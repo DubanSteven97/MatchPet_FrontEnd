@@ -10,7 +10,7 @@
     	$nombreApp = new ConfiguracionesModel();
     	$idEmpresa = 1;
     	$arrConfiguraciones = $nombreApp->DatosCorreo($idEmpresa);
-        return  $arrConfiguraciones["nombre_aplicacion"];
+        return  $arrConfiguraciones["nombre"];
 	}
 
 	function contactoWshatsapp()

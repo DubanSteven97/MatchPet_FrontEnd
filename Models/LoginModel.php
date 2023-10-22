@@ -15,7 +15,7 @@
 		{
 			$this->strUsuario = $usuario;
 			$this->strPassword = $password;
-			$sql = "SELECT idpersona, status FROM persona WHERE email_user = '$this->strUsuario' AND password = '$this->strPassword' AND status != 0";
+			$sql = "SELECT idPersona, estado FROM Persona WHERE email = '$this->strUsuario' AND password = '$this->strPassword' AND estado != 0";
 			$request = $this->Select($sql);
 			return $request;
 		}

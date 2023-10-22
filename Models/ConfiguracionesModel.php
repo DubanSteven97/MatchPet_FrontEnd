@@ -1,5 +1,5 @@
 <?php
-	class ConfiguracionesModel extends Mysql
+	class ConfiguracionesModel extends SqlServer
 	{
 		private $idEmpresa;
 		private $direccion;
@@ -34,7 +34,7 @@
         public function DatosCorreo(int $compañia)
 		{
 			$this->idEmpresa = $compañia;
-			$sql = "SELECT nombre_remitente, correo_remitente, nombre_aplicacion,nombre_empresa,sitio_web FROM empresa WHERE idempresa = $this->idEmpresa";
+			$sql = "SELECT nombre, descripcion, telefono,direccion,estado FROM Organizacion WHERE idOrganizacion = $this->idEmpresa";
 			$request = $this->Select($sql);
 			return $request;
 		}

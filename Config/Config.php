@@ -1,7 +1,7 @@
 <?php
 
-	const BASE_URL = "Http://localhost/ElBuenSamaritano/";
-	const BASE_URL_H = "localhost/ElBuenSamaritano";
+	const BASE_URL = "Http://localhost/MatchPet/";
+	const BASE_URL_H = "localhost/MatchPet";
 
 	date_default_timezone_set('America/Bogota');
 
@@ -10,6 +10,14 @@
 	const DB_USER = "root";
 	const DB_PASSWORD = "root";
 	const DB_CHARSET = "utf8";
+
+	const DRIVER_SQL ="sqlsrv:server";
+	const DATABASE="DBMatchpet";
+	const PORT="10060";
+	const HOSTNAME="DESKTOP-UIAKGPT";
+	const USERNAME="root";
+	const PASSWORD= "123456";
+
 
 	const SPD = ",";
 	const SPM = ".";
