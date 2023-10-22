@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded',function(){
 					if(request.status == 200)
 					{
 						var objData = JSON.parse(request.responseText);
-						if(objData.status)
+						if(objData.estado)
 						{
 							//window.location = BaseUrl+'/dashboard';
 							window.location.reload(false);

@@ -56,7 +56,7 @@
 		public function PermisosModulo(int $idRol)
 		{
 			$this->intRolId=$idRol;
-			$sql = "SELECT p.rolid, p.moduloid, m.titulo as modulo, p.r, p.w, p.u, p.d FROM permisos p INNER JOIN modulo m ON p.moduloid = m.idmodulo WHERE p.rolid = $this->intRolId";
+			$sql = "SELECT p.idRol, p.idModulo, m.titulo as modulo, p.r, p.w, p.u, p.d FROM Permiso p INNER JOIN Modulo m ON p.idModulo = m.idModulo WHERE p.idRol = $this->intRolId";
 			$request = $this->SelectAll($sql);
 
 			$arrPermisos = array();

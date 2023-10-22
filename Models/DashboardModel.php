@@ -1,5 +1,5 @@
 <?php
-	class DashboardModel extends Mysql
+	class DashboardModel extends SqlServer
 	{
 		public function __construct()
 		{
@@ -8,7 +8,7 @@
 
 		public function CanUsuarios()
 		{
-			$sql = "SELECT COUNT(*) total FROM persona WHERE status != 0";
+			$sql = "SELECT COUNT(*) total FROM Persona WHERE estado != 0";
 			$request = $this->Select($sql);
 			$total = $request['total'];
 			return $total;
@@ -16,7 +16,7 @@
 
 		public function CanClientes()
 		{
-			$sql = "SELECT COUNT(*) total FROM persona WHERE status != 0 AND rolid = (SELECT idrol FROM rol WHERE nombrerol = 'Cliente');";
+			$sql = "SELECT COUNT(*) total FROM Persona WHERE estado != 0 AND idRol = (SELECT idRol FROM Rol WHERE nombrerol = 'Cliente');";
 			$request = $this->Select($sql);
 			$total = $request['total'];
 			return $total;
@@ -24,7 +24,7 @@
 
 		public function CanProductos()
 		{
-			$sql = "SELECT COUNT(*) total FROM producto WHERE status != 0";
+			$sql = "SELECT COUNT(*) total FROM Animal WHERE estado != 0";
 			$request = $this->Select($sql);
 			$total = $request['total'];
 			return $total;
@@ -38,13 +38,13 @@
 				$where = " WHERE	personaid = ".$idPersona;
 			}
 
-			$sql = "SELECT COUNT(*) total FROM pedido ". $where;
+			$sql = "SELECT COUNT(*) total FROM Apadrinamiento ". $where;
 			$request = $this->Select($sql);
 			$total = $request['total'];
 			return $total;
 		}
 
-		public function LastOrders($idPersona = null)
+		/*public function LastOrders($idPersona = null)
 		{
 			$where = "";
 			if($idPersona != null)
@@ -59,9 +59,9 @@
 					ORDER BY p.idpedido DESC LIMIT 10";
 			$request = $this->SelectAll($sql);
 			return $request;
-		}
+		}*/
 
-		public function SelectPagosMes(int $anio, int $mes, $idPersona = null)
+		/*public function SelectPagosMes(int $anio, int $mes, $idPersona = null)
 		{
 			$where = "WHERE 1=1 ";
 			if($idPersona != null)
@@ -79,7 +79,7 @@
 			$pagos = $this->SelectAll($sql);
 			$arrData = array('anio'=>$anio, 'mes'=>Meses()[$mes-1], 'tipospago'=>$pagos);
 			return $arrData;
-		}
+		}*/
 	}
 
 ?>

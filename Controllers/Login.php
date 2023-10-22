@@ -25,31 +25,29 @@
 			{
 				if(empty($_POST['txtEmail']) || empty($_POST['txtPassword']))
 				{
-					$arrResponse = array('status' => false, 'msg' => 'Error de datos.');
+					$arrResponse = array('estado' => false, 'msg' => 'Error de datos.');
 				}else
 				{
 					$strUsuario = strtolower(StrClean($_POST['txtEmail']));
 					$strPassword = hash("SHA256", $_POST['txtPassword']);
 					$requestUser = $this->model->LoginUser($strUsuario, $strPassword);
-
-					echo("Aqui");
 					if(empty($requestUser))
 					{
-						$arrResponse = array('status' => false, 'msg' => 'Usuario o contraseña es incorrectos.');	
+						$arrResponse = array('estado' => false, 'msg' => 'Usuario o contraseña es incorrectos.');	
 					}else
 					{
 						$arrData = $requestUser;
-						if($arrData['status'] == 1)
+						if($arrData['estado'] == 1)
 						{
-							$_SESSION['idUser'] = $arrData['idpersona'];
+							$_SESSION['idUser'] = $arrData['idPersona'];
 							$_SESSION['login'] = true;
 							$_SESSION['timeout'] = true;
 							$_SESSION['inicio'] = time();
 							$arrData = $this->model->SessionLogin($_SESSION['idUser']);
 							$_SESSION['userData'] = $arrData;
-							$arrResponse = array('status' => true, 'msg' => 'ok');		
+							$arrResponse = array('estado' => true, 'msg' => 'ok');		
 						}else{
-							$arrResponse = array('status' => false, 'msg' => 'Usuario inactivo.');		
+							$arrResponse = array('estado' => false, 'msg' => 'Usuario inactivo.');		
 						}
 					}
 				}

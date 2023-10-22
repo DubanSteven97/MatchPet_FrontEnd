@@ -75,18 +75,18 @@
                 </tr>
               </thead>
               <tbody>
-                <?php if(count($data['lastOrders'])>0){ 
+                <?php /*if(count($data['lastOrders'])>0){ 
                   foreach ($data['lastOrders'] as $pedido) {
-                  ?>
-                <tr>
+                  */?>
+                <!--<tr>
                   <td><?= $pedido['idpedido'];?></td>
                   <td><?= $pedido['nombre'];?></td>
                   <td><?= $pedido['status'];?></td>
                   <td class="text-right"><?= FormatMoney($pedido['monto']);?></td>
                   <td><a href="<?= BaseUrl() ?>/pedidos/orden/<?= $pedido['idpedido'];?>" target="blank"> <i class="fa fa-eye" aria-hidden="true"></i></a></td>
-                </tr>
-              <?php }
-                  } ?>
+                </tr>-->
+              <?php /* }
+                  }*/ ?>
               </tbody>
             </table>
           </div>

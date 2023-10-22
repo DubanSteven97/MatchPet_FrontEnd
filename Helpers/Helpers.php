@@ -10,7 +10,7 @@
     	$nombreApp = new ConfiguracionesModel();
     	$idEmpresa = 1;
     	$arrConfiguraciones = $nombreApp->DatosCorreo($idEmpresa);
-        return  $arrConfiguraciones["nombre"];
+        return  $arrConfiguraciones["nombre_aplicacion"];
 	}
 
 	function contactoWshatsapp()
@@ -125,7 +125,7 @@
     {
     	require_once('Models/PermisosModel.php');
     	$objPermisos = new PermisosModel();
-    	$idRol = $_SESSION['userData']['idrol'];
+    	$idRol = $_SESSION['userData']['idRol'];
     	$arrPermisos = $objPermisos->PermisosModulo($idRol);
     	$permisos = '';
     	$permisosMod = '';
