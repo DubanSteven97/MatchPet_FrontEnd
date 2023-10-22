@@ -18,16 +18,16 @@
 	const CURRENCY = "USD";
 	const MONEDA = "COP";
 
-	const NOMBRE_REMITENTE = "El Buen Samaritano";
-	const EMAIL_REMITENTE = "info@elbuensamaritano.com";
+	const NOMBRE_REMITENTE = "MatchPet";
+	const EMAIL_REMITENTE = "info@MatchPet.com";
 	const NOMBRE_EMPRESA = "EL BUEN SAMARITANO";
-	const NOMBRE_APP = "El Buen Samaritano";
-	const WEB_EMPRESA = "www.elbuensamaritano.com";
+	const NOMBRE_APP = "MatchPet";
+	const WEB_EMPRESA = "www.MatchPet.com";
 
 	const DIRECCION_EMPRESA = "Calle Siempre Viva 123, Bogotá DC, Colombia";
 	const TELEFONO_EMPRESA = "+(57)320 3997016";
-	const EMAIL_PEDIDOS = "info@elbuensamaritano.com";
-	const EMAIL_EMPRESA = "info@elbuensamaritano.com";
+	const EMAIL_PEDIDOS = "info@MatchPet.com";
+	const EMAIL_EMPRESA = "info@MatchPet.com";
 
 	const CAT_SLIDER = "7,2,3";
 	const CAT_BANNER = "6,5,8";
