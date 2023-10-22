@@ -4,7 +4,7 @@
   <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="<?=media();?>/images/avatar.png" alt="User Image">
     <div>
       <p class="app-sidebar__user-name"><?=$_SESSION['userData']['nombres']; ?></p>
-      <p class="app-sidebar__user-designation"><?=$_SESSION['userData']['nombrerol']; ?></p>
+      <p class="app-sidebar__user-designation"><?=$_SESSION['userData']['nombreRol']; ?></p>
     </div>
   </div>
   <ul class="app-menu">
