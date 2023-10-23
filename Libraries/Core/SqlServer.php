@@ -16,14 +16,13 @@ class SqlServer extends Conexion
         $this->strQuery = $query;
         $this->arrValues = $arrayValues;
         $insert = $this->conexion->prepare($this->strQuery);
-        foreach ($this->arrValues as $key => $value) {
-            $insert->bindParam(":$key", $value);
-        }
-        $resInsert = $insert->execute();
-
-        if ($resInsert) {
+        $resInsert = $insert->execute($this->arrValues);
+        if($resInsert)
+        {
             $lastInsert = $this->conexion->lastInsertId();
-        } else {
+        }
+        else
+        {
             $lastInsert = 0;
         }
         return $lastInsert;
@@ -43,7 +42,7 @@ class SqlServer extends Conexion
         $this->strQuery = $query;
         $result = $this->conexion->prepare($this->strQuery);
         $result->execute();
-        $data = $result->fetchAll(PDO::FETCH_ASSOC);
+        $data = $result->fetchall(PDO::FETCH_ASSOC);
         return $data;
     }
 
@@ -52,10 +51,7 @@ class SqlServer extends Conexion
         $this->strQuery = $query;
         $this->arrValues = $arrayValues;
         $update = $this->conexion->prepare($this->strQuery);
-        foreach ($this->arrValues as $key => $value) {
-            $update->bindParam(":$key", $value);
-        }
-        $resUpdate = $update->execute();
+        $resUpdate = $update->execute($this->arrValues);
         return $resUpdate;
     }
 

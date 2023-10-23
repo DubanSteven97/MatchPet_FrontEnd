@@ -41,7 +41,7 @@
                         $uCheck = $permisos['u'] == 1 ? " checked " : "";
                         $dCheck = $permisos['d'] == 1 ? " checked " : "";
 
-                        $idmod = $modulos[$i]['idmodulo'];
+                        $idmod = $modulos[$i]['idModulo'];
                       
 
                     ?>

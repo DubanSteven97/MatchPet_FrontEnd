@@ -32,9 +32,11 @@
 			    empty($_POST['txtTelefono']) ||
 			    empty($_POST['txtEmail']) ||
 			    empty($_POST['listRolId']) ||
-			    empty($_POST['listStatus']))
+			    empty($_POST['listStatus'])||
+			    empty($_POST['listOrganizacionId']))
 		   	{
-				$arrResponse = array(	'status'=> false,
+				
+				$arrResponse = array(	'estado'=> false,
 											'msg'	=> 'Datos incorrectos.');		   	
 		   	}else
 		   	{
@@ -45,7 +47,8 @@
 				$intTelefono = intval(StrClean($_POST['txtTelefono']));
 				$strEmail = strtolower(StrClean($_POST['txtEmail']));
 				$intRolId = intval(StrClean($_POST['listRolId']));
-				$intStatus = intval(StrClean($_POST['listStatus']));
+				$intestado = intval(StrClean($_POST['listStatus']));
+				$intIdOrganizacion = intval(StrClean($_POST['listOrganizacionId']));
 				$request_user = "";
 				if($idUsuario == 0)
 				{
@@ -59,7 +62,8 @@
 																	$strEmail,
 																	$strPassword,
 																	$intRolId,
-																	$intStatus
+																	$intestado,
+																	$intIdOrganizacion
 																	);
 					}
 					$option = 1;
@@ -76,30 +80,30 @@
 																	$strEmail,
 																	$strPassword,
 																	$intRolId,
-																	$intStatus
+																	$intestado,
+																	$intIdOrganizacion
 																	);
 					}
 					$option = 2;
 				}
-
-				if($request_user>0)
+				if($request_user>0 /*&& $request_user != 'exist'*/) 
 				{
 					if($option == 1)
 					{
-						$arrResponse = array(	'status'=> true,
+						$arrResponse = array(	'estado'=> true,
 												'msg'	=> 'Datos guardados correctamente.');
 					}else
 					{
-						$arrResponse = array(	'status'=> true,
+						$arrResponse = array(	'estado'=> true,
 												'msg'	=> 'Datos actualizados correctamente.');
 					}
 				}else if($request_user == 'exist')
 				{
-					$arrResponse = array(	'status'=> false,
+					$arrResponse = array(	'estado'=> false,
 											'msg'	=> '¡Atención! El email o identificación ya existe.');
 				}else 
 				{
-					$arrResponse = array(	'status'=> false,
+					$arrResponse = array(	'estado'=> false,
 											'msg'	=> 'No es posible almacenar los datos');
 				}
 		   	}
@@ -116,33 +120,33 @@
 					$btnView = '';
 					$btnEdit = '';
 					$btnDelete = '';
-					if($arrData[$i]['status']==1)
+					if($arrData[$i]['estado']==1)
 					{
-						$arrData[$i]['status'] = '<span class="badge badge-success">Activo</span>';
+						$arrData[$i]['estado'] = '<span class="badge badge-success">Activo</span>';
 					}
-					if($arrData[$i]['status']==2)
+					if($arrData[$i]['estado']==2)
 					{
-						$arrData[$i]['status'] = '<span class="badge badge-danger">Inactivo</span>';
+						$arrData[$i]['estado'] = '<span class="badge badge-danger">Inactivo</span>';
 					}
 					if($_SESSION['permisosMod']['r']){
-						$btnView = '<button class="btn btn-info btn-sm btnViewUsuario" onClick= "fntViewUsuario('.$arrData[$i]['idpersona'].')" title="Ver usuario"><i class="fas fa-eye"></i></button>';
+						$btnView = '<button class="btn btn-info btn-sm btnViewUsuario" onClick= "fntViewUsuario('.$arrData[$i]['idPersona'].')" title="Ver usuario"><i class="fas fa-eye"></i></button>';
 					}
 					if($_SESSION['permisosMod']['u']){
-						if(($_SESSION['idUser'] == 1 AND $_SESSION['userData']['nombrerol'] == 'Administrador') ||
-							($_SESSION['userData']['nombrerol'] == 'Administrador' AND $arrData[$i]['nombrerol'] != 'Administrador'))
+						if(($_SESSION['idUser'] == 1 AND $_SESSION['userData']['nombreRol'] == 'Administrador') ||
+							($_SESSION['userData']['nombreRol'] == 'Administrador' AND $arrData[$i]['nombreRol'] != 'Administrador'))
 						{
-							$btnEdit = '<button class="btn btn-primary btn-sm btnEditUsuario" onClick= "fntEditUsuario(this,'.$arrData[$i]['idpersona'].')" title="Editar usuario"><i class="fas fa-pencil-alt"></i></button>';
+							$btnEdit = '<button class="btn btn-primary btn-sm btnEditUsuario" onClick= "fntEditUsuario(this,'.$arrData[$i]['idPersona'].')" title="Editar usuario"><i class="fas fa-pencil-alt"></i></button>';
 						}else
 						{
 							$btnEdit = '<button class="btn btn-primary btn-sm " disabled><i class="fas fa-pencil-alt"></i></button>';
 						}
 					}
 					if($_SESSION['permisosMod']['d']){
-						if(($_SESSION['idUser'] == 1 AND $_SESSION['userData']['nombrerol'] == 'Administrador') ||
-							($_SESSION['userData']['nombrerol'] == 'Administrador' AND $arrData[$i]['nombrerol'] != 'Administrador') AND
-							($_SESSION['userData']['idpersona'] != $arrData[$i]['idpersona']))
+						if(($_SESSION['idUser'] == 1 AND $_SESSION['userData']['nombreRol'] == 'Administrador') ||
+							($_SESSION['userData']['nombreRol'] == 'Administrador' AND $arrData[$i]['nombreRol'] != 'Administrador') AND
+							($_SESSION['userData']['idPersona'] != $arrData[$i]['idPersona']))
 						{
-							$btnDelete = '<button class="btn btn-danger btn-sm btnDelUsuario" onClick= "fntDelUsuario('.$arrData[$i]['idpersona'].')" title="Eliminar Usuario"><i class="fas fa-trash-alt"></i></button>';
+							$btnDelete = '<button class="btn btn-danger btn-sm btnDelUsuario" onClick= "fntDelUsuario('.$arrData[$i]['idPersona'].')" title="Eliminar Usuario"><i class="fas fa-trash-alt"></i></button>';
 						}else
 						{
 							$btnDelete = '<button class="btn btn-danger btn-sm" disabled><i class="fas fa-trash-alt"></i></button>';
@@ -168,11 +172,11 @@
 					$arrData = $this->model->SelectUsuario($idUsuario);
 					if(empty($arrData))
 					{
-						$arrResponse = array(	'status'=> false,
+						$arrResponse = array(	'estado'=> false,
 													'msg'	=> 'Datos no encontrados.');	
 					}else
 					{
-						$arrResponse = array(	'status'=> true,
+						$arrResponse = array(	'estado'=> true,
 													'data'	=> $arrData);	
 					}
 					echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
@@ -188,15 +192,15 @@
 				if($_SESSION['permisosMod']['u'])
 				{
 						
-					$intIdPersona = intval($_POST['idUsuario']);
-					$request = $this->model->DeleteUsuario($intIdPersona);
+					$intidPersona = intval($_POST['idUsuario']);
+					$request = $this->model->DeleteUsuario($intidPersona);
 					if($request)
 					{
-						$arrResponse = array(	'status'=> true,
+						$arrResponse = array(	'estado'=> true,
 												'msg'	=> 'Se ha eliminado el usuario.');
 					}else
 					{
-						$arrResponse = array(	'status'=> true,
+						$arrResponse = array(	'estado'=> true,
 												'msg'	=> 'Error al eliminar el usuario.');
 					}
 					echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
@@ -222,7 +226,7 @@
 			    empty($_POST['txtApellidos']) ||
 			    empty($_POST['txtTelefono']))
 				{
-					$arrResponse = array(	'status'=> false,
+					$arrResponse = array(	'estado'=> false,
 											'msg'	=> 'Datos incorrectos.');	
 				}else
 				{
@@ -239,11 +243,11 @@
 					if($request_user)
 					{
 						SessionUser($_SESSION['idUser']);
-						$arrResponse = array(	'status'=> true,
+						$arrResponse = array(	'estado'=> true,
 													'msg'	=> 'Datos Actualizados correctamente.');
 					}else
 					{
-						$arrResponse = array(	'status'=> false,
+						$arrResponse = array(	'estado'=> false,
 													'msg'	=> 'No es posible actualizar los datos.');
 					}
 				}
@@ -260,7 +264,7 @@
 			    empty($_POST['txtNombreFiscal']) ||
 			    empty($_POST['txtDireccionFiscal']))
 				{
-					$arrResponse = array(	'status'=> false,
+					$arrResponse = array(	'estado'=> false,
 											'msg'	=> 'Datos incorrectos.');	
 				}else
 				{
@@ -275,11 +279,11 @@
 					if($request_user)
 					{
 						SessionUser($_SESSION['idUser']);
-						$arrResponse = array(	'status'=> true,
+						$arrResponse = array(	'estado'=> true,
 													'msg'	=> 'Datos Actualizados correctamente.');
 					}else
 					{
-						$arrResponse = array(	'status'=> false,
+						$arrResponse = array(	'estado'=> false,
 													'msg'	=> 'No es posible actualizar los datos.');
 					}
 				}

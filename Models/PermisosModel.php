@@ -1,5 +1,5 @@
 <?php
-	class PermisosModel extends Mysql
+	class PermisosModel extends SqlServer
 	{
 		public $intIdPermiso;
 		public $intRolId;
@@ -16,7 +16,7 @@
 
 		public function SelectModulos()
 		{
-			$sql = "SELECT * FROM modulo WHERE status != 0";
+			$sql = "SELECT * FROM Modulo WHERE estado != 0";
 			$request = $this->SelectAll($sql);
 			return $request;
 		}
@@ -24,7 +24,7 @@
 		public function SelectPermisosRol(int $idRol)
 		{
 			$this->intRolId = $idRol;
-			$sql = "SELECT * FROM permisos WHERE rolid = $this->intRolId";
+			$sql = "SELECT * FROM Permiso WHERE idRol = $this->intRolId";
 			$request = $this->SelectAll($sql);
 			return $request;
 		}
@@ -32,7 +32,7 @@
 		public function DeletePermisos(int $idRol)
 		{
 			$this->intRolId = $idRol;
-			$sql = "DELETE FROM permisos WHERE rolid = $this->intRolId";
+			$sql = "DELETE FROM Permiso WHERE idRol = $this->intRolId";
 			$request = $this->Delete($sql);
 			return $request;	
 		}
@@ -47,7 +47,7 @@
 			$this->u=$u;
 			$this->d=$d;
 
-			$queryInsert = "INSERT INTO permisos(rolid,moduloid,r,w,u,d) VALUES (?,?,?,?,?,?)";
+			$queryInsert = "INSERT INTO permiso(idRol,idModulo,r,w,u,d) VALUES (?,?,?,?,?,?)";
 			$arrData = array($this->intRolId, $this->intModuloId, $this->r, $this->w, $this->u, $this->d);
 			$return = $this->Insert($queryInsert,$arrData);
 			return $return;

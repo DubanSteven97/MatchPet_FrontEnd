@@ -11,5 +11,5 @@ $strPassword = hash("SHA256", "123456");
 
 
 
-echo("Aqui.". $strPassword)
+echo("Aqui.". date_create())
 ?>

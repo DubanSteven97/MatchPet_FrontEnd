@@ -1,6 +1,6 @@
 <?php
 
-	const BASE_URL = "Http://localhost/MatchPet/";
+	const BASE_URL = "Http://localhost/MatchPet";
 	const BASE_URL_H = "localhost/MatchPet";
 
 	date_default_timezone_set('America/Bogota');

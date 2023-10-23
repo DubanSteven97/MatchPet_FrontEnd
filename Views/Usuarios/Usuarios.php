@@ -29,7 +29,8 @@
                       <th>Email</th>
                       <th>Telefono</th>
                       <th>Rol</th>
-                      <th>Status</th>
+                      <th>Organización</th>
+                      <th>Estado</th>
                       <th>Acciones</th>
                     </tr>
                   </thead>

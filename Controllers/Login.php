@@ -12,7 +12,7 @@
 		}
 		public function login()
 		{
-			$data['page_tag'] ="Login - Tienda Virtual";
+			$data['page_tag'] ="Login - MatchPet";
 			$data['page_title'] = "Login ". NombreApp()."</smal>";
 			$data['page_name'] = "login";
 			$data['page_functions_js'] = "functions_login.js";

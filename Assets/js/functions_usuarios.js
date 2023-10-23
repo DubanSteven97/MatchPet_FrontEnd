@@ -14,13 +14,14 @@ document.addEventListener('DOMContentLoaded',function(){
             "dataSrc":""
         },
         "columns": [
-            { "data": 'idpersona' },
+            { "data": 'idPersona' },
             { "data": 'nombres' },
             { "data": 'apellidos' },
-            { "data": 'email_user' },
+            { "data": 'email' },
             { "data": 'telefono' },
-            { "data": 'nombrerol' },
-            { "data": 'status' },
+            { "data": 'nombreRol' },
+            { "data": 'nombre' },
+            { "data": 'estado' },
             { "data": 'options' }
         ],
         'dom': 'lBfrtip',
@@ -64,8 +65,10 @@ document.addEventListener('DOMContentLoaded',function(){
         let intTipoUsuario = document.querySelector('#listRolId').value;
         let strPassword = document.querySelector('#txtPassword').value;
         let intStatus = document.querySelector('#listStatus').value;
+        let intOrganizacion = document.querySelector('#listOrganizacionId').value;
 
-        if(strIdentificacion == '' || strNombre == '' || strApellido == '' || strEmail == '' || intTelefono == '' || intTipoUsuario == '')
+    
+        if(strIdentificacion == '' || strNombre == '' || strApellido == '' || strEmail == '' || intTelefono == '' || intTipoUsuario == '' || intOrganizacion == '')
         {
             swal("Atención", "Todos los campos son obligatorios", "error");
             return false;
@@ -91,7 +94,7 @@ document.addEventListener('DOMContentLoaded',function(){
         request.onreadystatechange = function(){
             if(request.readyState == 4 && request.status == 200){
                 let objData = JSON.parse(request.responseText);
-                if(objData.status)
+                if(objData.estado)
                 {
                     if(rowTable == "")
                     {
@@ -103,7 +106,8 @@ document.addEventListener('DOMContentLoaded',function(){
                         rowTable.cells[3].textContent = strEmail;
                         rowTable.cells[4].textContent = intTelefono;
                         rowTable.cells[5].textContent = document.querySelector("#listRolId").selectedOptions[0].text;
-                        rowTable.cells[6].innerHTML = htmlStatus;
+                        rowTable.cells[6].textContent = document.querySelector("#listOrganizacionId").selectedOptions[0].text;
+                        rowTable.cells[7].innerHTML = htmlStatus;
                     }
                     $('#modalFormUsuario').modal("hide");
                     formUsuario.reset();
@@ -122,6 +126,7 @@ document.addEventListener('DOMContentLoaded',function(){
 
 window.addEventListener('load',function(){
     fntRolesUsuario();
+    fntOrganizacion();
 },false);
 
 function fntRolesUsuario()
@@ -140,6 +145,21 @@ function fntRolesUsuario()
 
 }
 
+function fntOrganizacion()
+{
+    let ajaxUrl = BaseUrl+'/Organizaciones/GetSelectOrganizaciones';
+    let request = (window.XMLHttpRequest) ? XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    request.open("GET",ajaxUrl,true);
+    request.send();
+    request.onreadystatechange = function(){
+        if(request.readyState == 4 && request.status == 200){
+            document.querySelector("#listOrganizacionId").innerHTML = request.responseText;
+            $('#listOrganizacionId').selectpicker('render');     
+        }
+    }
+
+}
+
 function fntViewUsuario(idpersona)
 {
     let request = (window.XMLHttpRequest) ? XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP')
@@ -149,18 +169,19 @@ function fntViewUsuario(idpersona)
     request.onreadystatechange = function(){
         if(request.readyState == 4 && request.status == 200){
             let objData = JSON.parse(request.responseText);
-            if(objData.status)
+            if(objData.estado)
             {
-                let estadoUsuario = objData.data.status == 1 ?
+                let estadoUsuario = objData.data.estado == 1 ?
                 '<span class="badge badge-success">Activo</span>' :
                 '<span class="badge badge-danger">Inactivo</span>';
-                document.querySelector("#celIdentificacion").innerHTML = objData.data.identificacion;
+                document.querySelector("#celIdentificacion").innerHTML = objData.data.numero_identificacion;
                 document.querySelector("#celNombres").innerHTML = objData.data.nombres;
                 document.querySelector("#celApellidos").innerHTML = objData.data.apellidos;
                 document.querySelector("#celTelefono").innerHTML = objData.data.telefono;
-                document.querySelector("#celEmail").innerHTML = objData.data.email_user;
+                document.querySelector("#celEmail").innerHTML = objData.data.email;
                 document.querySelector("#celTipoUsuario").innerHTML = objData.data.nombrerol;
                 document.querySelector("#celEstado").innerHTML = estadoUsuario;
+                document.querySelector("#celOrganizacion").innerHTML = objData.data.nombre;
                 document.querySelector("#celFechaRegistro").innerHTML = objData.data.fechaRegistro;
                 $('#modalViewUser').modal('show');
             }else
@@ -186,18 +207,20 @@ function fntEditUsuario(element, idpersona)
     request.onreadystatechange = function(){
         if(request.readyState == 4 && request.status == 200){
             let objData = JSON.parse(request.responseText);
-            if(objData.status)
+            if(objData.estado)
             {
                 document.querySelector("#idUsuario").value = objData.data.idpersona;
-                document.querySelector("#txtIdentificacion").value = objData.data.identificacion;
+                document.querySelector("#txtIdentificacion").value = objData.data.numero_identificacion;
                 document.querySelector("#txtNombres").value = objData.data.nombres;
                 document.querySelector("#txtApellidos").value = objData.data.apellidos;
                 document.querySelector("#txtTelefono").value = objData.data.telefono;
-                document.querySelector("#txtEmail").value = objData.data.email_user;
+                document.querySelector("#txtEmail").value = objData.data.email;
                 document.querySelector("#listRolId").value = objData.data.idrol;
-                document.querySelector("#listStatus").value = objData.data.status;
+                document.querySelector("#listOrganizacionId").value = objData.data.idOrganizacion;
+                document.querySelector("#listStatus").value = objData.data.estado;
                 $('#listRolId').selectpicker('render');         
-                $('#listStatus').selectpicker('render');                
+                $('#listStatus').selectpicker('render'); 
+                $('#listOrganizacionId').selectpicker('render');                        
                 $('#modalFormUsuario').modal('show');
             }else
             {
@@ -231,7 +254,7 @@ function fntDelUsuario(idpersona)
             request.onreadystatechange = function(){
                 if(request.readyState == 4 && request.status == 200){
                     let objData = JSON.parse(request.responseText);
-                    if(objData.status)
+                    if(objData.estado)
                     {
                         swal("¡Eliminar!", objData.msg, "success");
                         tableUsuarios.api().ajax.reload();

@@ -14,10 +14,10 @@ document.addEventListener('DOMContentLoaded',function(){
             "dataSrc":""
         },
         "columns": [
-            { "data": 'idrol' },
-            { "data": 'nombrerol' },
+            { "data": 'idRol' },
+            { "data": 'nombreRol' },
             { "data": 'descripcion' },
-            { "data": 'status' },
+            { "data": 'estado' },
             { "data": 'options' }
         ],
         'dom': 'lBfrtip',
@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded',function(){
             if(request.readyState == 4 && request.status == 200){
                 console.log(request.responseText);
                 let objData = JSON.parse(request.responseText);
-                if(objData.status)
+                if(objData.estado)
                 {
                     if(rowTable == "")
                     {
@@ -145,13 +145,12 @@ function fntEditRol(element, idRol)
     request.onreadystatechange = function(){
         if(request.readyState == 4 && request.status == 200){
             let objData = JSON.parse(request.responseText);
-            if(objData.status)
+            if(objData.estado)
             {
-                console.log(objData);
-                document.querySelector("#idrol").value = objData.data.idrol;
-                document.querySelector("#txtNombre").value = objData.data.nombrerol;
+                document.querySelector("#idrol").value = objData.data.idRol;
+                document.querySelector("#txtNombre").value = objData.data.nombreRol;
                 document.querySelector("#txtDescripcion").value = objData.data.descripcion;
-                document.querySelector("#listStatus").value = objData.data.status;       
+                document.querySelector("#listStatus").value = objData.data.estado;       
                 $('#listStatus').selectpicker('render');                
                 $('#modalFormRol').modal('show');
             }else
@@ -186,7 +185,7 @@ function fntDelRol(idRol)
             request.onreadystatechange = function(){
                 if(request.readyState == 4 && request.status == 200){
                     let objData = JSON.parse(request.responseText);
-                    if(objData.status)
+                    if(objData.estado)
                     {
                         swal("¡Eliminar!", objData.msg, "success");
                         tableRoles.api().ajax.reload();
@@ -216,7 +215,7 @@ function fntSavePermisos(event){
 	request.onreadystatechange = function(){
 		if(request.readyState == 4 && request.status == 200){
 			var objData = JSON.parse(request.responseText);
-			if(objData.status)
+			if(objData.estado)
 			{
 				swal("¡Permisos de usuario!", objData.msg, "success");
 			}else
