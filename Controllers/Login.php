@@ -39,13 +39,22 @@
 						$arrData = $requestUser;
 						if($arrData['estado'] == 1)
 						{
-							$_SESSION['idUser'] = $arrData['idPersona'];
-							$_SESSION['login'] = true;
-							$_SESSION['timeout'] = true;
-							$_SESSION['inicio'] = time();
-							$arrData = $this->model->SessionLogin($_SESSION['idUser']);
-							$_SESSION['userData'] = $arrData;
-							$arrResponse = array('estado' => true, 'msg' => 'ok');		
+							$res = $this->Auth();
+							if ($res->success)
+							{
+								$_SESSION['idUser'] = $arrData['idPersona'];
+								$_SESSION['login'] = true;
+								$_SESSION['timeout'] = true;
+								$_SESSION['inicio'] = time();
+								$_SESSION['TokeN_APP'] = GetTokenApp();
+								$arrData = $this->model->SessionLogin($_SESSION['idUser']);
+								$_SESSION['userData'] = $arrData;
+								$arrResponse = array('estado' => true, 'msg' => 'ok');	
+							}
+							else
+							{
+								$arrResponse = array('estado' => false, 'msg' => 'Usuario no autorizado. -> ' . $res->message);		
+							}	
 						}else{
 							$arrResponse = array('estado' => false, 'msg' => 'Usuario inactivo.');		
 						}
@@ -54,6 +63,22 @@
 				echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
 			}
 			die();
+		}
+
+		public function Auth()
+		{
+			$url = "https://localhost:7176/Matchpet/Aplicacion/Auth";
+			$name = APP_US;
+			$pass = APP_PS;
+
+			$arrayData = array(
+			"usuario"=> $name,
+			"password"=> $pass
+			);
+
+			$data = json_encode($arrayData);
+			
+			return PeticionPost($url, $data, "application/json","");
 		}
 
 		public function ResetPass()

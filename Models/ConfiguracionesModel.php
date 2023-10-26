@@ -26,7 +26,7 @@
 		public function SelectEmpresa(int $compañia)
 		{
 			$this->idEmpresa = $compañia;
-			$sql = "SELECT * FROM Aplicacion WHERE idAplicacion = $this->idEmpresa";
+			$sql = "SELECT * FROM Aplication WHERE idAplicacion = $this->idEmpresa";
 			$request = $this->Select($sql);
 			return $request;
 		}
@@ -34,7 +34,7 @@
         public function DatosCorreo(int $compañia)
 		{
 			$this->idEmpresa = $compañia;
-			$sql = "SELECT nombre_remitente, correo_remitente, nombre_aplicacion,nombre_empresa,sitio_web FROM Aplicacion WHERE idAplicacion = $this->idEmpresa";
+			$sql = "SELECT nombre_remitente, correo_remitente, nombre_aplicacion,nombre_empresa,sitio_web FROM Aplication WHERE idAplicacion = $this->idEmpresa";
 			$request = $this->Select($sql);
 			return $request;
 		}
@@ -42,14 +42,14 @@
         public function DatosEmpresa(int $compañia)
 		{
 			$this->idEmpresa = $compañia;
-			$sql = "SELECT direccion, telefono, correo_pedidos,correo_empresa FROM idAplicacion WHERE idAplicacion = $this->idEmpresa";
+			$sql = "SELECT direccion, telefono, correo_pedidos,correo_empresa FROM Aplication WHERE idAplicacion = $this->idEmpresa";
 			$request = $this->Select($sql);
 			return $request;
 		}
         public function DatosMoneda(int $compañia)
 		{
 			$this->idEmpresa = $compañia;
-			$sql = "SELECT separador_decimales, separador_miles_millones, simbolo_moneda,divisa, moneda FROM idAplicacion WHERE idAplicacion = $this->idEmpresa";
+			$sql = "SELECT separador_decimales, separador_miles_millones, simbolo_moneda,divisa, moneda FROM Aplication WHERE idAplicacion = $this->idEmpresa";
 			$request = $this->Select($sql);
 			return $request;
 		}
@@ -71,7 +71,7 @@
             $this->SeparfadorDecimal = $SeparfadorDecimal;
             $this->SeparadorMilesMillones = $SeparadorMilesMillones;
 	
-            $queryUpdate = "UPDATE idAplicacion SET direccion = ?, telefono = ?,correo_empresa = ? , correo_pedidos = ?, nombre_remitente = ?, correo_remitente = ?, nombre_empresa = ? , nombre_aplicacion = ?, sitio_web = ?, simbolo_moneda = ?, moneda = ?, divisa = ?, separador_decimales = ?, separador_miles_millones = ?  WHERE idAplicacion = $this->idEmpresa";
+            $queryUpdate = "UPDATE Aplication SET direccion = ?, telefono = ?,correo_empresa = ? , correo_pedidos = ?, nombre_remitente = ?, correo_remitente = ?, nombre_empresa = ? , nombre_aplicacion = ?, sitio_web = ?, simbolo_moneda = ?, moneda = ?, divisa = ?, separador_decimales = ?, separador_miles_millones = ?  WHERE idAplicacion = $this->idEmpresa";
             $arrData = array($this->direccion,$this->telefono,$this->correoEmrpesa,$this->correoPedidos, $this->nombreRemitente,$this->correoRemitente, $this->nombreEmpresa, $this->nombeAplicacion,$this->sitioWeb,$this->SimboloMoneda,$this->Moneda,$this->Divisa,$this->SeparfadorDecimal,$this->SeparadorMilesMillones );
 
             $return = $this->Update($queryUpdate,$arrData);

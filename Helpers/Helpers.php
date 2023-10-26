@@ -13,6 +13,8 @@
         return  $arrConfiguraciones["nombre_aplicacion"];
 	}
 
+
+
 	function contactoWshatsapp()
 	{
     	require_once('Models/ConfiguracionesModel.php');
@@ -125,18 +127,23 @@
     {
     	require_once('Models/PermisosModel.php');
     	$objPermisos = new PermisosModel();
-    	$idRol = $_SESSION['userData']['idRol'];
-    	$arrPermisos = $objPermisos->PermisosModulo($idRol);
-    	$permisos = '';
-    	$permisosMod = '';
-    	if(count($arrPermisos) >0 )
-    	{
-    		$permisos = $arrPermisos;
-    		$permisosMod = isset($arrPermisos[$modulo]) ? $arrPermisos[$modulo] : "";
-    	}
-    	$_SESSION['permisos'] = $permisos;
-    	$_SESSION['permisosMod'] = $permisosMod;
+        if(!empty($_SESSION['userData']['idRol']))
+        {
+
+        	$idRol = $_SESSION['userData']['idRol'];
+        	$arrPermisos = $objPermisos->PermisosModulo($idRol);
+        	$permisos = '';
+        	$permisosMod = '';
+        	if(count($arrPermisos) >0 )
+        	{
+        		$permisos = $arrPermisos;
+        		$permisosMod = isset($arrPermisos[$modulo]) ? $arrPermisos[$modulo] : "";
+        	}
+        	$_SESSION['permisos'] = $permisos;
+        	$_SESSION['permisosMod'] = $permisosMod;
+        }
     }
+
 
     function SessionUser(int $idPersona)
     {
@@ -406,4 +413,45 @@
                     "Diciembre");
         return $meses;
     }
+
+
+    function PeticionPost(string $ruta, string $data = null, string $contentType =null,  string $token)
+    {
+        $contentType = $contentType != null ? $contentType : "application/x-www-form-urlencoded";
+        if($token != "")
+        {
+            $arrHeader = array('Content-Type:'.$contentType,
+                                'Authorization: Bearer '.$token);
+        }else
+        {
+            $arrHeader = array('Content-Type:'.$contentType);
+        }
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $ruta);
+        curl_setopt($ch, CURLOPT_POST, TRUE);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $arrHeader);
+
+        $result = curl_exec($ch);
+        $err = curl_error($ch);
+        curl_close($ch);
+        if($err)
+        {
+            $request = "CURL PeticionPost Error #: " .$err;
+        }else
+        {
+            $request = json_decode($result);
+        }
+        return $request;
+    }
+
+    function GetTokenApp()
+	{
+    	require_once('Models/AplicacionModel.php');
+    	$app = new AplicacionModel();
+    	$arrApp = $app->SelectAplicacion(APP_NAME);
+        return  $arrApp["token"];
+	}
 ?>

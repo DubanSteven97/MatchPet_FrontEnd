@@ -1,23 +1,22 @@
 <?php
 
-	const BASE_URL = "Http://localhost/MatchPet";
-	const BASE_URL_H = "localhost/MatchPet";
+	const HOST = "localhost:8080";
+	const BASE_URL = "http://".HOST."/MatchPet_frontend";
+	const BASE_URL_H = HOST."/MatchPet_frontend";
 
 	date_default_timezone_set('America/Bogota');
-
-	const DB_HOST = "localhost";
-	const DB_NAME = "db_elbuensamaritano";
-	const DB_USER = "root";
-	const DB_PASSWORD = "root";
-	const DB_CHARSET = "utf8";
 
 	const DRIVER_SQL ="sqlsrv:server";
 	const DATABASE="DBMatchpet";
 	const PORT="10060";
-	const HOSTNAME="DESKTOP-UIAKGPT";
-	const USERNAME="root";
-	const PASSWORD= "123456";
+	const HOSTNAME="LAPTOP-0GO8QO85\SQLEXPRESS";
+	const USERNAME="usrmatchpet";
+	const PASSWORD= "usrmatchpet";
 
+	#ENVIROMENT DEV
+	const APP_NAME = "MatchpetDEV";
+	const APP_US = "devmatchpet";
+	const APP_PS = "147852";
 
 	const SPD = ",";
 	const SPM = ".";
