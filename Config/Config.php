@@ -14,6 +14,7 @@
 	const PASSWORD= "usrmatchpet";
 
 	#ENVIROMENT DEV
+	const APP_URL = "https://localhost:7176/Matchpet";
 	const APP_NAME = "MatchpetDEV";
 	const APP_US = "devmatchpet";
 	const APP_PS = "147852";

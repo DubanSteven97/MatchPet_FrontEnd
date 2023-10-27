@@ -25,7 +25,7 @@
 			{
 				if(empty($_POST['txtEmail']) || empty($_POST['txtPassword']))
 				{
-					$arrResponse = array('estado' => false, 'msg' => 'Error de datos.');
+					$arrResponse = array('status' => false, 'msg' => 'Error de datos.');
 				}else
 				{
 					$strUsuario = strtolower(StrClean($_POST['txtEmail']));
@@ -33,30 +33,32 @@
 					$requestUser = $this->model->LoginUser($strUsuario, $strPassword);
 					if(empty($requestUser))
 					{
-						$arrResponse = array('estado' => false, 'msg' => 'Usuario o contraseña es incorrectos.');	
+						$arrResponse = array('status' => false, 'msg' => 'Usuario o contraseña es incorrectos.');	
 					}else
 					{
 						$arrData = $requestUser;
 						if($arrData['estado'] == 1)
 						{
 							$res = $this->Auth();
+
 							if ($res->success)
 							{
 								$_SESSION['idUser'] = $arrData['idPersona'];
 								$_SESSION['login'] = true;
 								$_SESSION['timeout'] = true;
 								$_SESSION['inicio'] = time();
-								$_SESSION['TokeN_APP'] = GetTokenApp();
+								$_SESSION['Token_APP'] = GetTokenApp();
 								$arrData = $this->model->SessionLogin($_SESSION['idUser']);
 								$_SESSION['userData'] = $arrData;
-								$arrResponse = array('estado' => true, 'msg' => 'ok');	
+								
+								$arrResponse = array('status' => true, 'msg' => 'ok');	
 							}
 							else
 							{
-								$arrResponse = array('estado' => false, 'msg' => 'Usuario no autorizado. -> ' . $res->message);		
+								$arrResponse = array('status' => false, 'msg' => 'Usuario no autorizado. -> ' . $res["message"]);		
 							}	
 						}else{
-							$arrResponse = array('estado' => false, 'msg' => 'Usuario inactivo.');		
+							$arrResponse = array('status' => false, 'msg' => 'Usuario inactivo.');		
 						}
 					}
 				}
@@ -67,7 +69,7 @@
 
 		public function Auth()
 		{
-			$url = "https://localhost:7176/Matchpet/Aplicacion/Auth";
+			$url = APP_URL."/Aplicacion/Auth";
 			$name = APP_US;
 			$pass = APP_PS;
 
