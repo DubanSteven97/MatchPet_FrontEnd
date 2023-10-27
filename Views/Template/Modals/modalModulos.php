@@ -33,7 +33,7 @@
                 </div>	
          			<div class="form-group col-md-12">
   	              <label for="txtDescripcion">Descripcion <span class="required">*</span></label>
-  	              <textarea class="form-control" id="txtDescripcion" name="txtDescripcion"> </textarea>
+  	              <textarea class="form-control" id="txtDescripcion" name="txtDescripcion"></textarea>
   	           </div>
          		</div>
             <div class="tile-footer">

@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded',function(){
 				let objData = JSON.parse(request.responseText);
 				if(objData.status)
 				{					
-					if(rowTable == "")
+					if(rowTable == "" || rowTable === undefined)
 					{
 						tableModulos.api().ajax.reload();
 					}else{
