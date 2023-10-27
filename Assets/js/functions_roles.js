@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded',function(){
             if(request.readyState == 4 && request.status == 200){
                 console.log(request.responseText);
                 let objData = JSON.parse(request.responseText);
-                if(objData.estado)
+                if(objData.status)
                 {
                     if(rowTable == "")
                     {
@@ -145,7 +145,7 @@ function fntEditRol(element, idRol)
     request.onreadystatechange = function(){
         if(request.readyState == 4 && request.status == 200){
             let objData = JSON.parse(request.responseText);
-            if(objData.estado)
+            if(objData.status)
             {
                 document.querySelector("#idrol").value = objData.data.idRol;
                 document.querySelector("#txtNombre").value = objData.data.nombreRol;
@@ -185,7 +185,7 @@ function fntDelRol(idRol)
             request.onreadystatechange = function(){
                 if(request.readyState == 4 && request.status == 200){
                     let objData = JSON.parse(request.responseText);
-                    if(objData.estado)
+                    if(objData.status)
                     {
                         swal("¡Eliminar!", objData.msg, "success");
                         tableRoles.api().ajax.reload();
@@ -215,7 +215,7 @@ function fntSavePermisos(event){
 	request.onreadystatechange = function(){
 		if(request.readyState == 4 && request.status == 200){
 			var objData = JSON.parse(request.responseText);
-			if(objData.estado)
+			if(objData.status)
 			{
 				swal("¡Permisos de usuario!", objData.msg, "success");
 			}else
