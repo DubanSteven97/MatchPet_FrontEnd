@@ -12,7 +12,7 @@
 			$data['page_tag'] ="Registro ". NombreApp()."</smal>";
 			$data['page_title'] = "Registro ". NombreApp()."</smal>";
 			$data['page_name'] = "Registro";
-			$data['page_functions_js'] = "functions_register_user.js";
+			$data['page_functions_js'] = "functions_register_user.min.js";
 			$this->views->getView($this,"registro",$data);
 		}
 

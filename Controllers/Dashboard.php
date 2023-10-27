@@ -25,7 +25,7 @@
 			$data['page_tag'] ="Dashboard";
 			$data['page_name'] = "dashboard";
 			$data['page_title'] = "Dashboard <small> ". NombreApp()."</smal>";
-			$data['page_functions_js'] = "functions_dashboard.js";
+			$data['page_functions_js'] = "functions_dashboard.min.js";
 			$data['usuarios'] = $this->model->CanUsuarios();
 			$data['clientes'] = $this->model->CanClientes();
 			$data['productos'] = $this->model->CanProductos();

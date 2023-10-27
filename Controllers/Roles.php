@@ -20,7 +20,7 @@
 			$data['page_tag'] ="Roles";
 			$data['page_name'] = "rol_usuario";
 			$data['page_title'] = "Roles Usuario <small> ". NombreApp()."</smal>";
-			$data['page_functions_js'] = "functions_roles.js";
+			$data['page_functions_js'] = "functions_roles.min.js";
 			$this->views->GetView($this,"roles",$data);
 		}
 

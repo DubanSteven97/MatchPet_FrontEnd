@@ -15,7 +15,7 @@
 			$data['page_tag'] ="Login - MatchPet";
 			$data['page_title'] = "Login ". NombreApp()."</smal>";
 			$data['page_name'] = "login";
-			$data['page_functions_js'] = "functions_login.js";
+			$data['page_functions_js'] = "functions_login.min.js";
 			$this->views->GetView($this,"login",$data);
 		}
 

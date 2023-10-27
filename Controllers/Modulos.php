@@ -21,7 +21,7 @@
 			$data['page_tag'] ="Modulos";
 			$data['page_title'] = "Modulos <smal>Tienda Virtual</smal>";
 			$data['page_name'] = "modulos";
-			$data['page_functions_js'] = "functions_modulos.js";
+			$data['page_functions_js'] = "functions_modulos.min.js";
 			$this->views->GetView($this,"modulos",$data);
 		}
 
