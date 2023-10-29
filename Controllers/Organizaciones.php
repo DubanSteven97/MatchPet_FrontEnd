@@ -20,7 +20,7 @@
 			$data['page_tag'] ="Organizaciones";
 			$data['page_name'] = "organizaciones";
 			$data['page_title'] = "Organizaciones<small> ". NombreApp()."</smal>";
-			$data['page_functions_js'] = "functions_Organizaciones.js";
+			$data['page_functions_js'] = "functions_Organizaciones.min.js";
 			$this->views->GetView($this,"organizaciones",$data);
 		}
 		public function SetOrganizacion()
