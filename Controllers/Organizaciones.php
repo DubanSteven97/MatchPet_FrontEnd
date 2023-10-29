@@ -73,7 +73,7 @@
 					}
 					$option = 2;
 				}
-				if($request>0)
+				if($request>0 && $request<2 )
 				{
 					if($option == 1)
 					{
@@ -84,10 +84,10 @@
 						$arrResponse = array(	'status'=> true,
 												'msg'	=> 'Datos actualizados correctamente.');
 					}
-				}else if($request == 'exist')
+				}else if($request == 2)
 				{
 					$arrResponse = array(	'status'=> false,
-											'msg'	=> '¡Atención! El titulo ya existe.');
+											'msg'	=> '¡Atención! La organización ya existe.');
 				}else 
 				{
 					$arrResponse = array(	'status'=> false,
@@ -117,13 +117,13 @@
 					
 					if($_SESSION['permisosMod']['r']){
 						$btnList = '<button class="btn btn-info btn-sm btnViewModulo" onClick= "fntViewUsersByOrganizacio('.$arrData[$i]->idOrganizacion.')" title="Listar Usuarios"><i class="fa-solid fa-list"></i></button>';
-						$btnView = '<button class="btn btn-info btn-sm btnViewModulo" onClick= "fntViewOrganizacio('.$arrData[$i]->idOrganizacion.')" title="Ver Modulo"><i class="fas fa-eye"></i></button>';
+						$btnView = '<button class="btn btn-info btn-sm btnViewModulo" onClick= "fntViewOrganizacio('.$arrData[$i]->idOrganizacion.')" title="Ver Organiazción"><i class="fas fa-eye"></i></button>';
 					}
 					if($_SESSION['permisosMod']['u']){
 						$btnEdit = '<button class="btn btn-primary btn-sm btnEditModulo" onClick="fntEditOrganizacion(this,'.$arrData[$i]->idOrganizacion.')" title="Editar"><i class="fas fa-pencil-alt"></i></button>';
 					}
 					if($_SESSION['permisosMod']['d']){
-						$btnDelete = '<button class="btn btn-danger btn-sm btnDelModulo" onClick="fntDelModulo('.$arrData[$i]->idOrganizacion.')" title="Eliminar"><i class="fas fa-trash-alt"></i></button></div>';
+						$btnDelete = '<button class="btn btn-danger btn-sm btnDelModulo" onClick="fntDelOrganiazcion('.$arrData[$i]->idOrganizacion.')" title="Eliminar"><i class="fas fa-trash-alt"></i></button></div>';
 					}
 					$arrData[$i]->options = '<div class="text-center">'.$btnList.' '.$btnView.' '.$btnEdit.' '.$btnDelete.'';
 				}
@@ -144,7 +144,7 @@
 					if(empty($arrData))
 					{
 						$arrResponse = array(	'status'=> false,
-													'msg'	=> 'Datos no encontrados.');	
+													'msg'	=> 'La organización no tiene usuarios asignados.');	
 					}else
 					{
 						$arrResponse = array(	'status'=> true,
@@ -200,7 +200,30 @@
 			die();
 		}
 
-
+		public function DelOrganizacion($idOrganizacion)
+		{
+			if($_SESSION['permisosMod']['w'])
+			{
+				
+				$url = APP_URL."/Organizacion/DelOrganizacion/".$idOrganizacion;
+				$arrData = PeticionGet($url, "application/json", $_SESSION['Token_APP']);
+		
+				if($arrData == 'ok')
+				{
+					$arrResponse = array(	'estado'=> true,
+											'msg'	=> 'Se ha eliminado la organización.');
+				}else if($arrData == 'exist')
+				{
+					$arrResponse = array(	'estado'=> false,
+											'msg'	=> 'No es posible eliminar una organización asociada a un usuario.');
+				}else
+				{
+					$arrResponse = array(	'estado'=> false,
+											'msg'	=> 'Error al eliminar la organización.');
+				}
+				echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+			}
+		}
 
 	}
 ?>

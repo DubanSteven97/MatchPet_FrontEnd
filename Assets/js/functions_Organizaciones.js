@@ -157,9 +157,15 @@ function fntViewUsersByOrganizacio(idorganizacion)
 			let objData = JSON.parse(request.responseText);
 			if(objData.status)
 			{
-				document.querySelector("#celNombre").innerHTML = objData.data.nombre;
-
 				$('#modalViewUserByOrganizacion').modal('show');
+
+				
+				Object.entries(objData.data).forEach(([key, value]) =>{
+					var estado = htmlStatus = value.estado  == 1 ? '<span class="badge badge-success">Activo</span>' : '<span class="badge badge-danger">Inactivo</span>';
+					var fila = "<tr><td>" + value.idPersona+ "</td><td>" + value.nombres+ ' '+ value.apellidos  +"</td><td>" + value.email + "</td><td>" +value.numero_identificacion + "</td><td>" + value.telefono + "</td><td>" + estado + "</td></tr>";
+					document.getElementById('tableUsersByOrganizaciones').insertRow(-1).innerHTML =fila;
+				});
+				
 			}else
 			{
 				swal("¡Error!", objData.msg, "error");
@@ -199,6 +205,47 @@ function fntEditOrganizacion(element, idorganizacion)
 		}
 	}
 }
+
+
+function fntDelOrganiazcion(idorganizacion)
+{
+    swal({
+        title: "Eliminar el Rol",
+        text: "¿Realmente quiere eliminar el Rol?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Si, eliminar",
+        cancelButtonText: "No, cancelar",
+        closeOnConfirm: false,
+        closeOnCancel: true
+    }, function(isConfirm){
+        if(isConfirm)
+        {
+            divLoading.style.display = "flex";
+            let request = (window.XMLHttpRequest) ? XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP')
+            let ajaxUrl = BaseUrl+'/Organizaciones/DelOrganizacion/'+idorganizacion;
+			request.open("GET",ajaxUrl,true);
+			request.send();
+            request.onreadystatechange = function(){
+                if(request.readyState == 4 && request.status == 200){
+                    let objData = JSON.parse(request.responseText);
+                    if(objData.estado)
+                    {
+                        swal("¡Eliminar!", objData.msg, "success");
+                        tableOrganizaciones.api().ajax.reload();
+                    }else
+                    {
+                        swal("¡Error!", objData.msg, "error");
+                    }
+                }
+                
+                divLoading.style.display = "none";
+                return false;
+            }
+        }
+    });
+}
+
 
 function openModal()
 {
