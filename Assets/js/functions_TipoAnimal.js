@@ -1,23 +1,23 @@
-let tableCategorias;
+let tableTipoAnimal;
 let rowTable;
 let divLoading = document.querySelector("#divLoading");
 document.addEventListener('DOMContentLoaded',function(){
 
-	tableCategorias = $('#tableCategorias').dataTable({
+	tableTipoAnimal = $('#tableTipoAnimal').dataTable({
 		"aProcessing":true,
 		"aServerSide":true,
 		"language":{
 			"url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
 		},
 		"ajax":{
-			"url":""+BaseUrl+"/Categorias/GetCategorias",
+			"url":""+BaseUrl+"/TipoAnimal/GetTipoAnimales",
 			"dataSrc":""
 		},
 		columns: [
-            { "data": 'idcategoria' },
+            { "data": 'idTipoAnimal' },
             { "data": 'nombre' },
             { "data": 'descripcion' },
-            { "data": 'status' },
+            { "data": 'estado' },
             { "data": 'options' }
         ],
         'dom': 'lBfrtip',
@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded',function(){
 	                    }
 	                    document.querySelector('.delPhoto').classList.remove("notBlock");
 	                    let objeto_url = nav.createObjectURL(this.files[0]);
-	                    document.querySelector('.prevPhoto div').innerHTML = "<img id='img' src="+objeto_url+">";
+	                    document.querySelector('.prevPhoto div').innerHTML = "<img id='img' src='"+objeto_url+"' width='300'>";
 	                }
 	        }else{
 	            alert("No selecciono foto");
@@ -95,20 +95,21 @@ document.addEventListener('DOMContentLoaded',function(){
 	    }
 	}
 
-	let formCategoria = document.querySelector("#formCategoria");
+	let formCategoria = document.querySelector("#formTipoAnimal");
 	formCategoria.onsubmit = function(e){
 		e.preventDefault();
 		let strNombre = document.querySelector("#txtNombre").value;
 		let strDescripcion = document.querySelector("#txtDescripcion").value;
 		let listStatus = document.querySelector("#listStatus").value;
-		if(strNombre == '' || strDescripcion == '' || listStatus == '')
+		let foto = document.querySelector("#foto").value;
+		if(strNombre == '' || strDescripcion == '' || listStatus == ''|| foto == '')
 		{
 			swal("Atención", "Todos los campos son obligatorios", "error");
 			return false;
 		}
 		divLoading.style.display = "flex";
 		let request = (window.XMLHttpRequest) ? XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP')
-		let ajaxUrl = BaseUrl+'/Categorias/SetCategoria';
+		let ajaxUrl = BaseUrl+'/TipoAnimal/SetTipoAnimal';
 		let formData = new FormData(formCategoria);
 		request.open("POST",ajaxUrl,true);
 		request.send(formData);
@@ -119,7 +120,7 @@ document.addEventListener('DOMContentLoaded',function(){
 				{
 					if(rowTable == "")
 					{
-						tableCategorias.api().ajax.reload();
+						tableTipoAnimal.api().ajax.reload();
 					}else{
 						htmlStatus = listStatus == 1 ? 
 						'<span class="badge badge-success">Activo</span>' :
@@ -130,7 +131,7 @@ document.addEventListener('DOMContentLoaded',function(){
 						rowTable = "";
 					}
 
-					$('#modalFormCategoria').modal("hide");
+					$('#modalFormTipoAnimal').modal("hide");
 					formCategoria.reset();
 					swal("Categorias", objData.msg, "success");
 					removePhoto();
@@ -149,21 +150,21 @@ document.addEventListener('DOMContentLoaded',function(){
 
 function openModal()
 {
-	document.querySelector('#idCategoria').value = "";
+	document.querySelector('#idTipoAnimal').value = "";
 	document.querySelector('.modal-header').classList.replace("headerUpdate", "headerRegister");
 	document.querySelector('#btnActionForm').classList.replace("btn-info", "btn-primary");
 	document.querySelector('#btnText').innerHTML = "Guardar";
-	document.querySelector('#titleModal').innerHTML = "Nueva Categoria";
-	document.querySelector('#formCategoria').reset();
-	$('#modalFormCategoria').modal('show');
+	document.querySelector('#titleModal').innerHTML = "Nuevo tipo de animal";
+	document.querySelector('#formTipoAnimal').reset();
+	$('#modalFormTipoAnimal').modal('show');
 	rowTable = "";
 	removePhoto();
 }
 
-function fntViewCategoria(idcategoria)
+function fntViewTipoAnimal(idTipoAnimal)
 {
 	let request = (window.XMLHttpRequest) ? XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP')
-	let ajaxUrl = BaseUrl+'/Categorias/GetCategoria/'+idcategoria;
+	let ajaxUrl = BaseUrl+'/TipoAnimal/GetTipoAnimal/'+idTipoAnimal;
 	request.open("GET",ajaxUrl,true);
 	request.send();
 	request.onreadystatechange = function(){
@@ -171,15 +172,15 @@ function fntViewCategoria(idcategoria)
 			let objData = JSON.parse(request.responseText);
 			if(objData.status)
 			{	
-				let estado = objData.data.status == 1 ?
+				let estado = objData.data.estado == 1 ?
 				'<span class="badge badge-success">Activo</span>':
 				'<span class="badge badge-danger">Inactivo</span>';
-				document.querySelector("#celId").innerHTML = objData.data.idcategoria;
+				document.querySelector("#celId").innerHTML = objData.data.idTipoAnimal;
 				document.querySelector("#celNombre").innerHTML = objData.data.nombre;
 				document.querySelector("#celDescripcion").innerHTML = objData.data.descripcion;
 				document.querySelector("#celEstado").innerHTML = estado;
-				document.querySelector("#imgCategoria").innerHTML = '<img src="'+objData.data.url_portada+'"></img>';
-				$('#modalViewCategoria').modal('show');
+				document.querySelector("#imgAnimal").innerHTML = '<img src="'+objData.data.img+'" width="300"></img>';
+				$('#modalViewTipoAnimal').modal('show');
 			}else
 			{
 				swal("¡Error!", objData.msg, "error");
@@ -272,7 +273,7 @@ function fntDelCategoria(idcategoria)
 					if(objData.status)
 					{
 						swal("¡Eliminar!", objData.msg, "success");
-						tableCategorias.api().ajax.reload();
+						tableTipoAnimal.api().ajax.reload();
 					}else
 					{
 						swal("¡Error!", objData.msg, "error");

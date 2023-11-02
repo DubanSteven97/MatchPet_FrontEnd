@@ -1,18 +1,18 @@
-<div class="modal fade" id="modalFormCategoria" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="modalFormTipoAnimal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header headerRegister">
-        <h5 class="modal-title" id="titleModal">Nueva Categoría</h5>
+        <h5 class="modal-title" id="titleModal">Nuevo tipo de animal</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-          <form id="formCategoria" name="formCategoria" class="form-horizontal">
+          <form id="formTipoAnimal" name="formTipoAnimal" class="form-horizontal">
             <p class="text-primary">Todos los campos con asterisco (<span class="required">*</span>) son obligatorios.</p>
          	<div class="row">
          		<div class="col-md-6">
-         			<input type="hidden" name="idCategoria" id="idCategoria" value="">
+         			<input type="hidden" name="idTipoAnimal" id="idTipoAnimal" value="">
               <input type="hidden" name="foto_actual" id="foto_actual" value="">
               <input type="hidden" name="foto_remove" id="foto_remove" value="0">
 	                <div class="form-group">
@@ -33,7 +33,7 @@
          		</div>
          		<div class="col-md-6">
          			<div class="photo">
-					    <label for="foto">Foto (570x380)</label>
+					    <label for="foto">Foto (570x380) <span class="required">*</span></label>
 					    <div class="prevPhoto">
 					      <span class="delPhoto notBlock">X</span>
 					      <label for="foto"></label>
@@ -60,11 +60,11 @@
 </div>
 
 
-<div class="modal fade" id="modalViewCategoria" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="modalViewTipoAnimal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header header-primary">
-        <h5 class="modal-title" id="titleModal">Datos de la Categoría</h5>
+        <h5 class="modal-title" id="titleModal">Datos de tipos de animales</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -90,7 +90,7 @@
               </tr>
               <tr>
                 <td>Foto:</td>
-                <td id="imgCategoria"></td>
+                <td id="imgAnimal"></td>
               </tr>
             </tbody>
           </table>

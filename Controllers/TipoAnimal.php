@@ -1,5 +1,5 @@
 <?php
-	class Categorias extends Controllers
+	class TipoAnimal extends Controllers
 	{
 		public function __construct()
 		{
@@ -9,69 +9,72 @@
 			{
 				header('Location: ' . BaseUrl(). '/login');
 			}
-			GetPermisos('Categorias');
+			GetPermisos('Tipo de animal');
 		}
-		public function Categorias()
+		public function TipoAnimal()
 		{
 			if(empty($_SESSION['permisosMod']['r']))
 			{
 				header('Location: ' . BaseUrl(). '/AccesoRestringido');
 			}
-			$data['page_tag'] ="Categorias";
-			$data['page_name'] = "Categorias";
-			$data['page_title'] = "Categorias <small>". NombreApp()."</smal>";
-			$data['page_functions_js'] = "functions_categorias.js";
-			$this->views->GetView($this,"categorias",$data);
+			$data['page_tag'] ="TipoAnimal";
+			$data['page_name'] = "TipoAnimal";
+			$data['page_title'] = "Tipo de animal <small>". NombreApp()."</smal>";
+			$data['page_functions_js'] = "functions_TipoAnimal.js";
+			$this->views->GetView($this,"TipoAnimal",$data);
 		}
 
-		public function GetCategorias()
+		public function GetTipoAnimales()
 		{
 			if($_SESSION['permisosMod']['r'])
 			{
-				$arrData = $this->model->SelectCategorias();
+				$url = APP_URL."/TipoAnimal/GetTipoAnimales";
+				$arrData = PeticionGet($url, "application/json", $_SESSION['Token_APP']);
 				for($i=0;$i<count($arrData);$i++){
 					$btnEdit = '';
 					$btnDelete = '';
 
-					if($arrData[$i]['status']==1)
+					if($arrData[$i]->estado==1)
 					{
-						$arrData[$i]['status'] = '<span class="badge badge-success">Activo</span>';
+						$arrData[$i]->estado = '<span class="badge badge-success">Activo</span>';
 					}
-					if($arrData[$i]['status']==2)
+					if($arrData[$i]->estado==2)
 					{
-						$arrData[$i]['status'] = '<span class="badge badge-danger">Inactivo</span>';
+						$arrData[$i]->estado = '<span class="badge badge-danger">Inactivo</span>';
 					}
 					if($_SESSION['permisosMod']['r']){
-						$btnView = '<button class="btn btn-info btn-sm btnViewCategoria" onClick= "fntViewCategoria('.$arrData[$i]['idcategoria'].')" title="Ver Categoria"><i class="fas fa-eye"></i></button>';
+						$btnView = '<button class="btn btn-info btn-sm btnViewTipoAnimal" onClick= "fntViewTipoAnimal('.$arrData[$i]->idTipoAnimal.')" title="Ver Tipo de animal"><i class="fas fa-eye"></i></button>';
 					}
 					if($_SESSION['permisosMod']['u']){
-						$btnEdit = '<button class="btn btn-primary btn-sm btnEditCategoria" onClick="fntEditCategoria(this,'.$arrData[$i]['idcategoria'].')" title="Editar"><i class="fas fa-pencil-alt"></i></button>';
+						$btnEdit = '<button class="btn btn-primary btn-sm btnEditTipoAnimal" onClick="fntEditTipoAnimal(this,'.$arrData[$i]->idTipoAnimal.')" title="Editar"><i class="fas fa-pencil-alt"></i></button>';
 					}
 					if($_SESSION['permisosMod']['d']){
-						$btnDelete = '<button class="btn btn-danger btn-sm btnDelCategoria" onClick="fntDelCategoria('.$arrData[$i]['idcategoria'].')" title="Eliminar"><i class="fas fa-trash-alt"></i></button></div>';
+						$btnDelete = '<button class="btn btn-danger btn-sm btnDelTipoAnimal" onClick="fntDelTipoAnimal('.$arrData[$i]->idTipoAnimal.')" title="Eliminar"><i class="fas fa-trash-alt"></i></button></div>';
 					}
-					$arrData[$i]['options'] = '<div class="text-center">'.$btnView.' '.$btnEdit.' '.$btnDelete.'';
+					$arrData[$i]->options = '<div class="text-center">'.$btnView.' '.$btnEdit.' '.$btnDelete.'';
 				}
 				echo json_encode($arrData, JSON_UNESCAPED_UNICODE);
 			}
 			die();
 		}
 
-		public function GetCategoria(int $idCategoria)
+		public function GetTipoAnimal(int $idTipoAnimal)
 		{
 			if($_SESSION['permisosMod']['r'])
 			{
-				$intIdCategoria = intval(StrClean($idCategoria));
-				if($intIdCategoria > 0) 
+				$intIdTipoAnimal = intval(StrClean($idTipoAnimal));
+				if($intIdTipoAnimal > 0) 
 				{
-					$arrData = $this->model->SelectCategoria($intIdCategoria);
+					$url = APP_URL."/TipoAnimal/GetTipoAnimal/".$intIdTipoAnimal;
+					$arrData = PeticionGet($url, "application/json", $_SESSION['Token_APP']);
+				
 					if(empty($arrData))
 					{
 						$arrResponse = array(	'status'=> false,
 												'msg'	=> 'Datos no enontrados.');
 					}else
 					{
-						$arrData['url_portada'] = Media().'/images/uploads/'.$arrData['portada'];
+						
 						$arrResponse = array(	'status'=> true,
 												'data'	=> $arrData);
 					}
@@ -81,7 +84,7 @@
 			die();
 		}
 
-		public function SetCategoria()
+		public function SetTipoAnimal()
 		{
 			if($_POST)
 			{
@@ -91,28 +94,33 @@
 											'msg'	=> 'Datos incorrectos.');	
 				}else
 				{
-					$intIdCategoria = intval($_POST['idCategoria']);
-					$strCategoria = StrClean($_POST['txtNombre']);
+					$intIdTipoAnimal= intval($_POST['idTipoAnimal']);
+					$strnombre = StrClean($_POST['txtNombre']);
 					$strDescripcion = StrClean($_POST['txtDescripcion']);
 					$intStatus = intval($_POST['listStatus']);
-					$ruta = strtolower(ClearCadena($strCategoria));
-					$ruta = str_replace(" ", "-", $ruta);
+					$ruta = 'No se para que es la ruta';
+					$fechaActual = date("Y-m-d");
+					$foto = fileToBase64($_FILES['foto']);
 
-					$foto = $_FILES['foto'];
-					$nombreFoto = $foto['name'];
-					$type = $foto['type'];
-					$url_temp = $foto['tmp_name'];
-					$imgPortada = 'portada_categoria.png';
-
-					if($nombreFoto != '')
-					{
-						$imgPortada = 'img_'.md5(date('d-m-Y H:m:s')).'.jpg';
-					}
-					if($intIdCategoria == 0)
+					$request = "";
+					if($intIdTipoAnimal == 0)
 					{
 						if($_SESSION['permisosMod']['w'])
 						{
-							$request_Categoria = $this->model->InsertCategoria($strCategoria, $strDescripcion, $imgPortada, $ruta, $intStatus);
+
+							{
+								$tipoAnimal = array ("nombre" => $strnombre,
+								"descripcion" => $strDescripcion,
+								"img" => $foto,
+								"fechaCreacion" => 	$fechaActual ,
+								"ruta" => $ruta,
+								"estado" => $intStatus);
+		
+								$data = json_encode($tipoAnimal);
+								$url = APP_URL."/TipoAnimal/InsertTipoAnimal";
+								$request = PeticionPost($url, $data, "application/json", $_SESSION['Token_APP']);
+							}
+					
 						}
 						$option = 1;
 					}else
@@ -131,35 +139,26 @@
 						}
 						$option = 2;
 					}
-					if($request_Categoria>0)
+
+					
+					if($request>0 && $request<2)
 					{
 						if($option == 1)
 						{
 							$arrResponse = array(	'status'=> true,
 													'msg'	=> 'Datos guardados correctamente.');
-							if($nombreFoto != '')
-							{
-								UploadImage($foto,$imgPortada);
-							}
+		
 						}else
 						{
 							$arrResponse = array(	'status'=> true,
 													'msg'	=> 'Datos actualizados correctamente.');
-							if($nombreFoto != '')
-							{
-								UploadImage($foto,$imgPortada);
-							}
-
-							if(($nombreFoto == '' && $_POST['foto_remove'] == 1 && $_POST['foto_actual'] != 'portada_categoria.png') || ($nombreFoto != '' && $_POST['foto_actual'] != 'portada_categoria.png'))
-							{
-								DeleteFile($_POST['foto_actual']);
-							}
+		
 						}
 						
-					}else if($request_Categoria == 'exist')
+					}else if($request == 2)
 					{
 						$arrResponse = array(	'status'=> false,
-												'msg'	=> '¡Atención! La Categoria ya existe.');
+												'msg'	=> '¡Atención! El tipo de animal ya existe.');
 					}else 
 					{
 						$arrResponse = array(	'status'=> false,

@@ -485,4 +485,25 @@
     	$arrApp = $app->SelectAplicacion(APP_NAME);
         return  $arrApp["token"];
 	}
+
+    function fileToBase64($file) {
+        // Verificar si no hubo errores en la carga del archivo
+        if ($file['error'] === UPLOAD_ERR_OK) {
+            // Obtener el tipo MIME del archivo
+            $imageType = $file['type'];
+    
+            // Leer el contenido del archivo en formato binario
+            $imageData = file_get_contents($file['tmp_name']);
+    
+            // Codificar los datos binarios en Base64
+            $base64Image = base64_encode($imageData);
+    
+            // Crear la URL Data URI para el archivo
+            $dataURI = "data:$imageType;base64,$base64Image";
+    
+            return $dataURI;
+        } else {
+            return false; // Hubo un error en la carga del archivo
+        }
+    }
 ?>

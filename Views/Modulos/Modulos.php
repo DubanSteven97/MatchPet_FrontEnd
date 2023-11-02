@@ -4,7 +4,7 @@
     <div class="app-title">
       <div>
         <h1>
-        	<i class="fa fa-user-tag"></i> <?= $data['page_title'];?>
+        	<i class="fa-solid fa-boxes-stacked"></i> <?= $data['page_title'];?>
           <?php if($_SESSION['permisosMod']['w']){?>
         	<button class="btn btn-primary" type="button" onclick="openModal();"><i class="fa-solid fa-circle-plus"></i> Nuevo</button>
           <?php }?>
