@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded',function(){
 		let strDescripcion = document.querySelector("#txtDescripcion").value;
 		let listStatus = document.querySelector("#listStatus").value;
 		let foto = document.querySelector("#foto").value;
-		if(strNombre == '' || strDescripcion == '' || listStatus == ''|| foto == '')
+		if(strNombre == '' || strDescripcion == '' || listStatus == '')
 		{
 			swal("Atención", "Todos los campos son obligatorios", "error");
 			return false;
@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded',function(){
 
 					$('#modalFormTipoAnimal').modal("hide");
 					formCategoria.reset();
-					swal("Categorias", objData.msg, "success");
+					swal("Tipo de animal", objData.msg, "success");
 					removePhoto();
 				}else
 				{
@@ -179,7 +179,7 @@ function fntViewTipoAnimal(idTipoAnimal)
 				document.querySelector("#celNombre").innerHTML = objData.data.nombre;
 				document.querySelector("#celDescripcion").innerHTML = objData.data.descripcion;
 				document.querySelector("#celEstado").innerHTML = estado;
-				document.querySelector("#imgAnimal").innerHTML = '<img src="'+objData.data.img+'" width="300"></img>';
+				document.querySelector("#imgAnimal").innerHTML = '<img src="'+objData.data.url_portada+'" width="300"></img>';
 				$('#modalViewTipoAnimal').modal('show');
 			}else
 			{
@@ -189,16 +189,16 @@ function fntViewTipoAnimal(idTipoAnimal)
 	}
 }
 
-function fntEditCategoria(element, idcategoria)
+function fntEditTipoAnimal(element, idTipoAnimal)
 {
 	rowTable = element.parentNode.parentNode.parentNode;
 	document.querySelector('.modal-header').classList.replace("headerRegister", "headerUpdate");
 	document.querySelector('#btnActionForm').classList.replace("btn-primary", "btn-info");
 	document.querySelector('#btnText').innerHTML = "Actualizar";
-	document.querySelector('#titleModal').innerHTML = "Actualizar Categoria";
+	document.querySelector('#titleModal').innerHTML = "Actualizar tipo animal";
 
 	let request = (window.XMLHttpRequest) ? XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP')
-	let ajaxUrl = BaseUrl+'/Categorias/GetCategoria/'+idcategoria;
+	let ajaxUrl = BaseUrl+'/TipoAnimal/GetTipoAnimal/'+idTipoAnimal;
 	request.open("GET",ajaxUrl,true);
 	request.send();
 	request.onreadystatechange = function(){
@@ -206,10 +206,10 @@ function fntEditCategoria(element, idcategoria)
 			let objData = JSON.parse(request.responseText);
 			if(objData.status)
 			{
-				document.querySelector("#idCategoria").value = objData.data.idcategoria;
+				document.querySelector("#idTipoAnimal").value = objData.data.idTipoAnimal;
 				document.querySelector("#txtNombre").value = objData.data.nombre;
 				document.querySelector("#txtDescripcion").value = objData.data.descripcion;
-				document.querySelector("#foto_actual").value = objData.data.portada;
+				document.querySelector("#foto_actual").value = objData.data.img;
 				document.querySelector('#foto_remove').value = 0;
 
 				if(objData.data.status == 1)
@@ -226,7 +226,7 @@ function fntEditCategoria(element, idcategoria)
 					document.querySelector("#img").src = objData.data.url_portada;
 				}else
 				{
-					document.querySelector(".prevPhoto div").innerHTML = "<img id='img' src="+objData.data.url_portada+">";
+					document.querySelector(".prevPhoto div").innerHTML = '<img src="'+objData.data.url_portada+'" width="300"></img>';
 				}
 
 				if(objData.data.portada == 'portada_categoria.png')
@@ -237,7 +237,7 @@ function fntEditCategoria(element, idcategoria)
 					document.querySelector('.delPhoto').classList.remove('notBlock');
 				}
 
-				$('#modalFormCategoria').modal('show');
+				$('#modalFormTipoAnimal').modal('show');
 			}else
 			{
 				swal("¡Error!", objData.msg, "error");
@@ -246,11 +246,11 @@ function fntEditCategoria(element, idcategoria)
 	}
 }
 
-function fntDelCategoria(idcategoria)
+function fntDelTipoAnimal(idTipoAnimal)
 {
 	swal({
-		title: "Eliminar Categoria",
-		text: "¿Realente quiere eliminar el Categoria?",
+		title: "Eliminar Tipo animal",
+		text: "¿Realente quiere eliminar el tipo de animal?",
 		type: "warning",
 		showCancelButton: true,
 		confirmButtonText: "Si, eliminar",
@@ -262,8 +262,8 @@ function fntDelCategoria(idcategoria)
 		{
 			divLoading.style.display = "flex";
 			let request = (window.XMLHttpRequest) ? XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP')
-			let ajaxUrl = BaseUrl+'/Categorias/DelCategoria/';
-			let strData = "idCategoria="+idcategoria;
+			let ajaxUrl = BaseUrl+'/TipoAnimal/DelTipoAnimal/';
+			let strData = "idTipoAnimal="+idTipoAnimal;
 			request.open("POST",ajaxUrl,true);
 			request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 			request.send(strData);

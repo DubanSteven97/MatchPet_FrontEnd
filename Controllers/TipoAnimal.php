@@ -20,7 +20,7 @@
 			$data['page_tag'] ="TipoAnimal";
 			$data['page_name'] = "TipoAnimal";
 			$data['page_title'] = "Tipo de animal <small>". NombreApp()."</smal>";
-			$data['page_functions_js'] = "functions_TipoAnimal.js";
+			$data['page_functions_js'] = "functions_TipoAnimal.min.js";
 			$this->views->GetView($this,"TipoAnimal",$data);
 		}
 
@@ -74,7 +74,7 @@
 												'msg'	=> 'Datos no enontrados.');
 					}else
 					{
-						
+						$arrData->url_portada = $arrData->img;
 						$arrResponse = array(	'status'=> true,
 												'data'	=> $arrData);
 					}
@@ -94,20 +94,29 @@
 											'msg'	=> 'Datos incorrectos.');	
 				}else
 				{
-					$intIdTipoAnimal= intval($_POST['idTipoAnimal']);
+					$idTipoAnimal= intval($_POST['idTipoAnimal']);
 					$strnombre = StrClean($_POST['txtNombre']);
 					$strDescripcion = StrClean($_POST['txtDescripcion']);
 					$intStatus = intval($_POST['listStatus']);
 					$ruta = 'No se para que es la ruta';
 					$fechaActual = date("Y-m-d");
-					$foto = fileToBase64($_FILES['foto']);
-
 					$request = "";
-					if($intIdTipoAnimal == 0)
+
+
+
+					if(empty($_FILES['foto']['name'])){
+						$foto = media()."/images/uploads/portada_categoria.png";
+					}else{
+					
+						$foto = fileToBase64($_FILES['foto']);
+					}
+
+				
+
+					if($idTipoAnimal == 0)
 					{
 						if($_SESSION['permisosMod']['w'])
 						{
-
 							{
 								$tipoAnimal = array ("nombre" => $strnombre,
 								"descripcion" => $strDescripcion,
@@ -125,17 +134,32 @@
 						$option = 1;
 					}else
 					{
-						if($nombreFoto == '')
-						{
-							if($_POST['foto_actual'] != 'portada_Categoria.png' && $_POST['foto_remove'] == 0)
-							{
-								$imgPortada = $_POST['foto_actual'];
-							}
-						}
-
 						if($_SESSION['permisosMod']['u'])
 						{
-							$request_Categoria = $this->model->UpdateCategoria($intIdCategoria, $strCategoria, $strDescripcion, $imgPortada, $ruta, $intStatus);
+
+							$fotoActual = ($_POST['foto_actual']);
+
+							if(empty($_FILES['foto']['name'])){
+								
+								$foto = $fotoActual;
+							}else{
+							
+								$foto = fileToBase64($_FILES['foto']);
+							}
+
+
+							$tipoAnimal = array ("idTipoAnimal" => $idTipoAnimal,
+							"nombre" => $strnombre,
+							"descripcion" => $strDescripcion,
+							"img" => $foto,
+							"fechaCreacion" => 	$fechaActual ,
+							"ruta" => $ruta,
+							"estado" => $intStatus);
+	
+							$data = json_encode($tipoAnimal);
+							$url = APP_URL."/TipoAnimal/UpdateTipoAnimal";
+							$request = PeticionPost($url, $data, "application/json", $_SESSION['Token_APP']);
+
 						}
 						$option = 2;
 					}
@@ -170,49 +194,31 @@
 			die();
 		}
 
-		public function DelCategoria()
+		public function DelTipoAnimal()
 		{
 			if($_POST)
 			{
 				if($_SESSION['permisosMod']['d'])
 				{
-						
-					$intIdCategoria = intval($_POST['idCategoria']);
-					$request = $this->model->DeleteCategoria($intIdCategoria);
-					if($request == 'ok')
+					$intIdTipoAnimal= intval($_POST['idTipoAnimal']);
+					$url = APP_URL."/TipoAnimal/DelTipoAnimal/".$intIdTipoAnimal;
+					$arrData = PeticionGet($url, "application/json", $_SESSION['Token_APP']);
+					if($arrData == 'ok')
 					{
 						$arrResponse = array(	'status'=> true,
-												'msg'	=> 'Se ha eliminado la categoría.');
-					}else if($request == 'exist')
+												'msg'	=> 'Se ha eliminado el tipo de animal.');
+					}else if($arrData == 'exist')
 					{
-						$arrResponse = array(	'status'=> true,
-						'msg'	=> 'No es posible eliminar una categoría con productos asociados.');
+						$arrResponse = array(	'status'=> false,
+						'msg'	=> 'No es posible eliminar un tipo de animal con animales asociados.');
 					}else
 					{
-						$arrResponse = array(	'status'=> true,
-						'msg'	=> 'Error al eliminar la categoría.');
+						$arrResponse = array(	'status'=> false,
+						'msg'	=> 'Error al eliminar el tipo de animal.');
 					}
 					echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
 				}
 			}
-			die();
-		}
-
-		public function GetSelectCategorias()
-		{
-			$htmlOptions = "";
-			$arrData = $this->model->SelectCategorias();
-			if(count($arrData)>0)
-			{
-				for($i=0;$i<count($arrData);$i++)
-				{
-					if($arrData[$i]['status']==1)
-					{
-						$htmlOptions .= '<option value = "'.$arrData[$i]['idcategoria'].'"> '.$arrData[$i]['nombre'].' </option>';
-					}
-				}
-			}
-			echo $htmlOptions;
 			die();
 		}
 	}
