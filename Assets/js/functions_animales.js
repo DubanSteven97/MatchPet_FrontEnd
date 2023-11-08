@@ -1,5 +1,5 @@
 document.write(`<script type="text/javascript" src="${BaseUrl}/Assets/js/plugins/JsBarcode.all.min.js"></script>`);
-let tableProductos;
+let tableAnimales;
 let rowTable;
 let divLoading = document.querySelector("#divLoading");
 
@@ -11,23 +11,24 @@ $(document).on('focusin', function(e) {
 
 window.addEventListener('load',function(){
 
-	tableProductos = $('#tableProductos').dataTable({
+	tableAnimales = $('#tableAnimales').dataTable({
 		"aProcessing":true,
 		"aServerSide":true,
 		"language":{
 			"url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
 		},
 		"ajax":{
-			"url":""+BaseUrl+"/Productos/GetProductos",
+			"url":""+BaseUrl+"/Animales/GetAnimales",
 			"dataSrc":""
 		},
 		columns: [
-            { "data": 'idproducto' },
-            { "data": 'codigo' },
-            { "data": 'nombre' },
-            { "data": 'stock' },
-            { "data": 'precio' },
-            { "data": 'status' },
+            { "data": 'idAnimal' },
+			{ "data": 'nombre' },
+            { "data": 'organizacion' },
+            { "data": 'tipoAnimal' },
+            { "data": 'genero' },
+			{ "data": 'fecha_nacimiento' },
+            { "data": 'estado' },
             { "data": 'options' }
         ],
         "columnDefs": [
@@ -77,30 +78,26 @@ window.addEventListener('load',function(){
         "order":[[2,"asc"]]
 	});
 
-	if(document.querySelector("#formProducto")){
-		let formProducto = document.querySelector("#formProducto");
-		formProducto.onsubmit = function(e){
+	if(document.querySelector("#formAnimal")){
+		let formAnimal = document.querySelector("#formAnimal");
+		formAnimal.onsubmit = function(e){
 			e.preventDefault();
 			let strNombre = document.querySelector("#txtNombre").value;
-			let intPrecio = document.querySelector("#txtPrecio").value;
-			let intStock = document.querySelector("#txtStock").value;
-			let intCodigo = document.querySelector("#txtCodigo").value;
+			let strGenero = document.querySelector("#txtGenero").value;
+			let listOrganizacion = document.querySelector("#listOrganizacionId").value;
+			let listTipoAnimal = document.querySelector("#listTipoAnimalId").value;
+			let dateFechaNacimiento = document.querySelector("#fechaNacimiento").value;
 			let listStatus = document.querySelector("#listStatus").value;
-			if(strNombre == '' || intPrecio == '' || intStock == '' || intCodigo == '')
+			if(strNombre == '' || strGenero == '' || listOrganizacion == '' || listTipoAnimal == '' || listStatus == '')
 			{
 				swal("Atención", "Todos los campos son obligatorios", "error");
-				return false;
-			}
-			if(intCodigo.length < 5)
-			{
-				swal("Atención", "El código debe ser mayor a 5 dígitos", "error");
 				return false;
 			}
 			divLoading.style.display = "flex";
 			tinyMCE.triggerSave();
 			let request = (window.XMLHttpRequest) ? XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP')
-			let ajaxUrl = BaseUrl+'/Productos/SetProducto';
-			let formData = new FormData(formProducto);
+			let ajaxUrl = BaseUrl+'/Animales/SetAnimal';
+			let formData = new FormData(formAnimal);
 			request.open("POST",ajaxUrl,true);
 			request.send(formData);
 			request.onreadystatechange = function(){
@@ -108,27 +105,36 @@ window.addEventListener('load',function(){
 					let objData = JSON.parse(request.responseText);
 					if(objData.status)
 					{
-						swal("Productos", objData.msg, "success");
-						document.querySelector('#idProducto').value = objData.idproducto;
+						swal("Animales", objData.msg, "success");
+						document.querySelector('#idAnimal').value = objData.idAnimal;
 						document.querySelector('#containerGallery').classList.remove("notBlock");
 						if(rowTable == "")
 						{
-							tableProductos.api().ajax.reload();
+							tableAnimales.api().ajax.reload();
 						}else{
 							htmlStatus = listStatus == 1 ? 
 							'<span class="badge badge-success">Activo</span>' :
 							 '<span class="badge badge-danger">Inactivo</span>';
-							rowTable.cells[1].textContent = intCodigo;
-							rowTable.cells[2].textContent = strNombre;
-							rowTable.cells[3].textContent = intStock;
-							rowTable.cells[4].textContent = intPrecio;
-							rowTable.cells[5].innerHTML = htmlStatus;
+							rowTable.cells[1].textContent = strNombre;
+							const selectElement = document.querySelector("#listOrganizacionId");
+							const selectedOption = selectElement.options[selectElement.selectedIndex];
+							const selectedText = selectedOption.textContent;
+							rowTable.cells[2].textContent = selectedText;
+							const selectElement2 = document.querySelector("#listOrganizacionId");
+							const selectedOption2 = selectElement2.options[selectElement2.selectedIndex];
+							const selectedText2 = selectedOption2.textContent;							
+							rowTable.cells[3].textContent = selectedText2;
+							rowTable.cells[4].textContent = strGenero;
+							rowTable.cells[5].textContent = dateFechaNacimiento;
+							rowTable.cells[6].innerHTML = htmlStatus;
 							rowTable = "";
 						}
 					}else
 					{
 						swal("¡Error!", objData.msg, "error");
 					}
+					$('#modalFormAnimal').modal("hide");
+					formAnimal.reset();
 				}
 				divLoading.style.display = "none";
 				return false;
@@ -154,21 +160,8 @@ window.addEventListener('load',function(){
 		}
 	}
 	
-	fntCategorias();
 },false);
 
-if(document.querySelector('#txtCodigo')){
-	let inputCodigo = document.querySelector('#txtCodigo');
-	inputCodigo.onkeyup = function (){
-		if(inputCodigo.value.length >= 5 && inputCodigo.value.length < 20)
-		{
-			document.querySelector('#divBarCode').classList.remove("notBlock");
-			fntBarcode();
-		}else{
-			document.querySelector('#divBarCode').classList.add("notBlock");
-		}
-	}
-}
 
 tinymce.init({
 	selector:'#txtDescripcion',
@@ -260,59 +253,64 @@ function fntDelItem(element){
 	}
 }
 
-function fntCategorias(){
-	if(document.querySelector('#listCategoria'))
-	{
-		let ajaxUrl = BaseUrl+'/Categorias/GetSelectCategorias';
-		let request = (window.XMLHttpRequest) ? XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP')
-		request.open("GET", ajaxUrl, true);
-		request.send();
-		request.onreadystatechange = function(){
-			if(request.readyState == 4 && request.status == 200){
-				document.querySelector('#listCategoria').innerHTML = request.responseText;
-				$('#listCategoria').selectpicker('render');
-			}
-		}
-		
-	}
 
-}
 
-function fntBarcode()
+function fntOrganizacion()
 {
-	let codigo = document.querySelector('#txtCodigo').value;
-	JsBarcode("#barcode", codigo);	
+    let ajaxUrl = BaseUrl+'/Organizaciones/GetSelectOrganizaciones';
+    let request = (window.XMLHttpRequest) ? XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    request.open("GET",ajaxUrl,true);
+    request.send();
+    request.onreadystatechange = function(){
+        if(request.readyState == 4 && request.status == 200){
+            document.querySelector("#listOrganizacionId").innerHTML = request.responseText;
+            $('#listOrganizacionId').selectpicker('render');     
+        }
+    }
+
+}
+function fntTipoAnimal(){
+    let ajaxUrl = BaseUrl+'/TipoAnimal/GetSelectTipoAnimal';
+    let request = (window.XMLHttpRequest) ? XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    request.open("GET",ajaxUrl,true);
+    request.send();
+    request.onreadystatechange = function(){
+        if(request.readyState == 4 && request.status == 200){
+            document.querySelector("#listTipoAnimalId").innerHTML = request.responseText;
+            $('#listTipoAnimalId').selectpicker('render');     
+        }
+    }
+
 }
 
-function fntPrintBarcode(area){
-	let elementArea = document.querySelector(area);
-	let vprint = window.open(' ', 'popimpr', 'height=400,width=600');
-	vprint.document.write(elementArea.innerHTML);
-	vprint.document.close();
-	vprint.print();
-	vprint.close();
-}
+window.addEventListener('load',function(){
+    fntOrganizacion();
+	fntTipoAnimal()
+},false);
+
+
+
+
 
 function openModal()
 {
-	document.querySelector('#idProducto').value = "";
+	document.querySelector('#idAnimal').value = "";
 	document.querySelector('.modal-header').classList.replace("headerUpdate", "headerRegister");
 	document.querySelector('#btnActionForm').classList.replace("btn-info", "btn-primary");
 	document.querySelector('#btnText').innerHTML = "Guardar";
-	document.querySelector('#titleModal').innerHTML = "Nuevo Producto";
-	document.querySelector('#formProducto').reset();
-	$('#modalFormProducto').modal('show');
+	document.querySelector('#titleModal').innerHTML = "Nuevo animal";
+	document.querySelector('#formAnimal').reset();
+	$('#modalFormAnimal').modal('show');
 
-	document.querySelector('#divBarCode').classList.add("notBlock");
 	document.querySelector('#containerGallery').classList.add("notBlock");
 	document.querySelector("#containerImage").innerHTML = "";
 	rowTable = "";
 }
 
-function fntViewProducto(idProducto)
+function fntViewAnimal(idAnimal)
 {
 	let request = (window.XMLHttpRequest) ? XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP')
-	let ajaxUrl = BaseUrl+'/Productos/GetProducto/'+idProducto;
+	let ajaxUrl = BaseUrl+'/Animales/GetAnimal/'+idAnimal;
 	request.open("GET",ajaxUrl,true);
 	request.send();
 	request.onreadystatechange = function(){
@@ -321,16 +319,17 @@ function fntViewProducto(idProducto)
 			if(objData.status)
 			{	
 				let htmlImage = "";
-				let estado = objData.data.status == 1 ?
+				let estado = objData.data.estado == 1 ?
 				'<span class="badge badge-success">Activo</span>':
 				'<span class="badge badge-danger">Inactivo</span>';
-				document.querySelector("#celCodigo").innerHTML = objData.data.codigo;
+				document.querySelector("#celCodigo").innerHTML = objData.data.idAnimal;
 				document.querySelector("#celNombre").innerHTML = objData.data.nombre;
-				document.querySelector("#celPrecio").innerHTML = objData.data.precioF;
-				document.querySelector("#celStock").innerHTML = objData.data.stock;
-				document.querySelector("#celCategoria").innerHTML = objData.data.categoria;
+				document.querySelector("#celOrganizacion").innerHTML = objData.data.idOrganizacion;
+				document.querySelector("#celTipoAnimal").innerHTML = objData.data.idTipoAnimal;
+				document.querySelector("#celGenero").innerHTML = objData.data.genero;
+				document.querySelector("#celFechaNacimiento").innerHTML = objData.data.fecha_nacimiento;
 				document.querySelector("#celEstado").innerHTML = estado;
-				document.querySelector("#celDescripcion").innerHTML = objData.data.descripcion;
+	
 
 				if(objData.data.images.length > 0)
 				{
@@ -342,7 +341,7 @@ function fntViewProducto(idProducto)
 				}
 
 				document.querySelector("#celFotos").innerHTML = htmlImage;
-				$('#modalViewProducto').modal('show');
+				$('#modalViewAnimal').modal('show');
 			}else
 			{
 				swal("¡Error!", objData.msg, "error");
@@ -351,16 +350,16 @@ function fntViewProducto(idProducto)
 	}
 }
 
-function fntEditProducto(element, idProducto)
+function fntEditAnimal(element, idAnimal)
 {
 	rowTable = element.parentNode.parentNode.parentNode;
 	document.querySelector('.modal-header').classList.replace("headerRegister", "headerUpdate");
 	document.querySelector('#btnActionForm').classList.replace("btn-primary", "btn-info");
 	document.querySelector('#btnText').innerHTML = "Actualizar";
-	document.querySelector('#titleModal').innerHTML = "Actualizar Producto";
+	document.querySelector('#titleModal').innerHTML = "Actualizar Animal";
 
 	let request = (window.XMLHttpRequest) ? XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP')
-	let ajaxUrl = BaseUrl+'/Productos/GetProducto/'+idProducto;
+	let ajaxUrl = BaseUrl+'/Animales/GetAnimal/'+idAnimal;
 	request.open("GET",ajaxUrl,true);
 	request.send();
 	request.onreadystatechange = function(){
@@ -369,19 +368,22 @@ function fntEditProducto(element, idProducto)
 			if(objData.status)
 			{
 				let htmlImage = "";
-				document.querySelector("#idProducto").value = objData.data.idproducto;
+
+				document.querySelector("#idAnimal").value = objData.data.idAnimal;
 				document.querySelector("#txtNombre").value = objData.data.nombre;
-				document.querySelector("#txtDescripcion").value = objData.data.descripcion;
-				document.querySelector("#txtCodigo").value = objData.data.codigo;
-				document.querySelector("#txtPrecio").value = objData.data.precio;
-				document.querySelector("#txtStock").value = objData.data.stock;
-				document.querySelector("#listCategoria").value = objData.data.categoriaid;
-				document.querySelector("#listStatus").value = objData.data.status;
-				tinymce.activeEditor.setContent(objData.data.descripcion);
+				document.querySelector("#listOrganizacionId").value = objData.data.idOrganizacion;
+				document.querySelector("#listTipoAnimalId").value = objData.data.idTipoAnimal;
+				document.querySelector("#txtGenero").value = objData.data.genero;
+				const fechaNacimiento = new Date(objData.data.fecha_nacimiento);
+				const formattedFechaNacimiento = fechaNacimiento.toISOString().slice(0, 10);
+				document.querySelector("#fechaNacimiento").value = formattedFechaNacimiento;
+
+				document.querySelector("#listStatus").value = objData.data.estado;
+
+				$('#listOrganizacionId').selectpicker('render');
 				$('#listStatus').selectpicker('render');
-				$('#listCategoria').selectpicker('render');
-				fntBarcode();
-				document.querySelector('#divBarCode').classList.remove("notBlock");
+				$('#listTipoAnimalId').selectpicker('render');
+
 
 				if(objData.data.images.length > 0)
 				{
@@ -396,7 +398,7 @@ function fntEditProducto(element, idProducto)
 					}
 				}
 				document.querySelector('#containerImage').innerHTML = htmlImage;
-				$('#modalFormProducto').modal('show');
+				$('#modalFormAnimal').modal('show');
 			}else
 			{
 				swal("¡Error!", objData.msg, "error");
@@ -406,11 +408,11 @@ function fntEditProducto(element, idProducto)
 }
 
 
-function fntDelProducto(idProducto)
+function fntDelAnimal(idAnimal)
 {
 	swal({
-		title: "Eliminar Producto",
-		text: "¿Realente quiere eliminar el Producto?",
+		title: "Eliminar Animal",
+		text: "¿Realente quiere eliminar el Animal?",
 		type: "warning",
 		showCancelButton: true,
 		confirmButtonText: "Si, eliminar",
@@ -422,8 +424,8 @@ function fntDelProducto(idProducto)
 		{
 			divLoading.style.display = "flex";
 			let request = (window.XMLHttpRequest) ? XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP')
-			let ajaxUrl = BaseUrl+'/Productos/DelProducto/';
-			let strData = "idProducto="+idProducto;
+			let ajaxUrl = BaseUrl+'/Animales/DelAnimal/';
+			let strData = "idAnimal="+idAnimal;
 			request.open("POST",ajaxUrl,true);
 			request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 			request.send(strData);
@@ -433,7 +435,7 @@ function fntDelProducto(idProducto)
 					if(objData.status)
 					{
 						swal("¡Eliminar!", objData.msg, "success");
-						tableProductos.api().ajax.reload();
+						tableAnimales.api().ajax.reload();
 					}else
 					{
 						swal("¡Error!", objData.msg, "error");

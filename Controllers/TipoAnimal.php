@@ -221,5 +221,24 @@
 			}
 			die();
 		}
+
+		public function GetSelectTipoAnimal()
+		{
+			$htmlOptions = "";
+			$url = APP_URL."/TipoAnimal/GetTipoAnimales";
+			$arrData =PeticionGet($url, "application/json", $_SESSION['Token_APP']);
+			if(count($arrData) > 0)
+			{
+				for($i=0;$i<count($arrData);$i++)
+				{
+					if($arrData[$i]->estado == 1)
+					{
+						$htmlOptions .= '<option value="'.$arrData[$i]->idTipoAnimal.'"> '.$arrData[$i]->nombre.' </option>';
+					}
+				}
+			}
+			echo $htmlOptions;
+			die();
+		}
 	}
 ?>

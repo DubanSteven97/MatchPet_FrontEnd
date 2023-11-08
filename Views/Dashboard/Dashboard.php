@@ -59,7 +59,7 @@
         </div>
         <?php } ?>
       </div>
-      <div class="row">
+     <!--<div class="row">
         <?php if(!empty($_SESSION['permisos']['Pedidos']['r'])){ ?>
         <div class="col-md-6">
           <div class="tile">
@@ -106,7 +106,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div>-->
 
 
   </main>

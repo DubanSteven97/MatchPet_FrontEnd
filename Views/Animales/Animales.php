@@ -1,7 +1,7 @@
 <?php HeaderAdmin($data); ?>
   <div id="contentAjax"></div>
   <main class="app-content">
-<?php GetModal('modalProductos',$data);?> 
+<?php GetModal('modalAnimales',$data);?> 
     <div class="app-title">
       <div>
         <h1>
@@ -21,14 +21,15 @@
           <div class="tile">
             <div class="tile-body">
               <div class="table-responsive">
-                <table class="table table-hover table-bordered" id="tableProductos">
+                <table class="table table-hover table-bordered" id="tableAnimales">
                   <thead>
                     <tr>
                       <th>Id</th>
-                      <th>Código</th>
                       <th>Nombre</th>
-                      <th>Stock</th>
-                      <th>Precio</th>
+                      <th>Organización</th>
+                      <th>Tipo animal</th>
+                      <th>Género</th>
+                      <th>Fecha nacimiento</th>
                       <th>Estado</th>
                       <th>Acciones</th>
                     </tr>
