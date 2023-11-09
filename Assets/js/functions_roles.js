@@ -215,7 +215,7 @@ function fntSavePermisos(event){
 	request.onreadystatechange = function(){
 		if(request.readyState == 4 && request.status == 200){
 			var objData = JSON.parse(request.responseText);
-			if(objData.status)
+			if(objData.estado)
 			{
 				swal("¡Permisos de usuario!", objData.msg, "success");
 			}else
