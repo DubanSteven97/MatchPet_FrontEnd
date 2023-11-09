@@ -1,23 +1,38 @@
 <?php
 
-	const HOST = "localhost:8080";
-	const BASE_URL = "http://".HOST."/MatchPet_frontend";
-	const BASE_URL_H = HOST."/MatchPet_frontend";
+	const HOST = "localhost:80";
+	const BASE_URL = "http://".HOST."/MatchPet";
+	const BASE_URL_H = HOST."/MatchPet";
 
 	date_default_timezone_set('America/Bogota');
+
+	#ENVIROMENT DEV
+#	const DRIVER_SQL ="sqlsrv:server";
+#	const DATABASE="DBMatchpet";
+#	const PORT="10060";
+#	const HOSTNAME="DESKTOP-UIAKGPT";
+#	const USERNAME="root";
+#	const PASSWORD= "123456";
+
+#	const APP_URL = "https://localhost:7176/Matchpet";
+#	const APP_NAME = "MatchpetDEV";
+#	const APP_US = "devmatchpet";
+#	const APP_PS = "147852";
+    #ENVIROMENT PROD
+
 
 	const DRIVER_SQL ="sqlsrv:server";
 	const DATABASE="DBMatchpet";
 	const PORT="10060";
-	const HOSTNAME="LAPTOP-0GO8QO85\SQLEXPRESS";
-	const USERNAME="usrmatchpet";
-	const PASSWORD= "usrmatchpet";
+	const HOSTNAME="DBMatchpet.mssql.somee.com";
+	const USERNAME="MatchPet_SQLLogin_1";
+	const PASSWORD= "filj1rq9ai";
 
-	#ENVIROMENT DEV
-	const APP_URL = "https://localhost:7176/Matchpet";
+	const APP_URL = "https://www.matchpet.somee.com/Matchpet";
 	const APP_NAME = "MatchpetDEV";
 	const APP_US = "devmatchpet";
 	const APP_PS = "147852";
+
 
 	const SPD = ",";
 	const SPM = ".";
