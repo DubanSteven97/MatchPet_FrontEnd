@@ -188,13 +188,21 @@
 			$arrData =PeticionGet($url, "application/json", $_SESSION['Token_APP']);
 			if(count($arrData) > 0)
 			{
+				if($_SESSION['idUser'] == 1)
+				{
+					$htmlOptions = '<option value="-1"> Sin organización </option>';
+				}
 				for($i=0;$i<count($arrData);$i++)
 				{
 					if($arrData[$i]->estado == 1)
 					{
-						$htmlOptions .= '<option value="'.$arrData[$i]->idOrganizacion.'"> '.$arrData[$i]->nombre.' </option>';
+						if($arrData[$i]->idOrganizacion == $_SESSION['userData']['idOrganizacion'] || $_SESSION['idUser'] == 1)
+						{
+							$htmlOptions .= '<option value="'.$arrData[$i]->idOrganizacion.'"> '.$arrData[$i]->nombre.' </option>';
+						}
 					}
 				}
+				
 			}
 			echo $htmlOptions;
 			die();

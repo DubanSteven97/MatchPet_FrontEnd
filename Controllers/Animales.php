@@ -30,31 +30,41 @@
 			{
 				$url = APP_URL."/Animal/GetAnimales";
 				$arrData = PeticionGet($url, "application/json", $_SESSION['Token_APP']);
-				for($i=0;$i<count($arrData);$i++){
-					$btnEdit = '';
-					$btnDelete = '';
-
-					if($arrData[$i]->estado==1)
+				$arrAux = $arrData;
+				for($i=0;$i<count($arrAux);$i++){
+					if($_SESSION['idUser'] == 1 || $arrData[$i]->organizacion == $_SESSION['userData']['nombreOrganizacion'])
 					{
-						$arrData[$i]->estado  = '<span class="badge badge-success">Activo</span>';
-					}
-					if($arrData[$i]->estado==2)
-					{
-						$arrData[$i]->estado = '<span class="badge badge-danger">Inactivo</span>';
-					}
+						$btnEdit = '';
+						$btnDelete = '';
 
-				
-					if($_SESSION['permisosMod']['r']){
-						$btnView = '<button class="btn btn-info btn-sm btnViewProducto" onClick= "fntViewAnimal('.$arrData[$i]->idAnimal.')" title="Ver Producto"><i class="fas fa-eye"></i></button>';
+						if($arrData[$i]->estado==1)
+						{
+							$arrData[$i]->estado  = '<span class="badge badge-success">Activo</span>';
+						}
+						if($arrData[$i]->estado==2)
+						{
+							$arrData[$i]->estado = '<span class="badge badge-danger">Inactivo</span>';
+						}
+
+					
+						if($_SESSION['permisosMod']['r']){
+							$btnView = '<button class="btn btn-info btn-sm btnViewProducto" onClick= "fntViewAnimal('.$arrData[$i]->idAnimal.')" title="Ver Producto"><i class="fas fa-eye"></i></button>';
+						}
+						if($_SESSION['permisosMod']['u']){
+							$btnEdit = '<button class="btn btn-primary btn-sm btnEditProducto" onClick="fntEditAnimal(this,'.$arrData[$i]->idAnimal.')" title="Editar"><i class="fas fa-pencil-alt"></i></button>';
+						}
+						if($_SESSION['permisosMod']['d']){
+							$btnDelete = '<button class="btn btn-danger btn-sm btnDelProducto" onClick="fntDelAnimal('.$arrData[$i]->idAnimal.')" title="Eliminar"><i class="fas fa-trash-alt"></i></button></div>';
+						}
+						$arrData[$i]->options = '<div class="text-center">'.$btnView.' '.$btnEdit.' '.$btnDelete.'';
+						
 					}
-					if($_SESSION['permisosMod']['u']){
-						$btnEdit = '<button class="btn btn-primary btn-sm btnEditProducto" onClick="fntEditAnimal(this,'.$arrData[$i]->idAnimal.')" title="Editar"><i class="fas fa-pencil-alt"></i></button>';
+					else
+					{
+						unset($arrData[$i]);
 					}
-					if($_SESSION['permisosMod']['d']){
-						$btnDelete = '<button class="btn btn-danger btn-sm btnDelProducto" onClick="fntDelAnimal('.$arrData[$i]->idAnimal.')" title="Eliminar"><i class="fas fa-trash-alt"></i></button></div>';
-					}
-					$arrData[$i]->options = '<div class="text-center">'.$btnView.' '.$btnEdit.' '.$btnDelete.'';
 				}
+				dep($arrData); exit();
 				echo json_encode($arrData, JSON_UNESCAPED_UNICODE);
 			}
 			die();

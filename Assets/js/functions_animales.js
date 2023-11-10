@@ -380,9 +380,9 @@ function fntEditAnimal(element, idAnimal)
 
 				document.querySelector("#listStatus").value = objData.data.estado;
 
-				$('#listOrganizacionId').selectpicker('render');
-				$('#listStatus').selectpicker('render');
-				$('#listTipoAnimalId').selectpicker('render');
+				$('#listOrganizacionId').selectpicker('refresh');
+				$('#listStatus').selectpicker('refresh');
+				$('#listTipoAnimalId').selectpicker('refresh');
 
 
 				if(objData.data.images.length > 0)
