@@ -219,7 +219,7 @@ function fntEditTipoAnimal(element, idTipoAnimal)
 				{
 					document.querySelector("#listStatus").value = 2;
 				}
-				$('#listStatus').selectpicker('render');
+				$('#listStatus').selectpicker('refresh');
 
 				if(document.querySelector("#img"))
 				{

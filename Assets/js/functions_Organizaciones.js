@@ -196,7 +196,7 @@ function fntEditOrganizacion(element, idorganizacion)
 				document.querySelector("#txtDireccion").value = objData.data.direccion;
 				document.querySelector("#txtDescripcion").value = objData.data.descripcion;
 				document.querySelector("#listStatus").value = objData.data.estado;;
-				$('#listStatus').selectpicker('render');
+				$('#listStatus').selectpicker('refresh');
 				$('#modalFormOrganizacion').modal('show');
 			}else
 			{

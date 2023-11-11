@@ -138,8 +138,8 @@ function fntRolesUsuario()
     request.onreadystatechange = function(){
         if(request.readyState == 4 && request.status == 200){
             document.querySelector("#listRolId").innerHTML = request.responseText;
-            $('#listRolId').selectpicker('render');     
-            $('#listStatus').selectpicker('render');
+            $('#listRolId').selectpicker('refresh');     
+            $('#listStatus').selectpicker('refresh');
         }
     }
 
@@ -154,7 +154,7 @@ function fntOrganizacion()
     request.onreadystatechange = function(){
         if(request.readyState == 4 && request.status == 200){
             document.querySelector("#listOrganizacionId").innerHTML = request.responseText;
-            $('#listOrganizacionId').selectpicker('render');     
+            $('#listOrganizacionId').selectpicker('refresh');     
         }
     }
 

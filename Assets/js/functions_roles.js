@@ -151,7 +151,7 @@ function fntEditRol(element, idRol)
                 document.querySelector("#txtNombre").value = objData.data.nombreRol;
                 document.querySelector("#txtDescripcion").value = objData.data.descripcion;
                 document.querySelector("#listStatus").value = objData.data.estado;       
-                $('#listStatus').selectpicker('render');                
+                $('#listStatus').selectpicker('refresh');                
                 $('#modalFormRol').modal('show');
             }else
             {

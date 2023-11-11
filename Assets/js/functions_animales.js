@@ -277,7 +277,7 @@ function fntOrganizacion()
     request.onreadystatechange = function(){
         if(request.readyState == 4 && request.status == 200){
             document.querySelector("#listOrganizacionId").innerHTML = request.responseText;
-            $('#listOrganizacionId').selectpicker('render');     
+            $('#listOrganizacionId').selectpicker('refresh');     
         }
     }
 
@@ -290,7 +290,7 @@ function fntTipoAnimal(){
     request.onreadystatechange = function(){
         if(request.readyState == 4 && request.status == 200){
             document.querySelector("#listTipoAnimalId").innerHTML = request.responseText;
-            $('#listTipoAnimalId').selectpicker('render');     
+            $('#listTipoAnimalId').selectpicker('refresh');     
         }
     }
 
@@ -396,11 +396,11 @@ function fntEditAnimal(element, idAnimal)
 					tinymce.activeEditor.setContent(objData.data.descripcion);
 				}
 				document.querySelector("#listStatus").value = objData.data.estado;
-				
-				$('#listOrganizacionId').selectpicker('render');
-				$('#listStatus').selectpicker('render');
-				$('#listTipoAnimalId').selectpicker('render');
-				$('#txtGenero').selectpicker('render');
+
+				$('#listOrganizacionId').selectpicker('refresh');
+				$('#listStatus').selectpicker('refresh');
+				$('#listTipoAnimalId').selectpicker('refresh');
+				$('#txtGenero').selectpicker('refresh');
 
 
 				if(objData.data.images.length > 0)
