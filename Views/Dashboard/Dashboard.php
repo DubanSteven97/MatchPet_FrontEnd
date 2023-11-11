@@ -48,7 +48,7 @@
         </div>
       <?php } ?>
       <?php if(!empty($_SESSION['permisos']['Organizaciones']['r'])){ ?>
-        <div class="col-md-6 col-lg-3">
+        <div class="col-md-6 col-lg-4">
           <a href="<?=BaseUrl();?>/Organizaciones" class="linkw">
             <div class="widget-small danger coloured-icon"><i class="<?=$_SESSION['permisos']['Organizaciones']['icono']?>"></i>
               <div class="info">
