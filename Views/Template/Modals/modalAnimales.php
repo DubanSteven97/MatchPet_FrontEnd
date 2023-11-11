@@ -20,17 +20,22 @@
                                     <input class="form-control" id="txtNombre" name="txtNombre" type="text" required>
                                 </div>
 
-                               <!--<div class="form-group">
-                                <label class="control-label">Descripción Animal</label>
-                                <textarea class="form-control" id="txtDescripcion" name="txtDescripcion"> </textarea>
-                            </div>-->
+                                <div class="form-group col-md-12">
+                                    <label class="control-label">Descripción Animal</label>
+                                    <textarea class="form-control" id="txtDescripcion"
+                                        name="txtDescripcion"> </textarea>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <div class="form-group">
-                                    <label class="control-label">Genero<span class="required">*</span></label>
-                                    <input class="form-control" id="txtGenero" name="txtGenero" type="text" required>
+                                <div class="form-group ">
+                                    <label for="exampleSelect1">Genero <span class="required">*</span></label>
+                                    <select class="form-control selectpicker" id="txtGenero" name="txtGenero">
+                                        <option value="Macho">Macho</option>
+                                        <option value="Hembra">Hembra</option>
+                                        <option value="Cria">Cria</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-row">
@@ -131,6 +136,10 @@
                         <tr>
                             <td>Fecha nacimiento:</td>
                             <td id="celFechaNacimiento"></td>
+                        </tr>
+                        <tr>
+                            <td>Descripción:</td>
+                            <td id="celDescripcion"></td>
                         </tr>
                         <tr>
                             <td>Estado:</td>

@@ -133,8 +133,6 @@ window.addEventListener('load',function(){
 					{
 						swal("¡Error!", objData.msg, "error");
 					}
-					$('#modalFormAnimal').modal("hide");
-					formAnimal.reset();
 				}
 				divLoading.style.display = "none";
 				return false;
@@ -180,7 +178,7 @@ function fntInputFile(){
 	let inputUploadFile = document.querySelectorAll('.inputUploadFile');
 	inputUploadFile.forEach(function(inputUploadFile){
 		inputUploadFile.addEventListener('change',function() {
-			let idProducto = document.querySelector('#idProducto').value;
+			let idAnimal = document.querySelector('#idAnimal').value;
 			let parentId = this.parentNode.getAttribute("id");
 			let idFile = this.getAttribute("id");
 			let uploadFoto = document.querySelector("#"+idFile).value;
@@ -197,13 +195,18 @@ function fntInputFile(){
 					return false;
 				}else
 				{
-					let objeto_url = nav.createObjectURL(this.files[0]);
-					prevImg.innerHTML = `<img class="loading" src="${BaseUrl}/Assets/images/loading.svg">`;
+	
+					convertirABase64(fileImg[0]).then((valor) => {
+						prevImg.innerHTML = `<img class="loading" src="${valor}">`;
+					  }).catch((error) => {
+						console.error(error); 
+					  });
+				
 
-					let ajaxUrl = BaseUrl+'/Productos/SetImage';
+					let ajaxUrl = BaseUrl+'/Animales/SetImage';
 					let request = (window.XMLHttpRequest) ? XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP')
 					let formData = new FormData();
-					formData.append('idproducto', idProducto);
+					formData.append('idAnimal', idAnimal);
 					formData.append('foto', this.files[0]);
 					request.open("POST", ajaxUrl, true);
 					request.send(formData);
@@ -212,8 +215,17 @@ function fntInputFile(){
 						if(request.status == 200){
 							let objData = JSON.parse(request.responseText);
 							if(objData.status){	
-								prevImg.innerHTML = `<img src="${objeto_url}">`;
-								document.querySelector("#"+parentId+" .btnDeleteImage").setAttribute("imgname",objData.imgname);
+
+						
+
+								convertirABase64(fileImg[0]).then((valor) => {
+									prevImg.innerHTML = `<img src="${valor}"  id="imgAnimal" alt="${objData.idImagen}">`;
+								  }).catch((error) => {
+									console.error(error); 
+								  });
+
+								
+								//document.querySelector("#"+parentId+" .btnDeleteImage").setAttribute("imgname",objData.imgname);
 								document.querySelector("#"+parentId+" .btnUploadFile").classList.add("notBlock");
 								document.querySelector("#"+parentId+" .btnDeleteImage").classList.remove("notBlock");
 							}else{
@@ -228,14 +240,15 @@ function fntInputFile(){
 }
 
 function fntDelItem(element){
-	let nameImg = document.querySelector(element + ' .btnDeleteImage').getAttribute('imgname');
-	let idProducto = document.querySelector('#idProducto').value;
+	let idAnimal = document.querySelector('#idAnimal').value;
+	let idImagen = document.querySelector('#imgAnimal').alt;
 	let request = (window.XMLHttpRequest) ? XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP')
-	let ajaxUrl = BaseUrl+'/Productos/DelFile';
+	let ajaxUrl = BaseUrl+'/Animales/DelFile';
+
 
 	let formData = new FormData();
-	formData.append('idproducto', idProducto);
-	formData.append('file', nameImg);
+	formData.append('idAnimal', idAnimal);
+	formData.append('idImagen', idImagen);
 	request.open("POST", ajaxUrl, true);
 	request.send(formData);
 
@@ -328,6 +341,7 @@ function fntViewAnimal(idAnimal)
 				document.querySelector("#celTipoAnimal").innerHTML = objData.data.idTipoAnimal;
 				document.querySelector("#celGenero").innerHTML = objData.data.genero;
 				document.querySelector("#celFechaNacimiento").innerHTML = objData.data.fecha_nacimiento;
+				document.querySelector("#celDescripcion").innerHTML = objData.data.descripcion;
 				document.querySelector("#celEstado").innerHTML = estado;
 	
 
@@ -336,7 +350,7 @@ function fntViewAnimal(idAnimal)
 					let objProducto = objData.data.images;
 					for(let p = 0; p < objProducto.length; p++)
 					{
-						htmlImage += `<img src="${objProducto[p].url_image}"></img>`;
+						htmlImage += `<img src="${objProducto[p].url_image}" id="imgAnimal" alt="${objProducto[p].id_image}"></img>`;
 					}
 				}
 
@@ -371,18 +385,22 @@ function fntEditAnimal(element, idAnimal)
 
 				document.querySelector("#idAnimal").value = objData.data.idAnimal;
 				document.querySelector("#txtNombre").value = objData.data.nombre;
+				document.querySelector("#txtDescripcion").value = objData.data.descripcion;
 				document.querySelector("#listOrganizacionId").value = objData.data.idOrganizacion;
 				document.querySelector("#listTipoAnimalId").value = objData.data.idTipoAnimal;
 				document.querySelector("#txtGenero").value = objData.data.genero;
 				const fechaNacimiento = new Date(objData.data.fecha_nacimiento);
 				const formattedFechaNacimiento = fechaNacimiento.toISOString().slice(0, 10);
 				document.querySelector("#fechaNacimiento").value = formattedFechaNacimiento;
-
+				if(objData.data.descripcion){
+					tinymce.activeEditor.setContent(objData.data.descripcion);
+				}
 				document.querySelector("#listStatus").value = objData.data.estado;
 
 				$('#listOrganizacionId').selectpicker('render');
 				$('#listStatus').selectpicker('render');
 				$('#listTipoAnimalId').selectpicker('render');
+				$('#txtGenero').selectpicker('render');
 
 
 				if(objData.data.images.length > 0)
@@ -393,7 +411,7 @@ function fntEditAnimal(element, idAnimal)
 						let key = Date.now()+p;
 						htmlImage += `<div id="div${key}">
 						<div class="prevImage">
-						<img src="${objProducto[p].url_image}"></img></div>
+						<img src="${objProducto[p].url_image}" id="imgAnimal" alt="${objProducto[p].id_image}"></img></div>
 			            <button class="btnDeleteImage" type="button" onclick="fntDelItem('#div${key}')" imgname="${objProducto[p].img}"><i class="fas fa-trash-alt"></i></button></div>`;
 					}
 				}
@@ -406,6 +424,28 @@ function fntEditAnimal(element, idAnimal)
 		}
 	}
 }
+
+
+function convertirABase64(file) {
+	return new Promise((resolve, reject) => {
+		const reader = new FileReader();
+	
+		reader.onload = () => {
+		  resolve(reader.result);
+		};
+	
+		reader.onerror = (error) => {
+		  reject(error);
+		};
+	
+		if (file) {
+		  reader.readAsDataURL(file);
+		} else {
+		  reject(new Error("Archivo no válido"));
+		}
+	  });
+  }
+  
 
 
 function fntDelAnimal(idAnimal)
@@ -447,4 +487,6 @@ function fntDelAnimal(idAnimal)
 			}
 		}
 	});
+
+	
 }

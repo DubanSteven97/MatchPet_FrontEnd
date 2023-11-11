@@ -73,6 +73,7 @@
 					$intIdAnimal = intval($_POST['idAnimal']);
 					$strNombre = StrClean($_POST['txtNombre']);
 					$strGenero = StrClean($_POST['txtGenero']);
+					$strDescripcion = StrClean($_POST['txtDescripcion']);
 					$intOrganizacionId = intval($_POST['listOrganizacionId']);
 					$intTipoAnimalId = intval($_POST['listTipoAnimalId']);
 					$fechaActual = date("Y-m-d");
@@ -92,6 +93,7 @@
 							"idOrganizacion" => $intOrganizacionId,
 							"idTipoAnimal" => $intTipoAnimalId,
 							"genero" => $strGenero,
+							"descripcion" => $strDescripcion,
 							"fecha_nacimiento" => 	$dateFechaNacimiento ,
 							"fechaCreacion" => 	$fechaActual ,
 							"ruta" => $ruta,
@@ -111,6 +113,7 @@
 							"idOrganizacion" => $intOrganizacionId,
 							"idTipoAnimal" => $intTipoAnimalId,
 							"genero" => $strGenero,
+							"descripcion" => $strDescripcion,
 							"fecha_nacimiento" => 	$dateFechaNacimiento ,
 							"fechaCreacion" => 	$fechaActual ,
 							"ruta" => $ruta,
@@ -122,10 +125,12 @@
 						}
 						$option = 2;
 					}
-					if($request>0 && $request<2)
+
+					if($request>0)
 					{
 						if($option == 1)
 						{
+
 							$arrResponse = array(	'status'=> true,
 													'idAnimal' => $request,
 													'msg'	=> 'Datos guardados correctamente.');
@@ -163,21 +168,62 @@
 
 					if(empty($arrData))
 					{
+						
 						$arrResponse = array(	'status'=> false,
 												'msg'	=> 'Datos no enontrados.');
 					}else
 					{
 						$url = APP_URL."/Animal/GetImgByAnimal/".$intIdAnimal;
 						$arrDataImg = PeticionGet($url, "application/json", $_SESSION['Token_APP']);
+					
 						if(count($arrDataImg)>0){
 							for($i=0;$i<count($arrDataImg);$i++)
 							{
 								$arrDataImg[$i]->url_image = $arrDataImg[$i]->img;
+								$arrDataImg[$i]->id_image = $arrDataImg[$i]->idImagen;
 							}
 						}
 						$arrData->images= $arrDataImg;
 						$arrResponse = array(	'status'=> true,
 												'data'	=> $arrData);
+					}
+					echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+				}
+			}
+			die();
+		}
+
+		public function SetImage()
+		{	
+			if($_POST)
+			{
+				if($_SESSION['permisosMod']['w'])
+				{
+					if(empty($_POST['idAnimal'])){
+						$arrResponse = array(	'status'=> false,
+												'msg'	=> 'Datos incorrectos.');	
+					}else
+					{
+						$intIdAnimal = intval($_POST['idAnimal']);
+						$foto = fileToBase64($_FILES['foto']);
+						$imgNombre = 'pro_'.md5(date('d-m-Y H:m:s')).'.jpg';
+					
+						$imagenAnimal = array ("idAnimal" =>$intIdAnimal,
+						"img" => $foto,
+						"estado" => 1);
+
+						$data = json_encode($imagenAnimal);
+						$url = APP_URL."/Animal/SetImagenAnimal";
+						$request_image = PeticionPost($url, $data, "application/json", $_SESSION['Token_APP']);
+		
+						if($request_image)
+						{
+							
+							$arrResponse = array('status' => true, 'idImagen' => $request_image, 'msg' => 'Imagen cargada correctamente.');
+						}else
+						{
+							$arrResponse = array('status' => false, 'msg' => 'Error de carga.');
+						}
 					}
 					echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
 				}
@@ -206,6 +252,43 @@
 					{
 						$arrResponse = array(	'status'=> false,
 						'msg'	=> 'Error al eliminar el animal.');
+					}
+					echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+				}
+			}
+			die();
+		}
+
+		public function DelFile()
+		{
+			if($_POST)
+			{
+				if($_SESSION['permisosMod']['u'])
+				{
+					if(empty($_POST['idAnimal']) || empty($_POST['idImagen'])){
+						$arrResponse = array(	'status'=> false,
+												'msg'	=> 'Datos incorrectos.');	
+					}else
+					{
+						
+						$intIdAnimal = intval($_POST['idAnimal']);
+						$intIdImagen = intval($_POST['idImagen']);
+
+	
+						$url = APP_URL."/Animal/DelFileAnimal/".$intIdAnimal."/".$intIdImagen;
+						$arrData = PeticionGet($url, "application/json", $_SESSION['Token_APP']);
+
+			
+
+						if($arrData == 'ok')
+						{
+							$arrResponse = array(	'status'=> true,
+													'msg'	=> 'Se ha eliminado la imagen.');
+						}else 
+						{
+							$arrResponse = array(	'status'=> true,
+							'msg'	=> 'Error al eliminar la imagen.');
+						}
 					}
 					echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
 				}

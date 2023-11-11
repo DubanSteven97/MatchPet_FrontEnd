@@ -5,7 +5,7 @@
     <div class="app-title">
       <div>
         <h1>
-        	<i class="fa fa-box"></i> <?= $data['page_title'];?>
+        	<i class="app-menu__icon fa-solid fa-paw"></i> <?= $data['page_title'];?>
           <?php if($_SESSION['permisosMod']['w']){?>
         	<button class="btn btn-primary" type="button" onclick="openModal();"><i class="fa-solid fa-circle-plus"></i> Nuevo</button>
           <?php }?>
