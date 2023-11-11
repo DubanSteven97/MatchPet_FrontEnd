@@ -218,9 +218,9 @@ function fntEditUsuario(element, idpersona)
                 document.querySelector("#listRolId").value = objData.data.idrol;
                 document.querySelector("#listOrganizacionId").value = objData.data.idOrganizacion;
                 document.querySelector("#listStatus").value = objData.data.estado;
-                $('#listRolId').selectpicker('render');         
-                $('#listStatus').selectpicker('render'); 
-                $('#listOrganizacionId').selectpicker('render');                        
+                $('#listRolId').selectpicker('refresh');         
+                $('#listStatus').selectpicker('refresh'); 
+                $('#listOrganizacionId').selectpicker('refresh');                   
                 $('#modalFormUsuario').modal('show');
             }else
             {

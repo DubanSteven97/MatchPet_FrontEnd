@@ -23,7 +23,7 @@
 		public function SessionLogin(int $idUser)
 		{
 			$this->intIdUsuario = $idUser;
-			$sql = "SELECT p.idPersona, p.numero_identificacion, p.nombres, p.apellidos, p.telefono, p.email, p.nit, p.nombrefiscal, p.direccionfiscal, r.idRol, r.nombreRol, p.estado, p.idOrganizacion FROM Persona p INNER JOIN rol r ON p.idRol = r.idRol WHERE p.idPersona = $this->intIdUsuario";
+			$sql = "SELECT p.idPersona, p.numero_identificacion, p.nombres, p.apellidos, p.telefono, p.email, p.nit, p.nombrefiscal, p.direccionfiscal, r.idRol, r.nombreRol, p.estado, p.idOrganizacion, o.nombre as nombreOrganizacion FROM Persona p INNER JOIN rol r ON p.idRol = r.idRol FULL OUTER JOIN  Organizacion o ON P.idOrganizacion = o.idOrganizacion WHERE p.idPersona = $this->intIdUsuario";
 			$request = $this->Select($sql);
 			$_SESSION['userData'] = $request;
 			return $request;

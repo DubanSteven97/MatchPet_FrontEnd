@@ -8,7 +8,12 @@
 
 		public function CanUsuarios()
 		{
-			$sql = "SELECT COUNT(*) total FROM Persona WHERE estado != 0";
+			$whereOrg = "";
+			if($_SESSION['userData']['idOrganizacion'] != null)
+			{
+				$whereOrg = "  AND idOrganizacion = ".$_SESSION['userData']['idOrganizacion'];
+			}
+			$sql = "SELECT COUNT(*) total FROM Persona WHERE estado != 0".$whereOrg;
 			$request = $this->Select($sql);
 			$total = $request['total'];
 			return $total;
@@ -22,9 +27,22 @@
 			return $total;
 		}
 
-		public function CanProductos()
+		public function CanAnimales()
 		{
-			$sql = "SELECT COUNT(*) total FROM Animal WHERE estado != 0";
+			$whereOrg = "";
+			if($_SESSION['userData']['idOrganizacion'] != null)
+			{
+				$whereOrg = "  AND idOrganizacion = ".$_SESSION['userData']['idOrganizacion'];
+			}
+			$sql = "SELECT COUNT(*) total FROM Animal WHERE estado != 0".$whereOrg;
+			$request = $this->Select($sql);
+			$total = $request['total'];
+			return $total;
+		}
+
+		public function CanOrganizaciones()
+		{
+			$sql = "SELECT COUNT(*) total FROM organizacion WHERE estado != 0";
 			$request = $this->Select($sql);
 			$total = $request['total'];
 			return $total;

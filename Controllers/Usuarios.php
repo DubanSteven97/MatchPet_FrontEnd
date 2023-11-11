@@ -49,62 +49,71 @@
 				$intRolId = intval(StrClean($_POST['listRolId']));
 				$intestado = intval(StrClean($_POST['listStatus']));
 				$intIdOrganizacion = intval(StrClean($_POST['listOrganizacionId']));
-				$request_user = "";
-				if($idUsuario == 0)
+				if ($intIdOrganizacion == -1 && $intRolId != 1 )
 				{
-					$strPassword = empty($_POST['txtPassword']) ? hash("SHA256",PassGenerator()) : hash("SHA256",$_POST['txtPassword']);
-					if($_SESSION['permisosMod']['w'])
-					{
-						$request_user = $this->model->InsertUsuario($strIdentificacion,
-																	$strNombres,
-																	$strApellidos,
-																	$intTelefono,
-																	$strEmail,
-																	$strPassword,
-																	$intRolId,
-																	$intestado,
-																	$intIdOrganizacion
-																	);
-					}
-					$option = 1;
-				}else
-				{
-					$strPassword = empty($_POST['txtPassword']) ? "" : hash("SHA256",$_POST['txtPassword']);
-					if($_SESSION['permisosMod']['u'])
-					{
-						$request_user = $this->model->UpdateUsuario($idUsuario,
-																	$strIdentificacion,
-																	$strNombres,
-																	$strApellidos,
-																	$intTelefono,
-																	$strEmail,
-																	$strPassword,
-																	$intRolId,
-																	$intestado,
-																	$intIdOrganizacion
-																	);
-					}
-					$option = 2;
+					$arrResponse = array(	'estado'=> false,
+											'msg'	=> 'Debe seleccionar una organización válida');
 				}
-				if($request_user>0 /*&& $request_user != 'exist'*/) 
+				else
 				{
-					if($option == 1)
+					$intIdOrganizacion = $intIdOrganizacion == -1 ? null : $intIdOrganizacion;
+					$request_user = "";
+					if($idUsuario == 0)
 					{
-						$arrResponse = array(	'estado'=> true,
-												'msg'	=> 'Datos guardados correctamente.');
+						$strPassword = empty($_POST['txtPassword']) ? hash("SHA256",PassGenerator()) : hash("SHA256",$_POST['txtPassword']);
+						if($_SESSION['permisosMod']['w'])
+						{
+							$request_user = $this->model->InsertUsuario($strIdentificacion,
+																		$strNombres,
+																		$strApellidos,
+																		$intTelefono,
+																		$strEmail,
+																		$strPassword,
+																		$intRolId,
+																		$intestado,
+																		$intIdOrganizacion
+																		);
+						}
+						$option = 1;
 					}else
 					{
-						$arrResponse = array(	'estado'=> true,
-												'msg'	=> 'Datos actualizados correctamente.');
+						$strPassword = empty($_POST['txtPassword']) ? "" : hash("SHA256",$_POST['txtPassword']);
+						if($_SESSION['permisosMod']['u'])
+						{
+							$request_user = $this->model->UpdateUsuario($idUsuario,
+																		$strIdentificacion,
+																		$strNombres,
+																		$strApellidos,
+																		$intTelefono,
+																		$strEmail,
+																		$strPassword,
+																		$intRolId,
+																		$intestado,
+																		$intIdOrganizacion
+																		);
+						}
+						$option = 2;
 					}
-				}else if($request_user == 'exist')
-				{
-					$arrResponse = array(	'estado'=> false,
-											'msg'	=> '¡Atención! El email o identificación ya existe.');
-				}else 
-				{
-					$arrResponse = array(	'estado'=> false,
-											'msg'	=> 'No es posible almacenar los datos');
+					if($request_user>0 /*&& $request_user != 'exist'*/) 
+					{
+						if($option == 1)
+						{
+							$arrResponse = array(	'estado'=> true,
+													'msg'	=> 'Datos guardados correctamente.');
+						}else
+						{
+							$arrResponse = array(	'estado'=> true,
+													'msg'	=> 'Datos actualizados correctamente.');
+						}
+					}else if($request_user == 'exist')
+					{
+						$arrResponse = array(	'estado'=> false,
+												'msg'	=> '¡Atención! El email o identificación ya existe.');
+					}else 
+					{
+						$arrResponse = array(	'estado'=> false,
+												'msg'	=> 'No es posible almacenar los datos');
+					}
 				}
 		   	}
 		   	echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
@@ -133,7 +142,8 @@
 					}
 					if($_SESSION['permisosMod']['u']){
 						if(($_SESSION['idUser'] == 1 AND $_SESSION['userData']['nombreRol'] == 'Administrador') ||
-							($_SESSION['userData']['nombreRol'] == 'Administrador' AND $arrData[$i]['nombreRol'] != 'Administrador'))
+							($_SESSION['userData']['nombreRol'] == 'Administrador' AND $arrData[$i]['nombreRol'] != 'Administrador') ||
+							($_SESSION['userData']['idPersona'] != $arrData[$i]['idPersona']))
 						{
 							$btnEdit = '<button class="btn btn-primary btn-sm btnEditUsuario" onClick= "fntEditUsuario(this,'.$arrData[$i]['idPersona'].')" title="Editar usuario"><i class="fas fa-pencil-alt"></i></button>';
 						}else

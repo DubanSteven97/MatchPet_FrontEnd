@@ -396,7 +396,7 @@ function fntEditAnimal(element, idAnimal)
 					tinymce.activeEditor.setContent(objData.data.descripcion);
 				}
 				document.querySelector("#listStatus").value = objData.data.estado;
-
+				
 				$('#listOrganizacionId').selectpicker('render');
 				$('#listStatus').selectpicker('render');
 				$('#listTipoAnimalId').selectpicker('render');

@@ -28,7 +28,8 @@
 			$data['page_functions_js'] = "functions_dashboard.min.js";
 			$data['usuarios'] = $this->model->CanUsuarios();
 			$data['clientes'] = $this->model->CanClientes();
-			$data['productos'] = $this->model->CanProductos();
+			$data['animales'] = $this->model->CanAnimales();
+			$data['organizaciones'] = $this->model->CanOrganizaciones();
 			$data['pedidos'] = $this->model->CanPedidos($idPersona);
 			//$data['lastOrders'] = $this->model->LastOrders($idPersona);
 
