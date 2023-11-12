@@ -4,31 +4,19 @@
 			<div class="row">
 				<div class="col-sm-6 col-lg-4 p-b-50">
 					<h4 class="stext-301 cl0 p-b-30">
-						Categorías
+						Tipos de Animales
 					</h4>
 
 					<ul>
 						<li class="p-b-10">
 							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Women
+								Perros
 							</a>
 						</li>
 
 						<li class="p-b-10">
 							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Men
-							</a>
-						</li>
-
-						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Shoes
-							</a>
-						</li>
-
-						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Watches
+								Gatos
 							</a>
 						</li>
 					</ul>
@@ -87,23 +75,23 @@
 				<!--
 				<div class="flex-c-m flex-w p-b-18">
 					<a href="#" class="m-all-1">
-						<img src="<?= media(); ?>/tienda/images/icons/icon-pay-01.png" alt="ICON-PAY">
+						<img src="<?= media(); ?>/matchpet/images/icons/icon-pay-01.png" alt="ICON-PAY">
 					</a>
 
 					<a href="#" class="m-all-1">
-						<img src="<?= media(); ?>/tienda/images/icons/icon-pay-02.png" alt="ICON-PAY">
+						<img src="<?= media(); ?>/matchpet/images/icons/icon-pay-02.png" alt="ICON-PAY">
 					</a>
 
 					<a href="#" class="m-all-1">
-						<img src="<?= media(); ?>/tienda/images/icons/icon-pay-03.png" alt="ICON-PAY">
+						<img src="<?= media(); ?>/matchpet/images/icons/icon-pay-03.png" alt="ICON-PAY">
 					</a>
 
 					<a href="#" class="m-all-1">
-						<img src="<?= media(); ?>/tienda/images/icons/icon-pay-04.png" alt="ICON-PAY">
+						<img src="<?= media(); ?>/matchpet/images/icons/icon-pay-04.png" alt="ICON-PAY">
 					</a>
 
 					<a href="#" class="m-all-1">
-						<img src="<?= media(); ?>/tienda/images/icons/icon-pay-05.png" alt="ICON-PAY">
+						<img src="<?= media(); ?>/matchpet/images/icons/icon-pay-05.png" alt="ICON-PAY">
 					</a>
 				</div>
 				-->
@@ -128,22 +116,22 @@
         const BaseUrl = "<?= BaseUrl(); ?>";
     </script>
 
-	<script src="<?= media(); ?>/tienda/vendor/jquery/jquery-3.2.1.min.js"></script>
-	<script src="<?= media(); ?>/tienda/vendor/animsition/js/animsition.min.js"></script>
-	<script src="<?= media(); ?>/tienda/vendor/bootstrap/js/popper.js"></script>
-	<script src="<?= media(); ?>/tienda/vendor/bootstrap/js/bootstrap.min.js"></script>
-	<script src="<?= media(); ?>/tienda/vendor/select2/select2.min.js"></script>
-	<script src="<?= media(); ?>/tienda/vendor/daterangepicker/moment.min.js"></script>
-	<script src="<?= media(); ?>/tienda/vendor/daterangepicker/daterangepicker.js"></script>
-	<script src="<?= media(); ?>/tienda/vendor/slick/slick.min.js"></script>
-	<script src="<?= media(); ?>/tienda/js/slick-custom.js"></script>
-	<script src="<?= media(); ?>/tienda/vendor/parallax100/parallax100.js"></script>
-	<script src="<?= media(); ?>/tienda/vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
-	<script src="<?= media(); ?>/tienda/vendor/isotope/isotope.pkgd.min.js"></script>
-	<script src="<?= media(); ?>/tienda/vendor/sweetalert/sweetalert.min.js"></script>
-	<script src="<?= media(); ?>/tienda/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-	<script src="<?= media(); ?>/tienda/js/main.js"></script>
-	<script src="<?= media(); ?>/tienda/js/functions.js"></script>
+	<script src="<?= media(); ?>/matchpet/vendor/jquery/jquery-3.2.1.min.js"></script>
+	<script src="<?= media(); ?>/matchpet/vendor/animsition/js/animsition.min.js"></script>
+	<script src="<?= media(); ?>/matchpet/vendor/bootstrap/js/popper.js"></script>
+	<script src="<?= media(); ?>/matchpet/vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="<?= media(); ?>/matchpet/vendor/select2/select2.min.js"></script>
+	<script src="<?= media(); ?>/matchpet/vendor/daterangepicker/moment.min.js"></script>
+	<script src="<?= media(); ?>/matchpet/vendor/daterangepicker/daterangepicker.js"></script>
+	<script src="<?= media(); ?>/matchpet/vendor/slick/slick.min.js"></script>
+	<script src="<?= media(); ?>/matchpet/js/slick-custom.js"></script>
+	<script src="<?= media(); ?>/matchpet/vendor/parallax100/parallax100.js"></script>
+	<script src="<?= media(); ?>/matchpet/vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
+	<script src="<?= media(); ?>/matchpet/vendor/isotope/isotope.pkgd.min.js"></script>
+	<script src="<?= media(); ?>/matchpet/vendor/sweetalert/sweetalert.min.js"></script>
+	<script src="<?= media(); ?>/matchpet/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	<script src="<?= media(); ?>/matchpet/js/main.js"></script>
+	<script src="<?= media(); ?>/matchpet/js/functions.js"></script>
 	<script src="<?= media(); ?>/js/functions_admin.js"></script>
 	<script src="<?= media(); ?>/js/functions_login.js"></script>
 

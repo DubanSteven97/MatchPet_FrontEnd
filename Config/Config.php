@@ -3,7 +3,7 @@
 	const HOST = "localhost:80";
 	const BASE_URL = "http://".HOST."/MatchPet";
 	const BASE_URL_H = HOST."/MatchPet";
-
+	
 	date_default_timezone_set('America/Bogota');
 
 	#ENVIROMENT DEV
@@ -14,7 +14,7 @@
 #	const USERNAME="root";
 #	const PASSWORD= "123456";
 
-#	const APP_URL = "https://localhost:7176/Matchpet";
+	const APP_URL = "https://localhost:7176/Matchpet";
 #	const APP_NAME = "MatchpetDEV";
 #	const APP_US = "devmatchpet";
 #	const APP_PS = "147852";
@@ -28,7 +28,7 @@
 	const USERNAME="MatchPet_SQLLogin_1";
 	const PASSWORD= "filj1rq9ai";
 
-	const APP_URL = "https://www.matchpet.somee.com/Matchpet";
+#	const APP_URL = "http://matchpetucentral.online:8081/Matchpet";
 	const APP_NAME = "MatchpetDEV";
 	const APP_US = "devmatchpet";
 	const APP_PS = "147852";
@@ -43,7 +43,7 @@
 
 	const NOMBRE_REMITENTE = "MatchPet";
 	const EMAIL_REMITENTE = "info@MatchPet.com";
-	const NOMBRE_EMPRESA = "EL BUEN SAMARITANO";
+	const NOMBRE_EMPRESA = "MatchPet";
 	const NOMBRE_APP = "MatchPet";
 	const WEB_EMPRESA = "www.MatchPet.com";
 

@@ -30,7 +30,7 @@
 			{
 				$idOrhanizacion = intval( $_SESSION['userData']['idOrganizacion']);
 				$url = APP_URL."/Animal/GetAnimales/".$idOrhanizacion;
-				$arrData = PeticionGet($url, "application/json", $_SESSION['Token_APP']);
+				$arrData = PeticionGet($url, "application/json", "");
 				$arrAux = $arrData;
 				for($i=0;$i<count($arrAux);$i++){
 				
@@ -170,7 +170,7 @@
 				if($intIdAnimal > 0) 
 				{
 					$url = APP_URL."/Animal/GetAnimal/".$intIdAnimal;
-					$arrData = PeticionGet($url, "application/json", $_SESSION['Token_APP']);
+					$arrData = PeticionGet($url, "application/json", "");
 
 					if(empty($arrData))
 					{
@@ -180,7 +180,7 @@
 					}else
 					{
 						$url = APP_URL."/Animal/GetImgByAnimal/".$intIdAnimal;
-						$arrDataImg = PeticionGet($url, "application/json", $_SESSION['Token_APP']);
+						$arrDataImg = PeticionGet($url, "application/json", "");
 					
 						if(count($arrDataImg)>0){
 							for($i=0;$i<count($arrDataImg);$i++)

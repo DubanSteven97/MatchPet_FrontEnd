@@ -39,15 +39,15 @@
 		require_once($view_footer);
 	}
 
-	function HeaderTienda($data="")
+	function HeaderHome($data="")
 	{
-		$view_header = "Views/Template/header_tienda.php";
+		$view_header = "Views/Template/header_Home.php";
 		require_once($view_header);
 	}
 	
-	function FooterTienda($data="")
+	function FooterHome($data="")
 	{
-		$view_footer = "Views/Template/footer_tienda.php";
+		$view_footer = "Views/Template/footer_Home.php";
 		require_once($view_footer);
 	}
 	function Dep($data)
