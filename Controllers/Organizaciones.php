@@ -190,7 +190,7 @@
 			{
 				if($_SESSION['idUser'] == 1)
 				{
-					$htmlOptions = '<option value="-1"> Sin organización </option>';
+					$htmlOptions = '<option value="0"> Sin organización </option>';
 				}
 				for($i=0;$i<count($arrData);$i++)
 				{

@@ -30,7 +30,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <div class="form-group ">
-                                    <label for="exampleSelect1">Genero <span class="required">*</span></label>
+                                    <label for="exampleSelect1">Género <span class="required">*</span></label>
                                     <select class="form-control selectpicker" id="txtGenero" name="txtGenero">
                                         <option value="Macho">Macho</option>
                                         <option value="Hembra">Hembra</option>

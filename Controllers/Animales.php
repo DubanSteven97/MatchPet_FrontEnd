@@ -28,12 +28,12 @@
 		{
 			if($_SESSION['permisosMod']['r'])
 			{
-				$url = APP_URL."/Animal/GetAnimales";
+				$idOrhanizacion = intval( $_SESSION['userData']['idOrganizacion']);
+				$url = APP_URL."/Animal/GetAnimales/".$idOrhanizacion;
 				$arrData = PeticionGet($url, "application/json", $_SESSION['Token_APP']);
 				$arrAux = $arrData;
 				for($i=0;$i<count($arrAux);$i++){
-					if($_SESSION['idUser'] == 1 || $arrData[$i]->organizacion == $_SESSION['userData']['nombreOrganizacion'])
-					{
+				
 						$btnEdit = '';
 						$btnDelete = '';
 
@@ -58,13 +58,10 @@
 						}
 						$arrData[$i]->options = '<div class="text-center">'.$btnView.' '.$btnEdit.' '.$btnDelete.'';
 						
-					}
-					else
-					{
-						unset($arrData[$i]);
-					}
+
 				}
-				dep($arrData); exit();
+
+			
 				echo json_encode($arrData, JSON_UNESCAPED_UNICODE);
 			}
 			die();

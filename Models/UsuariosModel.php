@@ -31,7 +31,11 @@
 			$this->strPassword = $password;
 			$this->intRolId = $rolId;
 			$this->intStatus = $status;
-			$this-> intIdOrganizacion =$idOrganizacion;
+			if($idOrganizacion == 0){
+				$this-> intIdOrganizacion =Null;
+			}else{
+				$this-> intIdOrganizacion =$idOrganizacion;
+			}
 			$fechaCreacion= date('Y-m-d');
 			$return = 0;
 			$sql = "SELECT * FROM Persona WHERE

@@ -32,8 +32,7 @@
 			    empty($_POST['txtTelefono']) ||
 			    empty($_POST['txtEmail']) ||
 			    empty($_POST['listRolId']) ||
-			    empty($_POST['listStatus'])||
-			    empty($_POST['listOrganizacionId']))
+			    empty($_POST['listStatus']))
 		   	{
 				
 				$arrResponse = array(	'estado'=> false,
