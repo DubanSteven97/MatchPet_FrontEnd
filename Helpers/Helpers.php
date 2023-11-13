@@ -21,7 +21,7 @@
     	$nombreApp = new ConfiguracionesModel();
     	$idEmpresa = 1;
     	$arrConfiguraciones = $nombreApp->DatosEmpresa($idEmpresa);
-        return ("https://wa.me/".$arrConfiguraciones['telefono']."?text=¡Hola!%20Quisiera%20saber%20sobre%20mi%20pedido");
+        return ("https://wa.me/".$arrConfiguraciones['telefono']."?text=¡Hola!%20Necesito%20ayuda");
 	}
 	function Media(){
 		return BASE_URL."/Assets";

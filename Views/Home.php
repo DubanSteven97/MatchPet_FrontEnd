@@ -148,6 +148,10 @@
 			</a>
 		</div>
 	</div>
+
+	<span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="¿Necesita ayuda?, de clic aquí">
+      <img class="btn-whatsapp" src="https://clientes.dongee.com/whatsapp.png" width="64" height="64" alt="Whatsapp" onclick="window.open('<?= contactoWshatsapp(); ?>','_blank')">
+    </span>
 </section>
 
 <?php FooterHome($data);?>

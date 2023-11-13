@@ -33,8 +33,5 @@
     <!-- Page specific javascripts-->
     <script src="<?= media(); ?>/js/functions_admin.min.js"></script>
     <script src="<?=media();?>/js/<?= $data['page_functions_js']; ?>"></script>
-    <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="¿Quiere consultar sobre su pedido?, de clic aquí">
-      <img class="btn-whatsapp" src="https://clientes.dongee.com/whatsapp.png" width="64" height="64" alt="Whatsapp" onclick="window.open('<?= contactoWshatsapp(); ?>','_blank')">
-    </span>
   </body>
 </html>
