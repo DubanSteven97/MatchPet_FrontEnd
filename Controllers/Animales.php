@@ -86,6 +86,7 @@
 					$ruta = strtolower(ClearCadena($strNombre));
 					$ruta = str_replace(" ", "-", $ruta);
 					$intStatus = intval($_POST['listStatus']);
+					$dateFechaNacimiento = $_POST['fechaNacimiento'];
 
 					if(empty($dateFechaNacimiento)){
 						$dateFechaNacimiento = "2000-01-01";
