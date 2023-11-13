@@ -216,7 +216,11 @@ function fntEditUsuario(element, idpersona)
                 document.querySelector("#txtTelefono").value = objData.data.telefono;
                 document.querySelector("#txtEmail").value = objData.data.email;
                 document.querySelector("#listRolId").value = objData.data.idrol;
-                document.querySelector("#listOrganizacionId").value = objData.data.idOrganizacion;
+                if(objData.data.idOrganizacion==null){
+                    document.querySelector("#listOrganizacionId").value = 0;
+                }else{
+                    document.querySelector("#listOrganizacionId").value = objData.data.idOrganizacion;
+                }              
                 document.querySelector("#listStatus").value = objData.data.estado;
                 $('#listRolId').selectpicker('refresh');         
                 $('#listStatus').selectpicker('refresh'); 

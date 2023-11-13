@@ -101,7 +101,11 @@
 			$this->strPassword = $password;
 			$this->intRolId = $rolId;
 			$this->intStatus = $status;
-			$this->intIdOrganizacion = $organizacionId;
+			if($organizacionId == 0){
+				$this-> intIdOrganizacion =Null;
+			}else{
+				$this-> intIdOrganizacion =$organizacionId;
+			}			
 
 			$sql = "SELECT * FROM Persona WHERE (email = '{$this->strEmail}' AND idPersona != $this->intIdUsuario) OR (numero_identificacion = '{$this->strIdentificacion}' AND idPersona != $this->intIdUsuario)";
 			$request = $this->SelectAll($sql);
