@@ -38,7 +38,7 @@
 				$data['page_tag'] ="Actualizar Pagina";
 				$data['page_name'] = "actualizar_pagina";
 				$data['page_title'] = "Actualizar Página <small> MatchPet</smal>";
-				$data['page_functions_js'] = "functions_paginas.js";
+				$data['page_functions_js'] = "functions_paginas.min.js";
 
 				$infoPage = GetInfoPage($idPagina);
 
@@ -69,7 +69,7 @@
 			$data['page_tag'] ="Crear Pagina";
 			$data['page_name'] = "crear_pagina";
 			$data['page_title'] = "Crear Página <small> MatchPet</smal>";
-			$data['page_functions_js'] = "functions_paginas.js";
+			$data['page_functions_js'] = "functions_paginas.min.js";
 
 			$this->views->GetView($this,"CrearPagina",$data);
 			die();
