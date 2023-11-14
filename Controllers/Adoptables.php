@@ -3,7 +3,7 @@
 	require_once("Models/TCliente.php");
 
 	require_once("Models/LoginModel.php");
-	class Tienda extends Controllers
+	class Adoptables extends Controllers
 	{
 		use TProducto, TCliente;
 		public $login;
@@ -13,16 +13,48 @@
 			parent::__construct();
 			$this->login = new LoginModel();
 		}
-		public function Tienda()
+		public function Adoptables()
 		{
 			$data['page_tag'] = NOMBRE_EMPRESA;
 			$data['page_title'] = NOMBRE_EMPRESA;
-			$data['page_name'] = "tienda";
-			$data['productos'] = $this->GetProductosT();
-			$this->views->GetView($this,"tienda",$data);
+			$data['page_name'] = "adoptable";
+			$data['animales'] = $this->GetAnimales();
+			$data['page'] = GetPageRout('adoptables');
+			if(empty($data['page']))
+			{
+				header("Location: ".BaseUrl());
+			}
+			$this->views->GetView($this,"adoptables",$data);
 		}
 
-		public function Categoria($params)
+
+		public function GetAnimales()
+		{
+			$idOrhanizacion = 0;
+			$url = APP_URL."/Animal/GetAnimales/".$idOrhanizacion;
+			$arrData = PeticionGet($url, "application/json", "");
+			$ahora = new DateTime(date("Y-m-d"));
+			for($p=0;$p<count($arrData);$p++){
+				$nacimiento = new DateTime($arrData[$p]->fecha_nacimiento);
+				$diferencia = $ahora->diff($nacimiento);
+				$arrData[$p]->edad = $diferencia->format("%y");
+				$intidAnimal = $arrData[$p]->idAnimal; 
+				$url_img = APP_URL."/Animal/GetImgByAnimal/".$intidAnimal;
+				$requestImg = PeticionGet($url_img, "application/json", "");
+				if(count($requestImg)>0)
+				{
+					for ($i=0; $i < count($requestImg); $i++) { 
+						$requestImg[$i]->url_image = $requestImg[$i]->img;
+					}
+				}
+				$arrData[$p]->images = $requestImg;
+				
+			}
+
+			return $arrData;
+		}
+
+		public function TipoAnimal($params)
 		{
 			if(empty($params))
 			{
@@ -30,19 +62,45 @@
 			}else
 			{
 				$arrParams = explode(",",$params);
-				$idCategoria = intval($arrParams[0]);
+				$idTipoAnimal = intval($arrParams[0]);
 				$ruta = StrClean($arrParams[1]);
-				$infoCategoria = $this->GetProductosCategoriaT($idCategoria, $ruta);
-				$categoria = $infoCategoria['categoria'];
-				$data['page_tag'] = NOMBRE_EMPRESA . " - " .$categoria;
-				$data['page_title'] = $categoria;
-				$data['page_name'] = "categoria";
-				$data['productos'] = $infoCategoria['productos'];
-				$this->views->GetView($this,"categoria",$data);
+				$infoTipoAnimal = $this->GetAnimalesByTipoAnimal($idTipoAnimal, $ruta);
+				$tipoAnimal = $infoTipoAnimal->tipoAnimal;
+				$data['page_tag'] = NOMBRE_EMPRESA . " - " .$tipoAnimal;
+				$data['page_title'] = $tipoAnimal;
+				$data['page_name'] = "tipoAnimal";
+				$data['animales'] = $infoTipoAnimal->animales;
+				$this->views->GetView($this,"tipoAnimal",$data);
 			}
 		}
 
-		public function Producto($params)
+		public function GetAnimalesByTipoAnimal($idTipoAnimal, $ruta)
+		{
+			$url = APP_URL."/Animal/GetAnimalesByTipo/".$idTipoAnimal;
+			$arrData = PeticionGet($url, "application/json", "");
+			$ahora = new DateTime(date("Y-m-d"));
+			for($p=0;$p<count($arrData);$p++){
+				$nacimiento = new DateTime($arrData[$p]->fecha_nacimiento);
+				$diferencia = $ahora->diff($nacimiento);
+				$arrData[$p]->edad = $diferencia->format("%y");
+				$intidAnimal = $arrData[$p]->idAnimal; 
+				$url_img = APP_URL."/Animal/GetImgByAnimal/".$intidAnimal;
+				$requestImg = PeticionGet($url_img, "application/json", "");
+				if(count($requestImg)>0)
+				{
+					for ($i=0; $i < count($requestImg); $i++) { 
+						$requestImg[$i]->url_image = $requestImg[$i]->img;
+					}
+				}
+				$arrData[$p]->images = $requestImg;
+			}
+			$resp = (object) array('idTipoAnimal' => $idTipoAnimal,
+									'tipoAnimal' => $arrData[0]->tipoAnimal,
+								'animales' => $arrData);
+			return $resp;
+		}
+
+		public function Animal($params)
 		{
 			if(empty($params))
 			{
@@ -50,20 +108,46 @@
 			}else
 			{
 				$arrParams = explode(",",$params);
-				$idProducto = intval($arrParams[0]);
+				$idAnimal = intval($arrParams[0]);
 				$ruta = StrClean($arrParams[1]);
-				$producto = $this->GetProductoT($idProducto, $ruta);
-				if(empty($producto))
+				$animal = $this->GetAnimal($idAnimal, $ruta);
+				if(empty($animal))
 				{
 					header("Location: ".BaseUrl());
 				}
-				$data['page_tag'] = NOMBRE_EMPRESA . " - " .$producto['nombre'];
-				$data['page_title'] = $producto['nombre'];
-				$data['page_name'] = "producto";
-				$data['producto'] = $producto;
-				$data['productos'] = $this->GetProductosRandomT($data['producto']['categoriaid'],8, "r");
-				$this->views->GetView($this,"producto",$data);
+				$data['page_tag'] = NOMBRE_EMPRESA . " - " .$animal->nombre;
+				$data['page_title'] = $animal->nombre;
+				$data['page_name'] = "animal";
+				$data['animal'] = $animal;
+				#$data['productos'] = $this->GetProductosRandomT($data['producto']['categoriaid'],8, "r");
+				$this->views->GetView($this,"animal",$data);
 			}
+		}
+
+		public function GetAnimal(int $idAnimal,string $ruta)
+		{
+			$url = APP_URL."/Animal/GetAnimal/".$idAnimal;
+			$arrData = PeticionGet($url, "application/json", "");
+			$ahora = new DateTime(date("Y-m-d"));
+			if(!empty($arrData))
+			{
+				$nacimiento = new DateTime($arrData->fecha_nacimiento);
+				$diferencia = $ahora->diff($nacimiento);
+				$arrData->edad = $diferencia->format("%y");
+				$intidAnimal = $arrData->idAnimal; 
+				$url_img = APP_URL."/Animal/GetImgByAnimal/".$intidAnimal;
+				$requestImg = PeticionGet($url_img, "application/json", "");
+				if(count($requestImg)>0)
+				{
+					for ($i=0; $i < count($requestImg); $i++) { 
+						$requestImg[$i]->url_image = $requestImg[$i]->img;
+					}
+				}
+				$arrData->images = $requestImg;
+				
+			}
+
+			return $arrData;
 		}
 
 		public function AddCarrito()

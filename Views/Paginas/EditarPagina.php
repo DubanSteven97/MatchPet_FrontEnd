@@ -1,9 +1,9 @@
 <?php HeaderAdmin($data); 
   $fotoActual = $data['infoPage']['portada'];
   $fotoRemove = 0;
-  $imgPortada = $fotoActual != "" ? '<img id="img" src="'.Media().'/images/uploads/'.$fotoActual.'">' : "";
+  $imgPortada = $fotoActual != "" ? '<img id="img" src="'.$fotoActual.'">' : "";
 
-  $option = $data['infoPage']['status'];
+  $option = $data['infoPage']['estado'];
 
   $pageRuta = BaseUrl().'/'.$data['infoPage']['ruta'];
 ?>
@@ -12,7 +12,6 @@
       <div>
         <h1>
         	<i class="fa fa-file-text-o"></i> <?= $data['page_title'];?>
-          <a href="<?= BaseUrl() ?>/Paginas/Crear" class="btn btn-primary"><i class="fa-solid fa-circle-plus"></i> Crear Página</a>
     	</h1>
       </div>
       <ul class="app-breadcrumb breadcrumb">
@@ -25,7 +24,7 @@
           <div class="tile">
 
             <form id="formPaginas" name="formPaginas" class="form-horizontal">
-              <input type="hidden" name="idPagina" id="idPagina" value="<?= $data['infoPage']['idpost']  ?>">
+              <input type="hidden" name="idPagina" id="idPagina" value="<?= $data['infoPage']['idPagina']  ?>">
               <input type="hidden" name="foto_actual" id="foto_actual" value="<?= $fotoActual; ?>">
               <input type="hidden" name="foto_remove" id="foto_remove" value="0">
               <p class="text-primary">Todos los campos con asterisco (<span class="required">*</span>) son obligatorios.</p>

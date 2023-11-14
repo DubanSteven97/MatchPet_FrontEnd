@@ -37,8 +37,8 @@
 			{
 				$data['page_tag'] ="Actualizar Pagina";
 				$data['page_name'] = "actualizar_pagina";
-				$data['page_title'] = "Actualizar Página <small> Tienda Virtual</smal>";
-				$data['page_functions_js'] = "functions_paginas.js";
+				$data['page_title'] = "Actualizar Página <small> MatchPet</smal>";
+				$data['page_functions_js'] = "functions_paginas.min.js";
 
 				$infoPage = GetInfoPage($idPagina);
 
@@ -68,8 +68,8 @@
 		
 			$data['page_tag'] ="Crear Pagina";
 			$data['page_name'] = "crear_pagina";
-			$data['page_title'] = "Crear Página <small> Tienda Virtual</smal>";
-			$data['page_functions_js'] = "functions_paginas.js";
+			$data['page_title'] = "Crear Página <small> MatchPet</smal>";
+			$data['page_functions_js'] = "functions_paginas.min.js";
 
 			$this->views->GetView($this,"CrearPagina",$data);
 			die();
@@ -127,21 +127,13 @@
 					$ruta = strtolower(ClearCadena($strTitulo));
 					$ruta = str_replace(" ", "-", $ruta);
 
-					$foto = $_FILES['foto'];
-					$nombreFoto = $foto['name'];
-					$type = $foto['type'];
-					$url_temp = $foto['tmp_name'];
-					$imgPortada = '';
-
-					if($nombreFoto != '')
-					{
-						$imgPortada = 'img_'.md5(date('d-m-Y H:i:s')).'.jpg';
-					}
+					$foto = fileToBase64($_FILES['foto']);
+					
 					if($intIdPagina == 0)
 					{
 						if($_SESSION['permisosMod']['w'])
 						{
-							$request = $this->model->InsertPagina($strTitulo, $strContenido, $imgPortada, $ruta, $intStatus);
+							$request = $this->model->InsertPagina($strTitulo, $strContenido, $foto, $ruta, $intStatus);
 							$option = 1;
 						}
 					}
@@ -149,15 +141,7 @@
 					{
 						if($_SESSION['permisosMod']['u'])
 						{
-							if($nombreFoto == '')
-							{
-								if($_POST['foto_actual'] != '' && $_POST['foto_remove'] == 0)
-								{
-									$imgPortada = $_POST['foto_actual'];
-								}
-							}
-
-							$request = $this->model->UpdatePagina($intIdPagina, $strTitulo, $strContenido, $imgPortada, $intStatus);
+							$request = $this->model->UpdatePagina($intIdPagina, $strTitulo, $strContenido, $foto, $intStatus);
 							$option = 2;
 						}
 					}
@@ -167,24 +151,12 @@
 						{
 							$arrResponse = array(	'status'=> true,
 													'msg'	=> 'Datos guardados correctamente.');
-							if($nombreFoto != '')
-							{
-								UploadImage($foto,$imgPortada);
-							}
+
 						}
 						else
 						{
 							$arrResponse = array(	'status'=> true,
 													'msg'	=> 'Datos actualizados correctamente.');
-							if($nombreFoto != '')
-							{
-								UploadImage($foto,$imgPortada);
-							}
-
-							if(($nombreFoto == '' && $_POST['foto_remove'] == 1 && $_POST['foto_actual'] != '') || ($nombreFoto != '' && $_POST['foto_actual'] != ''))
-							{
-								DeleteFile($_POST['foto_actual']);
-							}
 						}
 						
 					}
