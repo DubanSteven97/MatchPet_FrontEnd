@@ -142,6 +142,16 @@ $infoPagePreguntas = !empty(GetPageRout('preguntas-frecuentes')) ? GetPageRout('
 						</ul>
 					</div>	
 
+					<!-- Icon header -->
+					<div class="wrap-icon-header flex-w flex-r-m">
+						<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 menu-right">
+							<a href="<?= BaseUrl(); ?>/apadrinar"><i class="zmdi zmdi-thumb-up"></i> Apadrina</a>
+						</div>
+						<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 menu-right">
+							<a href="<?= BaseUrl(); ?>/donar"><i class="zmdi zmdi-favorite"></i> Donar</a>
+						</div>
+					</div>
+
 				</nav>
 			</div>	
 		</div>
@@ -210,22 +220,15 @@ $infoPagePreguntas = !empty(GetPageRout('preguntas-frecuentes')) ? GetPageRout('
 				<li>
 					<a href="<?= BaseUrl(); ?>/contacto">Contacto</a>
 				</li>
+				<hr>
+				<li>
+					<a href="<?= BaseUrl(); ?>/apadrinar"><i class="zmdi zmdi-thumb-up"></i> Apadrinar</a>
+				</li>
+
+				<li>
+					<a href="<?= BaseUrl(); ?>/donar"><i class="zmdi zmdi-favorite"></i> Donar</a>
+				</li>
 			</ul>
 		</div>
 
-		<!-- Modal Search -->
-		<div class="modal-search-header flex-c-m trans-04 js-hide-modal-search">
-			<div class="container-search-header">
-				<button class="flex-c-m btn-hide-modal-search trans-04 js-hide-modal-search">
-					<img src="<?= media(); ?>/matchpet/images/icons/icon-close2.png" alt="CLOSE">
-				</button>
-
-				<form class="wrap-search-header flex-w p-l-15">
-					<button class="flex-c-m trans-04">
-						<i class="zmdi zmdi-search"></i>
-					</button>
-					<input class="plh3" type="text" name="search" placeholder="Buscar...">
-				</form>
-			</div>
-		</div>
 	</header>

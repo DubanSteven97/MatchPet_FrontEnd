@@ -21,3 +21,19 @@
     align-content: stretch;
     flex-direction: column-reverse;
 }
+
+.menu-right:hover > a{
+    text-decoration: none;
+    color: #853400;
+}
+
+.menu-right > a{
+    font-family: Poppins-Medium;
+    font-size: 14px;
+    color: #333;
+    padding: 5px 0px;
+    transition: all 0.4s;
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+}
