@@ -3,7 +3,7 @@
 	const HOST = "localhost:80";
 	const BASE_URL = "http://".HOST."/MatchPet";
 	const BASE_URL_H = HOST."/MatchPet";
-	
+
 	date_default_timezone_set('America/Bogota');
 
 	#ENVIROMENT DEV
@@ -23,10 +23,10 @@
 
 	const DRIVER_SQL ="sqlsrv:server";
 	const DATABASE="DBMatchpet";
-	const PORT="10060";
-	const HOSTNAME="DBMatchpet.mssql.somee.com";
-	const USERNAME="MatchPet_SQLLogin_1";
-	const PASSWORD= "filj1rq9ai";
+	const PORT="1433";
+	const HOSTNAME="matchpetucentral.online";
+	const USERNAME="MatchPet";
+	const PASSWORD= "Prueba123456+";
 
 #	const APP_URL = "http://matchpetucentral.online:8081/Matchpet";
 	const APP_NAME = "MatchpetDEV";
@@ -78,6 +78,7 @@
 	const URLGETORDENMP = URLMERCADOPAGO."/merchant_orders/";
 	const URLREENVOLSOMP = "/refunds";
 
+	const SHAREDHASH = "AdoptaNoCompres";
 
 	const KEYTASACAMBIO = "Z1rthZIKB8xx7we6m44l4ImeXXoxQAVg";
 

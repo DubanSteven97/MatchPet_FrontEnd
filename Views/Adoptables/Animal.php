@@ -1,9 +1,8 @@
 <?php 
 	HeaderHome($data);
-	//$arrProductos = $data['productos'];
 	$arrAnimal = $data['animal'];
 
-	//$rutaCategoria = $arrAnimal['categoriaid'].'/'.$arrAnimal['ruta_categoria'];
+	$urlShared = BaseUrl()."/adoptables/animal/".$arrAnimal->idAnimal."/".$arrAnimal->ruta;
 ?>
 <br><br><br>
 <hr>
@@ -60,21 +59,20 @@
 						<!--  -->
 						<div class="flex-w flex-m p-l-100 p-t-40 respon7">
 							<div class="flex-m bor9 p-r-10 m-r-11">
-								<a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100" data-tooltip="Add to Wishlist">
-									<i class="zmdi zmdi-favorite"></i>
-								</a>
+								Compartir en:
 							</div>
 
-							<a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Facebook">
+							<a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Facebook"
+								onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=<?=$urlShared;?>&t=Conoce a <?=$arrAnimal->nombre;?>','ventanacompartir','toolbar=0,status=0,width=650,height=450');">
 								<i class="fa fa-facebook"></i>
 							</a>
 
-							<a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Twitter">
+							<a href="https://www.twitter.com/intent/tweet?text=Conoce a <?=$arrAnimal->nombre;?>&url=<?=$urlShared;?>&hashtags=<?= SHAREDHASH;?>" target="_blank" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Twitter">
 								<i class="fa fa-twitter"></i>
 							</a>
 
-							<a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Google Plus">
-								<i class="fa fa-google-plus"></i>
+							<a href="https://api.whatsapp.com/send?text=Conoce a <?=$arrAnimal->nombre. ' ' . $urlShared;?>" target="_blank" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="whatsapp">
+								<i class="fa fa-whatsapp"></i>
 							</a>
 						</div>
 					</div>
