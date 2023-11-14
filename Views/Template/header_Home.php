@@ -96,7 +96,7 @@
 							</li>
 
 							<li>
-								<a href="<?= BaseUrl(); ?>contacto">Contacto</a>
+								<a href="<?= BaseUrl(); ?>/contacto">Contacto</a>
 							</li>
 						</ul>
 					</div>	

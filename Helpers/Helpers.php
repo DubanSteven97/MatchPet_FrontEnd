@@ -506,4 +506,43 @@
             return false; // Hubo un error en la carga del archivo
         }
     }
+
+    
+    function GetInfoPage(int $idPagina)
+    {
+        require_once("Libraries/Core/Mysql.php");
+        $con = new Mysql();
+        $sql = "SELECT * FROM pagina WHERE idpagina = $idPagina";
+        $request = $con->Select($sql);
+        return $request;
+    }
+
+    function GetPageRout(string $ruta)
+    {
+        require_once("Libraries/Core/Mysql.php");
+        $con = new Mysql();
+        $sql = "SELECT * FROM pagina WHERE ruta = '$ruta' AND estado != 0";
+        $request = $con->Select($sql);
+        if(!empty($request))
+        {
+            $request['portada'] = $request['portada'] != "" ? $request['portada'] : "";
+        }
+        return $request;
+    }
+
+    function ViewPage(int $idPagina)
+    {
+        require_once("Libraries/Core/Mysql.php");
+        $con = new Mysql();
+        $sql = "SELECT * FROM pagina WHERE idpagina = $idPagina";
+        $request = $con->Select($sql);
+
+        if(($request['estado'] == 2 AND isset($_SESSION['permisosMod']) AND $_SESSION['permisosMod']['u']) || $request['estado'] == 1)
+        {
+            return true;
+        }else
+        {
+            return false;
+        }
+    }
 ?>

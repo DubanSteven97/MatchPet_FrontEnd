@@ -18,6 +18,12 @@
 			$data['slider'] = $arrTipoAnimales;
 			$data['banner'] = $arrTipoAnimales;
 			$data['animales'] = $this->GetAnimales();
+			
+			$data['page'] = GetPageRout('home');
+			if(empty($data['page']))
+			{
+				header("Location: ".BaseUrl());
+			}
 			$this->views->GetView($this,"home",$data);
 		}
 
@@ -33,7 +39,11 @@
 			$idOrhanizacion = 0;
 			$url = APP_URL."/Animal/GetAnimales/".$idOrhanizacion;
 			$arrData = PeticionGet($url, "application/json", "");
+			$ahora = new DateTime(date("Y-m-d"));
 			for($p=0;$p<count($arrData);$p++){
+				$nacimiento = new DateTime($arrData[$p]->fecha_nacimiento);
+				$diferencia = $ahora->diff($nacimiento);
+				$arrData[$p]->edad = $diferencia->format("%y");
 				$intidAnimal = $arrData[$p]->idAnimal; 
 				$url_img = APP_URL."/Animal/GetImgByAnimal/".$intidAnimal;
 				$requestImg = PeticionGet($url_img, "application/json", "");
