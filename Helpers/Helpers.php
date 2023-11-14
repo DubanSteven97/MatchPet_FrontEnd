@@ -13,13 +13,15 @@
         return  $arrConfiguraciones["nombre_aplicacion"];
 	}
 
+
+
 	function contactoWshatsapp()
 	{
     	require_once('Models/ConfiguracionesModel.php');
     	$nombreApp = new ConfiguracionesModel();
     	$idEmpresa = 1;
     	$arrConfiguraciones = $nombreApp->DatosEmpresa($idEmpresa);
-        return ("https://wa.me/".$arrConfiguraciones['telefono']."?text=¡Hola!%20Quisiera%20saber%20sobre%20mi%20pedido");
+        return ("https://wa.me/".$arrConfiguraciones['telefono']."?text=¡Hola!%20Necesito%20ayuda");
 	}
 	function Media(){
 		return BASE_URL."/Assets";
@@ -37,15 +39,15 @@
 		require_once($view_footer);
 	}
 
-	function HeaderTienda($data="")
+	function HeaderHome($data="")
 	{
-		$view_header = "Views/Template/header_tienda.php";
+		$view_header = "Views/Template/header_Home.php";
 		require_once($view_header);
 	}
 	
-	function FooterTienda($data="")
+	function FooterHome($data="")
 	{
-		$view_footer = "Views/Template/footer_tienda.php";
+		$view_footer = "Views/Template/footer_Home.php";
 		require_once($view_footer);
 	}
 	function Dep($data)
@@ -125,18 +127,23 @@
     {
     	require_once('Models/PermisosModel.php');
     	$objPermisos = new PermisosModel();
-    	$idRol = $_SESSION['userData']['idrol'];
-    	$arrPermisos = $objPermisos->PermisosModulo($idRol);
-    	$permisos = '';
-    	$permisosMod = '';
-    	if(count($arrPermisos) >0 )
-    	{
-    		$permisos = $arrPermisos;
-    		$permisosMod = isset($arrPermisos[$modulo]) ? $arrPermisos[$modulo] : "";
-    	}
-    	$_SESSION['permisos'] = $permisos;
-    	$_SESSION['permisosMod'] = $permisosMod;
+        if(!empty($_SESSION['userData']['idRol']))
+        {
+
+        	$idRol = $_SESSION['userData']['idRol'];
+        	$arrPermisos = $objPermisos->PermisosModulo($idRol);
+        	$permisos = '';
+        	$permisosMod = '';
+        	if(count($arrPermisos) >0 )
+        	{
+        		$permisos = $arrPermisos;
+        		$permisosMod = isset($arrPermisos[$modulo]) ? $arrPermisos[$modulo] : "";
+        	}
+        	$_SESSION['permisos'] = $permisos;
+        	$_SESSION['permisosMod'] = $permisosMod;
+        }
     }
+
 
     function SessionUser(int $idPersona)
     {
@@ -405,5 +412,137 @@
                     "Noviembre",
                     "Diciembre");
         return $meses;
+    }
+
+
+    function PeticionPost(string $ruta, string $data = null, string $contentType =null,  string $token)
+    {
+        $contentType = $contentType != null ? $contentType : "application/x-www-form-urlencoded";
+        if($token != "")
+        {
+            $arrHeader = array('Content-Type:'.$contentType,
+                                'Authorization: Bearer '.$token);
+        }else
+        {
+            $arrHeader = array('Content-Type:'.$contentType);
+        }
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $ruta);
+        curl_setopt($ch, CURLOPT_POST, TRUE);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $arrHeader);
+
+        $result = curl_exec($ch);
+        $err = curl_error($ch);
+        curl_close($ch);
+        if($err)
+        {
+            $request = array('success' => false,
+                            'message' => 'CURL PeticionPost Error #: ' .$err);
+        }else
+        {
+            $request = json_decode($result);
+        }
+        return $request;
+    }
+
+    function PeticionGet(string $ruta, string $contentType =null, string $token)
+    {
+        $contentType = $contentType != null ? $contentType : "application/x-www-form-urlencoded";
+        if($token)
+        {
+            $arrHeader = array('Content-Type:'.$contentType,
+                                'Authorization: Bearer '.$token);
+        }else
+        {
+            $arrHeader = array('Content-Type:'.$contentType);
+        }
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $ruta);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $arrHeader);
+        $result = curl_exec($ch);
+        $err = curl_error($ch);
+        curl_close($ch);
+        if($err)
+        {
+            $request = array('success' => 0,
+                            'message' => 'CURL PeticionGet Error #: ' .$err);
+        }else
+        {
+            $request = json_decode($result);
+        }
+        return $request;
+    }
+
+    function GetTokenApp()
+	{
+    	require_once('Models/AplicacionModel.php');
+    	$app = new AplicacionModel();
+    	$arrApp = $app->SelectAplicacion(APP_NAME);
+        return  $arrApp["token"];
+	}
+
+    function fileToBase64($file) {
+        // Verificar si no hubo errores en la carga del archivo
+        if ($file['error'] === UPLOAD_ERR_OK) {
+            // Obtener el tipo MIME del archivo
+            $imageType = $file['type'];
+    
+            // Leer el contenido del archivo en formato binario
+            $imageData = file_get_contents($file['tmp_name']);
+    
+            // Codificar los datos binarios en Base64
+            $base64Image = base64_encode($imageData);
+    
+            // Crear la URL Data URI para el archivo
+            $dataURI = "data:$imageType;base64,$base64Image";
+    
+            return $dataURI;
+        } else {
+            return false; // Hubo un error en la carga del archivo
+        }
+    }
+
+    
+    function GetInfoPage(int $idPagina)
+    {
+        require_once("Libraries/Core/Mysql.php");
+        $con = new Mysql();
+        $sql = "SELECT * FROM pagina WHERE idpagina = $idPagina";
+        $request = $con->Select($sql);
+        return $request;
+    }
+
+    function GetPageRout(string $ruta)
+    {
+        require_once("Libraries/Core/Mysql.php");
+        $con = new Mysql();
+        $sql = "SELECT * FROM pagina WHERE ruta = '$ruta' AND estado != 0";
+        $request = $con->Select($sql);
+        if(!empty($request))
+        {
+            $request['portada'] = $request['portada'] != "" ? $request['portada'] : "";
+        }
+        return $request;
+    }
+
+    function ViewPage(int $idPagina)
+    {
+        require_once("Libraries/Core/Mysql.php");
+        $con = new Mysql();
+        $sql = "SELECT * FROM pagina WHERE idpagina = $idPagina";
+        $request = $con->Select($sql);
+
+        if(($request['estado'] == 2 AND isset($_SESSION['permisosMod']) AND $_SESSION['permisosMod']['u']) || $request['estado'] == 1)
+        {
+            return true;
+        }else
+        {
+            return false;
+        }
     }
 ?>

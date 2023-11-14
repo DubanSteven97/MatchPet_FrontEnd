@@ -6,7 +6,7 @@
     <script src="<?= media(); ?>/js/jquery-3.3.1.min.js"></script>
     <script src="<?= media(); ?>/js/popper.min.js"></script>
     <script src="<?= media(); ?>/js/bootstrap.min.js"></script>
-    <script src="<?= media(); ?>/js/main.js"></script>
+    <script src="<?= media(); ?>/js/main.min.js"></script>
     <script src="<?= media(); ?>/js/fontawesome.js"></script>
     <!-- The javascript plugin to display page loading on top-->
     <script src="<?= media(); ?>/js/plugins/pace.min.js"></script>
@@ -31,10 +31,7 @@
     
     
     <!-- Page specific javascripts-->
-    <script src="<?= media(); ?>/js/functions_admin.js"></script>
+    <script src="<?= media(); ?>/js/functions_admin.min.js"></script>
     <script src="<?=media();?>/js/<?= $data['page_functions_js']; ?>"></script>
-    <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="¿Quiere consultar sobre su pedido?, de clic aquí">
-      <img class="btn-whatsapp" src="https://clientes.dongee.com/whatsapp.png" width="64" height="64" alt="Whatsapp" onclick="window.open('<?= contactoWshatsapp(); ?>','_blank')">
-    </span>
   </body>
 </html>

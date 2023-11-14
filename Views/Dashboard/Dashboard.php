@@ -10,12 +10,13 @@
       </ul>
     </div>
     <div class="row">
+      
       <?php if(!empty($_SESSION['permisos']['Usuarios']['r'])){ ?>
         <div class="col-md-6 col-lg-3">
           <a href="<?=BaseUrl();?>/usuarios" class="linkw">
-            <div class="widget-small primary coloured-icon"><i class="icon fa fa-users fa-3x"></i>
+            <div class="widget-small primary coloured-icon"><i class="<?=$_SESSION['permisos']['Usuarios']['icono']?>"></i>
               <div class="info">
-                <h4>Usuarios</h4>
+                <h4><?=$_SESSION['permisos']['Usuarios']['modulo']?></h4>
                 <p><b><?=$data['usuarios'];?></b></p>
               </div>
             </div>
@@ -34,32 +35,35 @@
           </a>
         </div>
       <?php } ?>
-      <?php if(!empty($_SESSION['permisos']['Productos']['r'])){ ?>
+      <?php if(!empty($_SESSION['permisos']['Animales']['r'])){ ?>
         <div class="col-md-6 col-lg-3">
-          <a href="<?=BaseUrl();?>/productos" class="linkw">
-            <div class="widget-small warning coloured-icon"><i class="icon fa-solid fa-box-open fa-3x"></i>
+          <a href="<?=BaseUrl();?>/Animales" class="linkw">
+            <div class="widget-small warning coloured-icon"><i class="<?=$_SESSION['permisos']['Animales']['icono']?>"></i>
               <div class="info">
-                <h4>Productos</h4>
-                <p><b><?=$data['productos'];?></b></p>
+                <h4><?=$_SESSION['permisos']['Animales']['modulo']?></h4>
+                <p><b><?=$data['animales'];?></b></p>
               </div>
             </div>
           </a>
         </div>
       <?php } ?>
-      <?php if(!empty($_SESSION['permisos']['Pedidos']['r'])){ ?>
-        <div class="col-md-6 col-lg-3">
-          <a href="<?=BaseUrl();?>/pedidos" class="linkw">
-            <div class="widget-small danger coloured-icon"><i class="icon fa fa-shopping-cart fa-3x"></i>
+      <?php if(!empty($_SESSION['permisos']['Organizaciones']['r'])){ ?>
+        <div class="col-md-6 col-lg-4">
+          <a href="<?=BaseUrl();?>/Organizaciones" class="linkw">
+            <div class="widget-small danger coloured-icon"><i class="<?=$_SESSION['permisos']['Organizaciones']['icono']?>"></i>
               <div class="info">
-                <h4>Pedidos</h4>
-                <p><b><?=$data['pedidos'];?></b></p>
+                <h4><?=$_SESSION['permisos']['Organizaciones']['modulo']?></h4>
+                <p><b><?=$data['organizaciones'];?></b></p>
               </div>
             </div>
           </a>
         </div>
         <?php } ?>
       </div>
-      <div class="row">
+      <?php
+      dep($_SESSION);
+      ?>
+     <!--<div class="row">
         <?php if(!empty($_SESSION['permisos']['Pedidos']['r'])){ ?>
         <div class="col-md-6">
           <div class="tile">
@@ -75,18 +79,6 @@
                 </tr>
               </thead>
               <tbody>
-                <?php if(count($data['lastOrders'])>0){ 
-                  foreach ($data['lastOrders'] as $pedido) {
-                  ?>
-                <tr>
-                  <td><?= $pedido['idpedido'];?></td>
-                  <td><?= $pedido['nombre'];?></td>
-                  <td><?= $pedido['status'];?></td>
-                  <td class="text-right"><?= FormatMoney($pedido['monto']);?></td>
-                  <td><a href="<?= BaseUrl() ?>/pedidos/orden/<?= $pedido['idpedido'];?>" target="blank"> <i class="fa fa-eye" aria-hidden="true"></i></a></td>
-                </tr>
-              <?php }
-                  } ?>
               </tbody>
             </table>
           </div>
@@ -118,7 +110,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div>-->
 
 
   </main>

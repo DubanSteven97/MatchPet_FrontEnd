@@ -12,10 +12,10 @@
 		}
 		public function login()
 		{
-			$data['page_tag'] ="Login - Tienda Virtual";
+			$data['page_tag'] ="Login - MatchPet";
 			$data['page_title'] = "Login ". NombreApp()."</smal>";
 			$data['page_name'] = "login";
-			$data['page_functions_js'] = "functions_login.js";
+			$data['page_functions_js'] = "functions_login.min.js";
 			$this->views->GetView($this,"login",$data);
 		}
 
@@ -37,15 +37,26 @@
 					}else
 					{
 						$arrData = $requestUser;
-						if($arrData['status'] == 1)
+						if($arrData['estado'] == 1)
 						{
-							$_SESSION['idUser'] = $arrData['idpersona'];
-							$_SESSION['login'] = true;
-							$_SESSION['timeout'] = true;
-							$_SESSION['inicio'] = time();
-							$arrData = $this->model->SessionLogin($_SESSION['idUser']);
-							$_SESSION['userData'] = $arrData;
-							$arrResponse = array('status' => true, 'msg' => 'ok');		
+							$res = $this->Auth();
+
+							if ($res->success)
+							{
+								$_SESSION['idUser'] = $arrData['idPersona'];
+								$_SESSION['login'] = true;
+								$_SESSION['timeout'] = true;
+								$_SESSION['inicio'] = time();
+								$_SESSION['Token_APP'] = GetTokenApp();
+								$arrData = $this->model->SessionLogin($_SESSION['idUser']);
+								$_SESSION['userData'] = $arrData;
+								
+								$arrResponse = array('status' => true, 'msg' => 'ok');	
+							}
+							else
+							{
+								$arrResponse = array('status' => false, 'msg' => 'Usuario no autorizado. -> ' . $res["message"]);		
+							}	
 						}else{
 							$arrResponse = array('status' => false, 'msg' => 'Usuario inactivo.');		
 						}
@@ -54,6 +65,23 @@
 				echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
 			}
 			die();
+		}
+
+		public function Auth()
+		{
+			$url = APP_URL."/Aplicacion/Auth";
+			$name = APP_US;
+			$pass = APP_PS;
+
+			$arrayData = array(
+			"usuario"=> $name,
+			"password"=> $pass
+			);
+
+			$data = json_encode($arrayData);
+
+
+			return PeticionPost($url, $data, "application/json","");
 		}
 
 		public function ResetPass()

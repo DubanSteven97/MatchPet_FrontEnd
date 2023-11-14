@@ -184,7 +184,7 @@ function fntEditCliente(element, idpersona)
                 document.querySelector("#txtRazon").value = objData.data.nombrefiscal; 
                 document.querySelector("#txtDireccion").value = objData.data.direccionfiscal; 
 
-                $('#listStatus').selectpicker('render');                
+                $('#listStatus').selectpicker('refresh');                
                 $('#modalFormCliente').modal('show');
             }else
             {

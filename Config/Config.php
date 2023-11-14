@@ -1,15 +1,38 @@
 <?php
 
-	const BASE_URL = "Http://localhost/ElBuenSamaritano/";
-	const BASE_URL_H = "localhost/ElBuenSamaritano";
-
+	const HOST = "localhost:80";
+	const BASE_URL = "http://".HOST."/MatchPet";
+	const BASE_URL_H = HOST."/MatchPet";
+	
 	date_default_timezone_set('America/Bogota');
 
-	const DB_HOST = "localhost";
-	const DB_NAME = "db_elbuensamaritano";
-	const DB_USER = "root";
-	const DB_PASSWORD = "root";
-	const DB_CHARSET = "utf8";
+	#ENVIROMENT DEV
+#	const DRIVER_SQL ="sqlsrv:server";
+#	const DATABASE="DBMatchpet";
+#	const PORT="10060";
+#	const HOSTNAME="DESKTOP-UIAKGPT";
+#	const USERNAME="root";
+#	const PASSWORD= "123456";
+
+	const APP_URL = "https://localhost:7176/Matchpet";
+#	const APP_NAME = "MatchpetDEV";
+#	const APP_US = "devmatchpet";
+#	const APP_PS = "147852";
+    #ENVIROMENT PROD
+
+
+	const DRIVER_SQL ="sqlsrv:server";
+	const DATABASE="DBMatchpet";
+	const PORT="10060";
+	const HOSTNAME="DBMatchpet.mssql.somee.com";
+	const USERNAME="MatchPet_SQLLogin_1";
+	const PASSWORD= "filj1rq9ai";
+
+#	const APP_URL = "http://matchpetucentral.online:8081/Matchpet";
+	const APP_NAME = "MatchpetDEV";
+	const APP_US = "devmatchpet";
+	const APP_PS = "147852";
+
 
 	const SPD = ",";
 	const SPM = ".";
@@ -18,16 +41,16 @@
 	const CURRENCY = "USD";
 	const MONEDA = "COP";
 
-	const NOMBRE_REMITENTE = "El Buen Samaritano";
-	const EMAIL_REMITENTE = "info@elbuensamaritano.com";
-	const NOMBRE_EMPRESA = "EL BUEN SAMARITANO";
-	const NOMBRE_APP = "El Buen Samaritano";
-	const WEB_EMPRESA = "www.elbuensamaritano.com";
+	const NOMBRE_REMITENTE = "MatchPet";
+	const EMAIL_REMITENTE = "info@MatchPet.com";
+	const NOMBRE_EMPRESA = "MatchPet";
+	const NOMBRE_APP = "MatchPet";
+	const WEB_EMPRESA = "www.MatchPet.com";
 
 	const DIRECCION_EMPRESA = "Calle Siempre Viva 123, Bogotá DC, Colombia";
 	const TELEFONO_EMPRESA = "+(57)320 3997016";
-	const EMAIL_PEDIDOS = "info@elbuensamaritano.com";
-	const EMAIL_EMPRESA = "info@elbuensamaritano.com";
+	const EMAIL_PEDIDOS = "info@MatchPet.com";
+	const EMAIL_EMPRESA = "info@MatchPet.com";
 
 	const CAT_SLIDER = "7,2,3";
 	const CAT_BANNER = "6,5,8";

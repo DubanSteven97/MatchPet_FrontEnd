@@ -16,7 +16,7 @@
 		{
 
 			$idPersona = "";
-			if($_SESSION['userData']['nombrerol'] == "Cliente")
+			if($_SESSION['userData']['nombreRol'] == "Cliente")
 			{
 				$idPersona = $_SESSION['userData']['idpersona'];
 			}
@@ -25,17 +25,18 @@
 			$data['page_tag'] ="Dashboard";
 			$data['page_name'] = "dashboard";
 			$data['page_title'] = "Dashboard <small> ". NombreApp()."</smal>";
-			$data['page_functions_js'] = "functions_dashboard.js";
+			$data['page_functions_js'] = "functions_dashboard.min.js";
 			$data['usuarios'] = $this->model->CanUsuarios();
 			$data['clientes'] = $this->model->CanClientes();
-			$data['productos'] = $this->model->CanProductos();
+			$data['animales'] = $this->model->CanAnimales();
+			$data['organizaciones'] = $this->model->CanOrganizaciones();
 			$data['pedidos'] = $this->model->CanPedidos($idPersona);
-			$data['lastOrders'] = $this->model->LastOrders($idPersona);
+			//$data['lastOrders'] = $this->model->LastOrders($idPersona);
 
 			$anio = date('Y');
 			$mes = date('m');
 
-			$data['pagosMes'] = $this->model->SelectPagosMes($anio,$mes,$idPersona);
+			//$data['pagosMes'] = $this->model->SelectPagosMes($anio,$mes,$idPersona);
 			//dep($data['pagosMes']);exit();
 
 			$this->views->GetView($this,"dashboard",$data);

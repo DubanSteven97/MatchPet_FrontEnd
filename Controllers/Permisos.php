@@ -67,11 +67,11 @@
 				}
 				if($requestPermiso > 0)
 				{
-					$arrResponse = array(	'status'=> true,
+					$arrResponse = array(	'estado'=> true,
 											'msg'	=> 'Permisos asignados correctamente.');
 				}else
 				{
-					$arrResponse = array(	'status'=> false,
+					$arrResponse = array(	'estado'=> false,
 											'msg'	=> 'No es posible asinar los permisos.');
 				}
 				echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);

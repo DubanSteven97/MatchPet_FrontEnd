@@ -1,5 +1,5 @@
 <?php
-	class LoginModel extends Mysql
+	class LoginModel extends SqlServer
 	{
 		private $intIdUsuario;
 		private $strUsuario;
@@ -15,7 +15,7 @@
 		{
 			$this->strUsuario = $usuario;
 			$this->strPassword = $password;
-			$sql = "SELECT idpersona, status FROM persona WHERE email_user = '$this->strUsuario' AND password = '$this->strPassword' AND status != 0";
+			$sql = "SELECT idPersona, estado FROM Persona WHERE email = '$this->strUsuario' AND password = '$this->strPassword' AND estado != 0";
 			$request = $this->Select($sql);
 			return $request;
 		}
@@ -23,7 +23,7 @@
 		public function SessionLogin(int $idUser)
 		{
 			$this->intIdUsuario = $idUser;
-			$sql = "SELECT p.idpersona, p.identificacion, p.nombres, p.apellidos, p.telefono, p.email_user, p.nit, p.nombrefiscal, p.direccionfiscal, r.idrol, r.nombrerol, p.status FROM persona p INNER JOIN rol r ON p.rolid = r.idrol WHERE p.idpersona = $this->intIdUsuario";
+			$sql = "SELECT p.idPersona, p.numero_identificacion, p.nombres, p.apellidos, p.telefono, p.email, p.nit, p.nombrefiscal, p.direccionfiscal, r.idRol, r.nombreRol, p.estado, p.idOrganizacion, o.nombre as nombreOrganizacion FROM Persona p INNER JOIN rol r ON p.idRol = r.idRol FULL OUTER JOIN  Organizacion o ON P.idOrganizacion = o.idOrganizacion WHERE p.idPersona = $this->intIdUsuario";
 			$request = $this->Select($sql);
 			$_SESSION['userData'] = $request;
 			return $request;

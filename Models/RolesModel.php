@@ -1,5 +1,5 @@
 <?php
-	class RolesModel extends Mysql
+	class RolesModel extends SqlServer
 	{
 		public $intIdRol;
 		public $strRol;
@@ -15,9 +15,9 @@
 			$whereAdmin = "";
 			if($_SESSION['idUser'] != 1)
 			{
-				$whereAdmin = "  AND nombrerol != 'Administrador' ";
+				$whereAdmin = "  AND nombreRol != 'Administrador' ";
 			}
-			$sql = "SELECT * FROM rol WHERE status != 0".$whereAdmin;
+			$sql = "SELECT * FROM Rol WHERE estado != 0".$whereAdmin;
 			$request = $this->SelectAll($sql);
 			return $request;
 		}
@@ -25,7 +25,7 @@
 		public function SelectRol(int $rolId)
 		{
 			$this->intIdRol = $rolId;
-			$sql = "SELECT * FROM rol WHERE idrol = $this->intIdRol";
+			$sql = "SELECT * FROM Rol WHERE idRol = $this->intIdRol";
 			$request = $this->Select($sql);
 			return $request;
 		}
@@ -37,12 +37,12 @@
 			$this->strDescripcion = $descripcion;
 			$this->intStatus = $status;
 
-			$sql = "SELECT * FROM rol WHERE nombrerol = '{$this->strRol}'";
+			$sql = "SELECT * FROM rol WHERE nombreRol = '{$this->strRol}'";
 			$request = $this->SelectAll($sql);
 
 			if(empty($request))
 			{
-				$queryInsert = "INSERT INTO rol(nombrerol,descripcion,status) VALUES (?,?,?)";
+				$queryInsert = "INSERT INTO rol(nombreRol,descripcion,estado) VALUES (?,?,?)";
 				$arrData = array($this->strRol, $this->strDescripcion, $this->intStatus);
 				$return = $this->Insert($queryInsert,$arrData);
 			}else
@@ -60,11 +60,11 @@
 			$this->strDescripcion = $descripcion;
 			$this->intStatus = $status;
 
-			$sql = "SELECT * FROM rol WHERE nombrerol = '{$this->strRol}' AND idrol != {$this->intIdRol}";
+			$sql = "SELECT * FROM Rol WHERE nombreRol = '{$this->strRol}' AND idRol != {$this->intIdRol}";
 			$request = $this->SelectAll($sql);
 			if(empty($request))
 			{
-				$queryUpdate = "UPDATE rol SET nombrerol = ?, descripcion = ?, status = ? WHERE idrol = $this->intIdRol";
+				$queryUpdate = "UPDATE Rol SET nombreRol = ?, descripcion = ?, estado = ? WHERE idRol = $this->intIdRol";
 				$arrData = array($this->strRol, $this->strDescripcion, $this->intStatus);
 				$return = $this->Update($queryUpdate,$arrData);
 			}else
@@ -77,11 +77,11 @@
 		public function DeleteRol(int $idRol)
 		{
 			$this->intIdRol = $idRol;
-			$sql = "SELECT * FROM persona WHERE rolid = {$this->intIdRol}";
+			$sql = "SELECT * FROM persona WHERE idRol = {$this->intIdRol}";
 			$request = $this->SelectAll($sql);
 			if(empty($request))
 			{
-				$queryUpdate = "UPDATE rol SET status = ? WHERE idrol = $this->intIdRol";
+				$queryUpdate = "UPDATE rol SET estado = ? WHERE idrol = $this->intIdRol";
 				$arrData = array(0);
 				$request = $this->Update($queryUpdate,$arrData);
 				if($request)
