@@ -21,6 +21,9 @@
     </section>
     <section class="login-content">
       <div class="logo">
+      <h1><a href="<?=BaseUrl();?>">
+              <img src="<?=media();?>/images/logo-01.png" width="100px" height="100px" alt="logo">
+            </a></h1>
       </div>
       <div class="login-box">
         <div id="divLoading">

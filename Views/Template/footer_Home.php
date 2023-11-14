@@ -20,12 +20,15 @@
 							</a>
 						</li>
 					</ul>
+					<h4 class="stext-301 cl0 p-b-30">
+						<a href="#" data-toggle="modal" data-target="#modalAyuda"> Preguntas Frecuentes</a>
+					</h4>
 				</div>
 
 				<div class="col-sm-6 col-lg-4 p-b-50">
 					<h4 class="stext-301 cl0 p-b-30">
 						Contacto
-					</h4>
+					
 
 					<p class="stext-107 cl7 size-201">
 						Avenida siempre viva # 123 <br>

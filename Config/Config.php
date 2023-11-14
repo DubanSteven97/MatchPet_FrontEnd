@@ -77,6 +77,7 @@
 	const URLGETORDENMP = URLMERCADOPAGO."/merchant_orders/";
 	const URLREENVOLSOMP = "/refunds";
 
+	const SHAREDHASH = "AdoptaNoCompres";
 
 	const KEYTASACAMBIO = "Z1rthZIKB8xx7we6m44l4ImeXXoxQAVg";
 
