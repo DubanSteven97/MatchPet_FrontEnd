@@ -157,15 +157,19 @@ function fntViewUsersByOrganizacio(idorganizacion)
 			let objData = JSON.parse(request.responseText);
 			if(objData.status)
 			{
-				$('#modalViewUserByOrganizacion').modal('show');
-
+				// Limpiar la tabla antes de agregar nuevas filas
+				var table = document.getElementById('tableUsersByOrganizaciones');
+				while (table.rows.length > 0) {
+					table.deleteRow(0);
+				}
 				
+				$('#modalViewUserByOrganizacion').modal('show');
 				Object.entries(objData.data).forEach(([key, value]) =>{
 					var estado = htmlStatus = value.estado  == 1 ? '<span class="badge badge-success">Activo</span>' : '<span class="badge badge-danger">Inactivo</span>';
 					var fila = "<tr><td>" + value.idPersona+ "</td><td>" + value.nombres+ ' '+ value.apellidos  +"</td><td>" + value.email + "</td><td>" +value.numero_identificacion + "</td><td>" + value.telefono + "</td><td>" + estado + "</td></tr>";
 					document.getElementById('tableUsersByOrganizaciones').insertRow(-1).innerHTML =fila;
 				});
-				
+
 			}else
 			{
 				swal("¡Error!", objData.msg, "error");
