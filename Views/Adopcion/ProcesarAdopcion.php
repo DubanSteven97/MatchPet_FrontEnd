@@ -1,87 +1,6 @@
 <?php 
-	HeaderTienda($data);
-
-	MercadoPago\SDK::setAccessToken(ACCESSTOKENMERCADOPAGO);
-	if(isset($_SESSION['login'])){
-
-		$preference = new MercadoPago\Preference();
-
-
-		$preference->back_urls = array("success"=>BASE_URL_H.'/Tienda/ResponsePedido',
-										"failure"=>BASE_URL_H.'/Tienda/ResponsePedido',
-										"pending"=>BASE_URL_H.'/Tienda/ResponsePedido');
-
-		/*$preference->taxes = array("type" => "IVA",
-									"value" => 19);*/
-		$payer = new MercadoPago\Payer();
-		$payer->name =$_SESSION['userData']['nombres'];
-		$payer->surname=$_SESSION['userData']['apellidos'];
-		$payer->email=$_SESSION['userData']['email_user'];
-	}
-
-		// Crea un ítem en la preferencia
-		$productos = [];
-		$subTotal = 0;
-		$total = 0;
-		foreach ($_SESSION['arrCarrito'] as $producto) 
-		{	
-			if(isset($_SESSION['login'])){
-				$item = new MercadoPago\Item();
-				$item->id = $producto['idproducto'];
-				$item->title = $producto['producto'];
-				$item->quantity = $producto['cantidad'];
-				$item->unit_price = intval($producto['precio']);
-				$item->picture_url = $producto['imagen'];
-				$item->currency_id = MONEDA;
-				array_push($productos, $item);
-			}
-			$subTotal += $producto['precio']*$producto['cantidad'];
-		}
-		$item = new MercadoPago\Item();
-		$item->id = 0;
-		$item->title = 'Costo de envío';
-		$item->quantity = 1;
-		$item->unit_price = COSTOENVIO;
-		$item->currency_id = MONEDA;
-		array_push($productos, $item);
-		if(isset($_SESSION['login'])){
-
-			$preference->payer = $payer;
-			$preference->items = $productos;
-			$preference->save();
-		}
-	$total = $subTotal + COSTOENVIO;
+	HeaderHome($data);
 ?>
-
-<script src="https://sdk.mercadopago.com/js/v2"></script>
-<script src="https://www.paypal.com/sdk/js?client-id=<?=IDCLIENTEPAYPAL;?>&currency=<?=CURRENCY;?>"></script>
-<!-- Modal -->
-<div class="modal fade" id="modalTerminos" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Términos y Condiciones</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Non deserunt exercitationem, ratione, quam, quos dolore facere veniam in voluptate ea voluptatem. Quae repellendus numquam optio, iste explicabo, facilis architecto alias. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque cum nobis ea ipsum iure consequatur illo molestiae recusandae eligendi facilis quibusdam dolorem molestias, aperiam quae facere repellendus? Iste, modi, iusto. <br> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<br><br><br>
-<hr>
 <!-- breadcrumb -->
 <div class="container">
 	<div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
@@ -365,4 +284,4 @@ if(isset($_SESSION['login'])){
 	});
 </script>
 <?php }?>
-<?php FooterTienda($data);?>
+<?php FooterHome($data);?>

@@ -54,9 +54,11 @@
 						<?=$arrAnimal->edad." Años.";?>
 						</span>
 
-						<?=$arrAnimal->descripcion;?>
+						<?=$arrAnimal->descripcion;?><br>
 						
-						
+						<a href="<?= BaseUrl(); ?>/Adopcion" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
+							Iniciar proceso de adopción
+						</a>
 						<!--  -->
 						<div class="flex-w flex-m p-l-100 p-t-40 respon7">
 							<div class="flex-m bor9 p-r-10 m-r-11">
