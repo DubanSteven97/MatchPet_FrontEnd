@@ -157,10 +157,14 @@ function fntViewUsersByOrganizacio(idorganizacion)
 			let objData = JSON.parse(request.responseText);
 			if(objData.status)
 			{
-				// Limpiar la tabla antes de agregar nuevas filas
 				var table = document.getElementById('tableUsersByOrganizaciones');
-				while (table.rows.length > 0) {
-					table.deleteRow(0);
+
+				// Obtén el número de filas en la tabla, excluyendo el encabezado
+				var rowCount = table.rows.length;
+				
+				// Itera sobre las filas (comenzando desde el final para evitar problemas de índice)
+				for (var i = rowCount - 1; i > 0; i--) {
+					table.deleteRow(i);
 				}
 				
 				$('#modalViewUserByOrganizacion').modal('show');
