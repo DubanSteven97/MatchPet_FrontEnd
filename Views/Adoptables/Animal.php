@@ -55,7 +55,7 @@
 
 						<?=$arrAnimal->descripcion;?><br>
 						
-						<a href="<?= BaseUrl(); ?>/Adopcion" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
+						<a href="<?= BaseUrl(); ?>/ProcesoAdopcion/ProcesoAdopcion?idAnimal=<?=$arrAnimal->idAnimal;?>& nombreAnimal=<?=$arrAnimal->nombre;?>& idOrganizacionAnimal=<?=$arrAnimal->idOrganizacion;?>" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
 							Iniciar proceso de adopción
 						</a>
 						<!--  -->

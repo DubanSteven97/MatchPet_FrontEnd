@@ -19,7 +19,6 @@ require_once("Libraries/Core/Mysql.php");
 		public function InsertClienteT(string $nombres, string $apellidos, int $telefono, string $email, string $password, int $rolId)
 		{
 			$this->con = new Mysql();
-
 			$this->strNombres = $nombres;
 			$this->strApellidos = $apellidos;
 			$this->intTelefono = $telefono;
@@ -30,12 +29,12 @@ require_once("Libraries/Core/Mysql.php");
 			
 			$return = 0;
 			$sql = "SELECT * FROM persona WHERE
-					email_user = '{$this->strEmail}'";
+					email= '{$this->strEmail}'";
 			$request = $this->con->SelectAll($sql);
 
 			if(empty($request))
 			{
-				$query_insert = "INSERT INTO persona (nombres, apellidos, telefono, email_user, password, rolid, status) VALUES (?,?,?,?,?,?,?)";
+				$query_insert = "INSERT INTO persona (nombres, apellidos, telefono, email, password, idrol, estado) VALUES (?,?,?,?,?,?,?)";
 				$arrData = array($this->strNombres,
 								$this->strApellidos,
 								$this->intTelefono,

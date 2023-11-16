@@ -31,27 +31,35 @@
 		public function GetAnimales()
 		{
 			$idOrhanizacion = 0;
-			$url = APP_URL."/Animal/GetAnimales/".$idOrhanizacion;
+			$url = APP_URL . "/Animal/GetAnimales/" . $idOrhanizacion;
 			$arrData = PeticionGet($url, "application/json", "");
 			$ahora = new DateTime(date("Y-m-d"));
-			for($p=0;$p<count($arrData);$p++){
-				$nacimiento = new DateTime($arrData[$p]->fecha_nacimiento);
-				$diferencia = $ahora->diff($nacimiento);
-				$arrData[$p]->edad = $diferencia->format("%y");
-				$intidAnimal = $arrData[$p]->idAnimal; 
-				$url_img = APP_URL."/Animal/GetImgByAnimal/".$intidAnimal;
-				$requestImg = PeticionGet($url_img, "application/json", "");
-				if(count($requestImg)>0)
-				{
-					for ($i=0; $i < count($requestImg); $i++) { 
-						$requestImg[$i]->url_image = $requestImg[$i]->img;
+		
+			$animalesFiltrados = [];
+		
+			for ($p = 0; $p < count($arrData); $p++) {
+				if ($arrData[$p]->estado == 1) {
+					$nacimiento = new DateTime($arrData[$p]->fecha_nacimiento);
+					$diferencia = $ahora->diff($nacimiento);
+					$arrData[$p]->edad = $diferencia->format("%y");
+		
+					$intidAnimal = $arrData[$p]->idAnimal;
+					$url_img = APP_URL . "/Animal/GetImgByAnimal/" . $intidAnimal;
+					$requestImg = PeticionGet($url_img, "application/json", "");
+		
+					if (count($requestImg) > 0) {
+						for ($i = 0; $i < count($requestImg); $i++) {
+							$requestImg[$i]->url_image = $requestImg[$i]->img;
+						}
 					}
+		
+					$arrData[$p]->images = $requestImg;
+		
+					// Agregar el animal al array resultante
+					$animalesFiltrados[] = $arrData[$p];
 				}
-				$arrData[$p]->images = $requestImg;
-				
 			}
-
-			return $arrData;
+			return $animalesFiltrados;
 		}
 
 		public function TipoAnimal($params)
@@ -315,8 +323,7 @@
 				$strApellidos = ucwords(StrClean($_POST['txtApellido']));
 				$intTelefono = intval(StrClean($_POST['txtTelefono']));
 				$strEmail = strtolower(StrClean($_POST['txtEmailCliente']));
-				$intTipoId = intval($this->GetIdRolT('Cliente'));
-
+				$intTipoId = intval($this->GetIdRolT('Amigo'));
 				$request = "";
 				$strPassword = PassGenerator();
 				$strPasswordEncript = hash("SHA256",$strPassword);
@@ -328,16 +335,17 @@
 												$strPasswordEncript,
 												$intTipoId
 												);
-				if($request>0)
+				if($request>0 && $request != "exist")
 				{
+					
 					$arrResponse = array(	'status'=> true,
 											'msg'	=> 'Datos guardados correctamente.');
 					$nombreUsuario = $strNombres.' '.$strApellidos;
-
+					
 					$dataUsuario = array('nombreUsuario' => $nombreUsuario,
 									'email' => $strEmail,
 									'password' => $strPassword,
-									'asunto' => 'Bienvenido a tu tienda en línea');
+									'asunto' => 'Bienvenido a MatchPet');
 					$_SESSION['idUser'] = $request;
 					$_SESSION['login'] = true;	
 					$this->login->SessionLogin($request);

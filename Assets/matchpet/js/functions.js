@@ -1,3 +1,5 @@
+var divLoading = document.querySelector("#divLoading");
+
 $(".js-select2").each(function(){
 	$(this).select2({
 		minimumResultsForSearch: 20,
@@ -162,7 +164,7 @@ if(document.querySelector("#formRegister")){
 
 		divLoading.style.display = "flex";
 		let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-		let ajaxUrl = BaseUrl+'/Tienda/Registro';
+		let ajaxUrl = BaseUrl+'/Adoptables/Registro';
 		let formData = new FormData(formRegister);
 		request.open("POST",ajaxUrl,true);
 		request.send(formData);
@@ -172,7 +174,11 @@ if(document.querySelector("#formRegister")){
 				let objData = JSON.parse(request.responseText);
 				if(objData.status)
 				{					
-					window.location.reload(false);					
+					swal("¡Bienvenido a MatchPet!", objData.msg, "success").then((value) => {
+
+						window.location.reload(false);	
+					});
+								
 				}else
 				{
 					swal("¡Error!", objData.msg, "error");
@@ -320,6 +326,34 @@ if(document.querySelector("#condiciones"))
 			document.querySelector('#optMetodoPago').classList.add("notBlock");
 		}
 	});
+}
+
+function confirmacionAdopcion(idPersona,idAnimal,idOrganizacionAnimal) {
+	divLoading.style.display = "flex";
+	let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP')
+	let ajaxUrl = BaseUrl+'/ProcesoAdopcion/SolicitudAdopcion';
+	let formData = new FormData();
+	formData.append('idPersona',idPersona);
+	formData.append('idAnimal',idAnimal);
+	formData.append('idOrganizacionAnimal',idOrganizacionAnimal);
+	request.open("POST",ajaxUrl,true);
+	request.send(formData);
+	request.onreadystatechange = function(){
+        if(request.readyState == 4 && request.status == 200){
+            let objData = JSON.parse(request.responseText);
+            if(objData.estado)
+            {    
+				swal("¡Proceso exitoso!", objData.msg, "success").then((value) => {
+
+					window.location.href = BaseUrl;
+				});
+            }else
+            {
+                swal("¡Error!", objData.msg, "error");
+            }
+        }
+    }
+
 }
 
 function fntViewPago()
