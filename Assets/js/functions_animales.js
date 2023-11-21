@@ -332,23 +332,7 @@ function fntViewAnimal(idAnimal)
 			if(objData.status)
 			{	
 				let htmlImage = "";
-				switch (objData.data.estado) {
-					case 1:
-						estado = '<span class="badge badge-success">Activo</span>';
-						break;
-					case 2:
-						estado = '<span class="badge badge-danger">Inactivo</span>';
-						break;
-					case 3:
-						estado = '<span class="badge badge-primary">En proceso</span>';
-						break;
-					case 4:
-						estado ='<span class="badge badge-success">Adoptado</span>';
-						break;
-					default:
-						estado = '<span class="badge badge-secondary">Estado desconocido</span>';
-						break;
-				}
+				let estado = objData.data.estado == 1 ? '<span class="badge badge-success">Activo</span>':'<span class="badge badge-danger">Inactivo</span>';
 
 				document.querySelector("#celCodigo").innerHTML = objData.data.idAnimal;
 				document.querySelector("#celNombre").innerHTML = objData.data.nombre;

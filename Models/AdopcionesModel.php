@@ -62,10 +62,13 @@
 			$returnUpdateProceso = $this->Update($queryUpdateProceso,$arrDataUpdateProceso);
 
 			$queryUpdateAnimal = "UPDATE Animal SET estado = ? WHERE idAnimal = $this->intIdAnimal";
-			$arrDataUpdateAnimal = array(4);
+			$arrDataUpdateAnimal = array(2);
 			$returnUpdateAnimal = $this->Update($queryUpdateAnimal,$arrDataUpdateAnimal);
 
-	
+			$descripcion = "Rechazado - Para mas detalle ponte en contacto con la organización"; 
+			$queryOtrosProcesos = "UPDATE ProcesoAdopcion SET requisitos = ?, estado = ? WHERE idProcesoAdopcion IN (SELECT idProcesoAdopcion FROM ProcesoAdopcion  WHERE  idAnimal = $this->intIdAnimal AND idProcesoAdopcion != $this->intIdProcesoAdopcion)";
+			$arrDataUpdate = array($descripcion,4);
+			$request = $this->Update($queryOtrosProcesos,$arrDataUpdate);
 			if($returnUpdateProceso != null & $returnUpdateAnimal != null){
 				return $return="Exito";
 			}

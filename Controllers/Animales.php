@@ -45,14 +45,7 @@
 						{
 							$arrData[$i]->estado = '<span class="badge badge-danger">Inactivo</span>';
 						}
-						if($arrData[$i]->estado==3)
-						{
-							$arrData[$i]->estado  = '<span class="badge badge-primary">En proceso</span>';
-						}
-						if($arrData[$i]->estado==4)
-						{
-							$arrData[$i]->estado = '<span class="badge badge-success">Adoptado</span>';
-						}
+
 
 						if($_SESSION['permisosMod']['r']){
 							$btnView = '<button class="btn btn-info btn-sm btnViewProducto" onClick= "fntViewAnimal('.$arrData[$i]->idAnimal.')" title="Ver Producto"><i class="fas fa-eye"></i></button>';
