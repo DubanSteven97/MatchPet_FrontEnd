@@ -31,11 +31,11 @@
 	const EMAIL_REMITENTE = "info@MatchPet.com";
 	const NOMBRE_EMPRESA = "MatchPet";
 	const NOMBRE_APP = "MatchPet";
-	const WEB_EMPRESA = "www.MatchPet.com";
+	const WEB_EMPRESA = BASE_URL_H;
 
 	const DIRECCION_EMPRESA = "Calle Siempre Viva 123, Bogotá DC, Colombia";
 	const TELEFONO_EMPRESA = "+(57)320 3997016";
-	const EMAIL_PEDIDOS = "info@MatchPet.com";
+	const EMAIL_DONACIONES = "info@MatchPet.com";
 	const EMAIL_EMPRESA = "info@MatchPet.com";
 
 	const CAT_SLIDER = "7,2,3";

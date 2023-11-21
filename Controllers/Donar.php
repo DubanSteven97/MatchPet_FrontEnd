@@ -98,12 +98,20 @@
 														$status);
 				if($request_pedido>0)
 				{
+					$transaccion = array('idtransaccion' => $idtransaccion,
+					'datostransaccion' => $datostransaccion,
+					'personaid' => $personaid,
+					'monto' => $monto,
+					'tipopagoid' => $tipopagoid,
+					'idOrganizacion' => $idOrganizacion,
+					'status' => $status);
 					$dataEmailOrden = array('asunto' => "Se ha realizado la donación No. ".$request_pedido,
-											'email' => $_SESSION['userData']['email_user'],
+											'email' => $_SESSION['userData']['email'],
+											'cliente' => $_SESSION['userData']['email'],
 											'emailCopia' => EMAIL_DONACIONES,
-											'pedido' => $request_pedido);
-
-					//SendEmail($dataEmailOrden,'ConfirmarOrden');
+											'transaccion' => $transaccion,
+											'tipo' => 'donacion');
+					SendEmailPhpMailer($dataEmailOrden,'ConfirmarTransaccion');
 
 					$orden = openssl_encrypt($request_pedido, METHODENCRIPT, KEY);
 					$transaccion = openssl_encrypt($idtransaccion, METHODENCRIPT, KEY);
