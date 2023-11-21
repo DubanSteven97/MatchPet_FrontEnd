@@ -3,6 +3,7 @@
 	$arrAnimal = $data['animal'];
 
 	$urlShared = BaseUrl()."/adoptables/animal/".$arrAnimal->idAnimal."/".$arrAnimal->ruta;
+
 ?>
 <br><br><br>
 <hr>
@@ -16,7 +17,9 @@
 				<div class="col-md-6 col-lg-7 p-b-30">
 					<div class="p-l-25 p-r-30 p-lr-0-lg">
 						<div class="wrap-slick3 flex-sb flex-w">
-							<div class="wrap-slick3-dots"></div>
+							<div class="wrap-slick3-dots">
+								
+							</div>
 							<div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
 
 							<div class="slick3 gallery-lb">
@@ -48,6 +51,7 @@
 						<h4 class="mtext-105 cl2 js-name-detail p-b-14">
 							<?=$arrAnimal->nombre;?>
 						</h4>
+						<h5><?=$arrAnimal->organizacionNombre;?></h5>
 
 						<span class="mtext-106 cl2">
 						<?=$arrAnimal->edad." Años.";?>

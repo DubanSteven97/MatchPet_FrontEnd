@@ -408,3 +408,20 @@ if(document.querySelector("#btnComprar")){
     	}
 	},false);
 }
+
+
+function fntSelectOrg(idOrg)
+{
+	id = '#selectOrg'+idOrg;
+	select = $(id);
+	$('.cardOrg').removeClass("border-primary");
+	if(select.hasClass("border-primary"))
+	{
+		select.removeClass("border-primary");
+	}
+	else
+	{
+		select.addClass("border-primary");
+	}
+	
+}

@@ -42,7 +42,6 @@
 					$nacimiento = new DateTime($arrData[$p]->fecha_nacimiento);
 					$diferencia = $ahora->diff($nacimiento);
 					$arrData[$p]->edad = $diferencia->format("%y");
-		
 					$intidAnimal = $arrData[$p]->idAnimal;
 					$url_img = APP_URL . "/Animal/GetImgByAnimal/" . $intidAnimal;
 					$requestImg = PeticionGet($url_img, "application/json", "");
@@ -142,6 +141,9 @@
 				$nacimiento = new DateTime($arrData->fecha_nacimiento);
 				$diferencia = $ahora->diff($nacimiento);
 				$arrData->edad = $diferencia->format("%y");
+				$url_org = APP_URL."/Organizacion/GetOrganizacion/".$arrData->idOrganizacion;
+				$arrData_org = PeticionGet($url_org, "application/json", "");
+				$arrData->organizacionNombre = $arrData_org->nombre;
 				$intidAnimal = $arrData->idAnimal; 
 				$url_img = APP_URL."/Animal/GetImgByAnimal/".$intidAnimal;
 				$requestImg = PeticionGet($url_img, "application/json", "");

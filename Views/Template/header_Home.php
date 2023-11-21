@@ -87,7 +87,7 @@ $infoPagePreguntas = !empty(GetPageRout('preguntas-frecuentes')) ? GetPageRout('
 							if(isset($_SESSION['login']))
 							{
 						?>	
-						<a href="<?=BaseUrl();?>/dashboard" class="flex-c-m trans-04 p-lr-25">
+						<a href="<?=BaseUrl();?>/Usuarios/Perfil" class="flex-c-m trans-04 p-lr-25">
 							Mi cuenta
 						</a>
 						<?php
@@ -174,14 +174,18 @@ $infoPagePreguntas = !empty(GetPageRout('preguntas-frecuentes')) ? GetPageRout('
 
 		<!-- Menu Mobile -->
 		<div class="menu-mobile">
-		<?php
-		if(isset($_SESSION['login']))
-		{
-		?>	
+	
 			<ul class="topbar-mobile">
 				<li>
 					<div class="left-top-bar">
-						Bienvenido: <?=$_SESSION['userData']['nombres']?> <?=$_SESSION['userData']['apellidos']?>
+						<?php
+							if(isset($_SESSION['login']))
+							{
+						?>	
+								Bienvenido usuario: <?=$_SESSION['userData']['nombres']?> <?=$_SESSION['userData']['apellidos']?>
+						<?php
+							}
+						?>
 					</div>
 				</li>
 
@@ -190,20 +194,33 @@ $infoPagePreguntas = !empty(GetPageRout('preguntas-frecuentes')) ? GetPageRout('
 						<a href="#" data-toggle="modal" data-target="#modalAyuda" class="flex-c-m trans-04 p-lr-25">
 							Ayuda
 						</a>
-
-						<a href="<?=BaseUrl();?>/Usuarios/perfil" class="flex-c-m p-lr-10 trans-04">
+						<?php
+						if(isset($_SESSION['login']))
+						{
+						?>	
+						<a href="<?=BaseUrl();?>/Usuarios/Perfil" class="flex-c-m p-lr-10 trans-04">
 							Mi cuenta
 						</a>
-
+						<?php
+						}
+						if(isset($_SESSION['login']))
+						{
+						?>	
 						<a href="<?=BaseUrl();?>/Logout" class="flex-c-m p-lr-10 trans-04">
 							Salir
 						</a>
+						<?php
+						}else{
+						?>
+						<a href="<?=BaseUrl();?>/login" class="flex-c-m p-lr-10 trans-04">
+							Iniciar Sesión
+						</a>
+						<?php
+						}
+						?>
 					</div>
 				</li>
 			</ul>
-		<?php
-		}
-		?>
 			<ul class="main-menu-m">
 				<li>
 					<a href="<?= BaseUrl(); ?>">Inicio</a>

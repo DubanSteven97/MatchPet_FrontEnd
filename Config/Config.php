@@ -1,9 +1,9 @@
 <?php
 
 #	const HOST = "matchpetucentral.online";
-	const HOST = "localhost:80";
-	const BASE_URL = "http://".HOST."/MatchPet";
-	const BASE_URL_H = HOST."/MatchPet";
+const HOST = "localhost:80";
+const BASE_URL = "http://".HOST."/MatchPet";
+const BASE_URL_H = HOST."/MatchPet";
 
 	date_default_timezone_set('America/Bogota');
 
@@ -61,16 +61,9 @@
 	const VALORIVA = 19;
 
 
-	const URLPAYPAL = "https://api-m.sandbox.paypal.com";
-	const IDCLIENTEPAYPAL = "AcC2eApkOGCPo2k03LryQEkZJXIGEzC_UD-Xh8AedUUmLOIImINbEMkChJjAaexBTLgvRXb0IkUMlLET";
-	const SECRETCLIENTEPAYPAL = "EO0IGxZBSKMHrrWJdsQysPwLDShcZkdU9xSH536bIdz_u2HuCPD5uz7JojS-YOkXF7oi_NhLlupNrybJ";
-	const URLGETPAYMENTPP = URLPAYPAL."/v2/payments/captures/";
-	const URLGETORDENPP =URLPAYPAL."/v2/checkout/orders/";
-	const URLREENVOLSOPP = "/refund";
-
 	const URLMERCADOPAGO = "https://api.mercadopago.com";
-	const ACCESSTOKENMERCADOPAGO = "TEST-530799249801378-101016-f19e98f43d54b91941e72dc3ea42ad11-383773505";
-	const KEYPUBLICMERCADOPAGO = "TEST-eac798f6-f505-491b-9bc3-f35cbfbb4bd8";
+	const ACCESSTOKENMERCADOPAGO = "TEST-6005038764479624-111417-0561622cb25160efc80af1e5877758da-383773505";
+	const KEYPUBLICMERCADOPAGO = "TEST-4fa157c6-2e2d-4f14-a67b-d5aae08b08a1";
 	const IDAPPMERCADOPAGO = "4889927137089308";
 	const SECRETAPPMERCADOPAGO = "R3FI1VJetdTT84vfuY888xeNzEVdOmZf";
 	const URLGETPAYMENTMP = URLMERCADOPAGO."/v1/payments/";
@@ -78,8 +71,6 @@
 	const URLREENVOLSOMP = "/refunds";
 
 	const SHAREDHASH = "AdoptaNoCompres";
-
-	const KEYTASACAMBIO = "Z1rthZIKB8xx7we6m44l4ImeXXoxQAVg";
 
 	const STATUS = array('Completo','Aprobado','Cancelado','Reembolsado','Pendiente','Entregado');
 
