@@ -93,8 +93,8 @@
 					<div class="x_sgwrap">
 						<p>Hola <?= $data['nombreUsuario']; ?></p>
 					</div>
-					<p>Bienvenido a nuestra tienda en línea.</p>
-					<p>Ahora puedes realizar tus compras en línea sin salir de casa.</p>
+					<p>¡Bienvenido a MatchPet!.</p>
+					<p>Ahora puedes ayudar a un animal sin hogar.</p>
 					<p>Accese a tu cuenta con tus credenciales:</p>
 					<p>Usuario: <strong><?= $data['email']; ?></strong></p>
 					<p>Contraseña: <strong><?= $data['password']; ?></strong></p>

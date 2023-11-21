@@ -1,4 +1,13 @@
 <?php
+    require 'Libraries/PHPMailer/src/Exception.php';
+    require 'Libraries/PHPMailer/src/PHPMailer.php';
+    require 'Libraries/PHPMailer/src/SMTP.php';
+
+
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\SMTP;
+    use PHPMailer\PHPMailer\Exception;
+
 
 	function BaseUrl()
 	{
@@ -73,6 +82,62 @@
     }
 
 	//Envio de correos
+    function SendEmailPhpMailer($data,$template){
+
+        require_once('Models/ConfiguracionesModel.php');
+    	$nombreApp = new ConfiguracionesModel();
+    	$idEmpresa = 1;
+    	$arrConfiguraciones = $nombreApp->DatosCorreo($idEmpresa);
+        $arrCorreo = $nombreApp->DatosEmpresa($idEmpresa);
+
+        $asunto = $data['asunto'];
+        $emailDestino = $arrCorreo['correo_empresa'];
+        $nombreDestino = $arrConfiguraciones['nombre_remitente'];
+        $cliente = $data["cliente"];
+        $remitente = $arrConfiguraciones["correo_remitente"];
+        $emailCopia = !empty($data['emailCopia']) ? $data['emailCopia'] : "";
+    
+
+        $mail = new PHPMailer(true);
+
+        try {
+			$mail->isSMTP();
+			$mail->Host       = 'ssl://smtp.gmail.com';
+			$mail->SMTPAuth   = true;
+			$mail->Username   = 'matchpet.23@gmail.com';
+			$mail->Password   = 'rdbjlotqlppklvvo';  
+			$mail->SMTPOptions = array(
+				'ssl' => array(
+					'verify_peer' => false,
+					'verify_peer_name' => false,
+					'allow_self_signed' => true
+				)
+			);    
+			$mail->Port       = 465;            
+
+
+            $mail->setFrom( $emailDestino,  $nombreDestino);
+            $mail->addAddress($cliente);    
+            $mail->addCC($emailCopia);
+
+            //Content
+            $mail->isHTML(true);                                  //Set email format to HTML
+            $mail->Subject = $asunto;
+            ob_start();
+            $Plantilla = require_once("Views/Template/Email/".$template.".php");
+            $mensaje = ob_get_clean();
+
+            //Cuerpo del Correo "Plantilla"
+            $mail->Body    =  $mensaje;
+            $mail->CharSet = 'UTF-8';
+
+            $mail->send();
+            return True;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
     function SendEmail($data,$template)
     {
     	require_once('Models/ConfiguracionesModel.php');
