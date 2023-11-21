@@ -346,12 +346,15 @@
 					
 					$dataUsuario = array('nombreUsuario' => $nombreUsuario,
 									'email' => $strEmail,
+									"cliente" => $strEmail,
+									"emailCopia" => $strEmail,
 									'password' => $strPassword,
-									'asunto' => 'Bienvenido a MatchPet');
+									'nombreUsuario' => $strNombres ." ". $strApellidos, 
+									'asunto' => '¡Bienvenido a MatchPet!');
 					$_SESSION['idUser'] = $request;
 					$_SESSION['login'] = true;	
 					$this->login->SessionLogin($request);
-					//SendEmail($dataUsuario,'Bienvenida');
+					SendEmailPhpMailer($dataUsuario,'Bienvenida');
 
 				}else if($request == 'exist')
 				{
