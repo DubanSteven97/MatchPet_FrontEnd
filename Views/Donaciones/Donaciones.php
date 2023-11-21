@@ -21,11 +21,11 @@
                   <thead>
                     <tr>
                       <th>Id</th>
+                      <th>Transacción</th>
                       <th>Amigo</th>
-                      <th>Animal</th>
                       <th>Organización</th>
-                      <th>Fecha solicitud</th>
-                      <th>Descipción</th>
+                      <th>Fecha</th>
+                      <th>Monto</th>
                       <th>Estado</th>
                       <th>Acciones</th>
                     </tr>
