@@ -16,7 +16,7 @@
             <div class="tile">
                 <div class="tile-body">
                     <form id="formEmpresa" name="formEmpresa">
-                        <h2>Datos de la empresa</h2>
+                        <h2>Datos de la aplicación</h2>
                         <hr>
                         <div class="form-row">
                             <div class="form-group col-md-6">
