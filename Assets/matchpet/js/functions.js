@@ -425,3 +425,100 @@ function fntSelectOrg(idOrg)
 	}
 	
 }
+
+if(document.querySelector("#frmSuscripcion")){
+	frmSuscripcion = document.querySelector("#frmSuscripcion");
+	frmSuscripcion.addEventListener('submit', function(e){
+		e.preventDefault();
+		let nombre = document.querySelector("#nombreSuscripcion").value;
+    	let correo = document.querySelector("#emailSuscripcion").value;
+
+    	if(nombre == "")
+    	{
+    		swal("","El nombre es obligatorio.", "error");
+    		return;
+    	}
+
+    	if(!TestEmail(correo))
+    	{
+    		swal("","Ingrese un correo válido.", "error");
+    		return;
+    	}
+	
+		divLoading.style.display = "flex";
+		let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP')
+		let ajaxUrl = BaseUrl+'/Suscriptores/SetSuscripcion';
+		let formData = new FormData(frmSuscripcion);
+		request.open("POST",ajaxUrl,true);
+		request.send(formData);
+		request.onreadystatechange = function(){
+			if(request.readyState != 4) return;
+			if(request.status == 200){
+				let objData = JSON.parse(request.responseText);
+				if(objData.status)
+				{
+					swal("", objData.msg, "success");
+					document.querySelector('#frmSuscripcion').reset();
+				}else
+				{
+					swal("", objData.msg, "error");
+				}
+			}
+			divLoading.style.display = "none";
+			return false;
+		}
+    	
+	},false);
+}
+
+if(document.querySelector("#frmContacto")){
+	frmContacto = document.querySelector("#frmContacto");
+	frmContacto.addEventListener('submit', function(e){
+		e.preventDefault();
+		let nombre = document.querySelector("#nombreContacto").value;
+    	let correo = document.querySelector("#emailContacto").value;
+    	let mensaje = document.querySelector("#mensaje").value;
+
+    	if(nombre == "")
+    	{
+    		swal("","El nombre es obligatorio.", "error");
+    		return;
+    	}
+
+    	if(!TestEmail(correo))
+    	{
+    		swal("","Ingrese un correo válido.", "error");
+    		return;
+    	}
+
+    	if(mensaje == "")
+    	{
+    		swal("","El mensaje es obligatorio.", "error");
+    		return;
+    	}
+	
+		divLoading.style.display = "flex";
+		let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP')
+		let ajaxUrl = BaseUrl+'/Contacto/SetContacto';
+		let formData = new FormData(frmContacto);
+		request.open("POST",ajaxUrl,true);
+		request.send(formData);
+		request.onreadystatechange = function(){
+			if(request.readyState != 4) return;
+			if(request.status == 200){
+				let objData = JSON.parse(request.responseText);
+				if(objData.status)
+				{
+					swal("", objData.msg, "success");
+					document.querySelector('#frmContacto').reset();
+				}else
+				{
+					swal("", objData.msg, "error");
+				}
+			}
+			divLoading.style.display = "none";
+			return false;
+		}
+    	
+	},false);
+}

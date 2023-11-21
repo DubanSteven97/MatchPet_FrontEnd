@@ -104,7 +104,7 @@
 			$mail->isSMTP();
 			$mail->Host       = 'ssl://smtp.gmail.com';
 			$mail->SMTPAuth   = true;
-			$mail->Username   = 'matchpet.23@gmail.com';
+			$mail->Username   = EMAIL_REMITENTE;
 			$mail->Password   = 'rdbjlotqlppklvvo';  
 			$mail->SMTPOptions = array(
 				'ssl' => array(
