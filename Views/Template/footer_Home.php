@@ -59,9 +59,13 @@
 						Suscríbete
 					</h4>
 
-					<form>
+					<form id="frmSuscripcion" name="frmSuscripcion">
 						<div class="wrap-input1 w-full p-b-4">
-							<input class="input1 bg-none plh1 stext-107 cl7" type="text" name="email" placeholder="email@example.com">
+							<input class="input1 bg-none plh1 stext-107 cl7" type="text" name="nombreSuscripcion" placeholder="Nombre completo" id="nombreSuscripcion" required>
+							<div class="focus-input1 trans-04"></div>
+						</div><br>
+						<div class="wrap-input1 w-full p-b-4">
+							<input class="input1 bg-none plh1 stext-107 cl7" type="email" name="emailSuscripcion" placeholder="email@example.com" id="emailSuscripcion" required>
 							<div class="focus-input1 trans-04"></div>
 						</div>
 

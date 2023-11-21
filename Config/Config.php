@@ -28,15 +28,17 @@
 	const MONEDA = "COP";
 
 	const NOMBRE_REMITENTE = "MatchPet";
-	const EMAIL_REMITENTE = "info@MatchPet.com";
+	const EMAIL_REMITENTE = "matchpet.23@gmail.com";
 	const NOMBRE_EMPRESA = "MatchPet";
 	const NOMBRE_APP = "MatchPet";
 	const WEB_EMPRESA = BASE_URL_H;
 
 	const DIRECCION_EMPRESA = "Calle Siempre Viva 123, Bogotá DC, Colombia";
 	const TELEFONO_EMPRESA = "+(57)320 3997016";
-	const EMAIL_DONACIONES = "info@MatchPet.com";
-	const EMAIL_EMPRESA = "info@MatchPet.com";
+	const EMAIL_DONACIONES = "matchpet.23@gmail.com";
+	const EMAIL_EMPRESA = "matchpet.23@gmail.com";
+	const EMAIL_SUSCRIPCION = "matchpet.23@gmail.com";
+	const EMAIL_CONTACTO = "matchpet.23@gmail.com";
 
 	const CAT_SLIDER = "7,2,3";
 	const CAT_BANNER = "6,5,8";
