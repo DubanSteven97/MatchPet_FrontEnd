@@ -136,7 +136,6 @@ class RestClient
 
         $defaultHttpParams = self::$defaultParams;
         $connectionParams = array_merge($defaultHttpParams, $this->customParams);
-
         $query = '';
 
         if ($url_query > 0) {
@@ -145,7 +144,6 @@ class RestClient
         
         $address = $this->getArrayValue($connectionParams, 'address');
         $uri = $address . $requestPath;
-
         if ($query != '') {
             if (parse_url($uri, PHP_URL_QUERY)) {
                 $uri .= '&' . $query;
@@ -165,7 +163,6 @@ class RestClient
         $this->setHeaders($connect, $headers);
         $proxyAddress = $this->getArrayValue($connectionParams, 'proxy_addr');
         $proxyPort = $this->getArrayValue($connectionParams, 'proxy_port');
-        
         if (!empty($proxyAddress)) {
             $connect->setOption(CURLOPT_PROXY, $proxyAddress);
             $connect->setOption(CURLOPT_PROXYPORT, $proxyPort);
@@ -173,7 +170,6 @@ class RestClient
         if ($useSsl = $this->getArrayValue($connectionParams, 'use_ssl')) {
             $connect->setOption(CURLOPT_SSL_VERIFYPEER, $useSsl);
         }
-        $connect->setOption(CURLOPT_SSL_VERIFYPEER, false); //DEBUG EN DEV
         if ($sslVersion = $this->getArrayValue($connectionParams, 'ssl_version')) {
             $connect->setOption(CURLOPT_SSLVERSION, $sslVersion);
         }
@@ -185,6 +181,7 @@ class RestClient
         }
         
         $connect->setOption(CURLOPT_FOLLOWLOCATION, true);
+
         if ($formData) {
             $this->setData($connect, $formData);
         }
@@ -221,7 +218,7 @@ class RestClient
      * @throws Exception
      */
     public function get($uri, $options = [])
-    {   
+    {
         return $this->exec(array_merge(['get' => $uri], $options));
     }
 

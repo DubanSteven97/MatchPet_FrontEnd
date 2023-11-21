@@ -43,6 +43,7 @@ class SDK
         self::initialize();
       }
       self::$_config->configure(['ACCESS_TOKEN' => $access_token]);
+      
     }
 
     public static function getAccessToken(){

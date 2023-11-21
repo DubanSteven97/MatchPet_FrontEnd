@@ -59,7 +59,6 @@ class Config
      */
     public function __construct($path = null, $restClient = null)
     {
-
         $this->data = [];
         $this->_restclient = $restClient;
         if (is_file($path ?? '')) {
@@ -111,7 +110,6 @@ class Config
 
         if ($key == "ACCESS_TOKEN") { 
             $user = $this->getUserId($value);
-
             parent::set('USER_ID', $user['id']);
             parent::set('COUNTRY_ID', $user['country_id']);
         }
@@ -141,7 +139,6 @@ class Config
      */
     public function getUserId()
     {
-
         if (!$this->_restclient) {
             $this->_restclient = new RestClient();
             $this->_restclient->setHttpParam('address', $this->get('base_url'));

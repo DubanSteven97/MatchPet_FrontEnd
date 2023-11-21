@@ -7,6 +7,7 @@ use Exception;
  *
  * @package MercadoPago
  */
+#[\AllowDynamicProperties]
 abstract class Entity
 {
     /**
@@ -131,9 +132,8 @@ abstract class Entity
     /**
      * @return mixed
      */
-    public static function all($options = [])
+    public static function all($params = [], $options = [])
     {
-        $params = [];
         $class = get_called_class();
         $entity = new $class();
         $entities =  array();
@@ -247,6 +247,7 @@ abstract class Entity
         self::$_manager->setEntityQueryJsonData($this);
         
         $response = self::$_manager->execute($this, 'post', $options);
+
         if ($response['code'] == "200" || $response['code'] == "201") {
             $this->_fillFromArray($this, $response['body']);
             $this->_last = clone $this;

@@ -29,6 +29,7 @@
 	}
 
 ?>
+<script src="https://sdk.mercadopago.com/js/v2"></script>
 <!-- breadcrumb -->
 <div class="container">
 <br>

@@ -28,9 +28,6 @@ class CurlRequest
             throw new Exception("cURL extension not found. You need to enable cURL in your php.ini or another configuration you have.");
         }
         $this->handle = curl_init($uri);
-        curl_setopt($this->handle, CURLOPT_URL, $uri);
-        curl_setopt($this->handle, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($this->handle, CURLOPT_POST, true);
 
         return $this->handle;
     }
