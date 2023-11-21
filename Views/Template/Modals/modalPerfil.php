@@ -13,7 +13,7 @@
             <div class="form-row">
        			<div class="form-group col-md-6">
 	             	<label for="txtIdentificacion">Identificación <span class="required">*</span></label>
-	             	<input class="form-control" id="txtIdentificacion" name="txtIdentificacion" type="text" placeholder="Identificación del usuario" required value="<?= $_SESSION['userData']['identificacion']?>" readonly disabled>
+	             	<input class="form-control" id="txtIdentificacion" name="txtIdentificacion" type="text" placeholder="Identificación del usuario" required value="<?= $_SESSION['userData']['numero_identificacion']?>" readonly disabled>
 	            </div>     	
             </div>
 
@@ -35,7 +35,7 @@
 	            </div>
 	            <div class="form-group col-md-6">
 	              <label for="txtEmail">Correo</label>
-	              <input class="form-control valid validEmail" id="txtEmail" name="txtEmail" type="email" placeholder="Correo del usuario" required value="<?= $_SESSION['userData']['email_user']?>" readonly disabled>
+	              <input class="form-control valid validEmail" id="txtEmail" name="txtEmail" type="email" placeholder="Correo del usuario" required value="<?= $_SESSION['userData']['email']?>" readonly disabled>
 	            </div>		
        		</div>
 
@@ -49,7 +49,6 @@
               <input class="form-control" id="txtPasswordConfirm" name="txtPasswordConfirm" type="password" placeholder="Contraseña del usuario">
             </div>
 	        </div>
-
             <div class="tile-footer">
               <button class="btn btn-info" type="submit" id="btnActionForm"><i class="fa fa-fw fa-lg fa-check-circle"></i><span id="btnText">Actualizar</span></button>&nbsp;&nbsp;&nbsp;
               <button class="btn btn-danger" type="button" data-dismiss="modal"><i class="fa fa-fw fa-lg fa-times-circle"></i><span id="btnText">Cerrar</span></button>

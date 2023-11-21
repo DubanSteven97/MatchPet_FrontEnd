@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded',function(){
 			if(request.readyState != 4) return;
 			if(request.status == 200){
 				var objData = JSON.parse(request.responseText);
-				if(objData.status)
+				if(objData.estado)
 				{
 					$('#modalFormPerfil').modal("hide");
 					swal({

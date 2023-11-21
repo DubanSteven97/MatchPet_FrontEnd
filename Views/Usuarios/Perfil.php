@@ -15,8 +15,8 @@
           <div class="tile p-0">
             <ul class="nav flex-column nav-tabs user-tabs">
               <li class="nav-item"><a class="nav-link active" href="#user-dataPersonal" data-toggle="tab">Datos Personales</a></li>
-              <li class="nav-item"><a class="nav-link" href="#user-dataFiscal" data-toggle="tab">Datos Fiscales</a></li>
-              <li class="nav-item"><a class="nav-link" href="#user-dataPagos" data-toggle="tab">Pagos</a></li>
+              <!--<li class="nav-item"><a class="nav-link" href="#user-dataFiscal" data-toggle="tab">Datos Fiscales</a></li>
+              <li class="nav-item"><a class="nav-link" href="#user-dataPagos" data-toggle="tab">Pagos</a></li>-->
             </ul>
           </div>
         </div>
