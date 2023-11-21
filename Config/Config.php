@@ -1,24 +1,11 @@
 <?php
 
-#	const HOST = "matchpetucentral.online";
-	const HOST = "localhost:80";
-	const BASE_URL = "http://".HOST."/MatchPet";
+
+	const HOST = "matchpetucentral.online";
+	const BASE_URL = "https://".HOST."/MatchPet";
 	const BASE_URL_H = HOST."/MatchPet";
 
 	date_default_timezone_set('America/Bogota');
-
-		#ENVIROMENT DEV
-#	const DRIVER_SQL ="sqlsrv:server";
-#	const DATABASE="DBMatchpet";
-#	const PORT="10060";
-#	const HOSTNAME="DESKTOP-UIAKGPT";
-#	const USERNAME="root";
-#	const PASSWORD= "123456";
-
-#	const APP_URL = "https://localhost:7176/Matchpet";
-#	const APP_NAME = "MatchpetDEV";
-#	const APP_US = "devmatchpet";
-#	const APP_PS = "147852";
 
 	const DRIVER_SQL ="sqlsrv:server";
 	const DATABASE="DBMatchpet";
