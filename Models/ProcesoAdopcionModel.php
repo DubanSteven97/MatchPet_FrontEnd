@@ -32,13 +32,8 @@
 			$arrData = array($this->intIdPersona,$this->intIdAnimal, $this->intIdOrganizacion, $this->strFechaCreacion, $this->strDescripcion, $this->intStatus);
 			$returnInsert = $this->Insert($queryInsert,$arrData);
 
-
-			$queryUpdate = "UPDATE Animal SET estado = ? WHERE idAnimal = $this->intIdAnimal";
-			$arrDataUpdate = array(3);
-			$returnUpdate = $this->Update($queryUpdate,$arrDataUpdate);
-
 	
-			if($returnUpdate != null & $returnInsert != null){
+			if($returnInsert != null){
 				return $return="Exito";
 			}
 
