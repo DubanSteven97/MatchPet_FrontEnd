@@ -1,9 +1,9 @@
 let rowTable;
-let tableOrganizaciones;
+let tableProcesos;
 var divLoading = document.querySelector("#divLoading");
 document.addEventListener('DOMContentLoaded',function(){
 
-	tableOrganizaciones = $('#tableProcesosAdopcion').dataTable({
+	tableProcesos = $('#tableProcesosAdopcion').dataTable({
 		"aProcessing":true,
 		"aServerSide":true,
 		"language":{
@@ -80,6 +80,7 @@ document.addEventListener('DOMContentLoaded',function(){
 
 
         divLoading.style.display = "flex";
+		tinyMCE.triggerSave();
         let request = (window.XMLHttpRequest) ? XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
         let ajaxUrl = BaseUrl+'/Adopciones/gestionProceso';
         let formData = new FormData(formProcesoAdopcion);
@@ -109,8 +110,9 @@ document.addEventListener('DOMContentLoaded',function(){
 							break;
 					}
 
-					//rowTable.cells[5].textContent = strDescripcion;
-
+					//rowTable.cells[6].textContent = strDescripcion;
+					//rowTable.cells[7].innerHTML = htmlStatus;
+					tableProcesos.api().ajax.reload();
               
                     $('#modalProcesoAdopcion').modal("hide");
                     formProcesoAdopcion.reset();
