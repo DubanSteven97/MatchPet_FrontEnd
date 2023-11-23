@@ -117,8 +117,10 @@
 
 
             $mail->setFrom( $emailDestino,  $nombreDestino);
-            $mail->addAddress($cliente);    
-            $mail->addCC($emailCopia);
+            $mail->addAddress($cliente);   
+            if(!empty($emailCopia)){
+             $mail->addCC($emailCopia);
+            } 
 
             //Content
             $mail->isHTML(true);                                  //Set email format to HTML

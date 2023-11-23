@@ -16,7 +16,7 @@
 		{
 
 			$idPersona = "";
-			if($_SESSION['userData']['nombreRol'] == "Cliente")
+			if($_SESSION['userData']['nombreRol'] == "Amigo")
 			{
 				$idPersona = $_SESSION['userData']['idpersona'];
 			}
@@ -30,13 +30,17 @@
 			$data['clientes'] = $this->model->CanClientes();
 			$data['animales'] = $this->model->CanAnimales();
 			$data['organizaciones'] = $this->model->CanOrganizaciones();
+			$data['adopciones'] = $this->model->CanAdopciones();
 			$data['pedidos'] = $this->model->CanPedidos($idPersona);
 			//$data['lastOrders'] = $this->model->LastOrders($idPersona);
 
 			$anio = date('Y');
 			$mes = date('m');
+			$idOrganizacion = $_SESSION['userData']['idOrganizacion'];
 
-			//$data['pagosMes'] = $this->model->SelectPagosMes($anio,$mes,$idPersona);
+			$data['adopcionesMes'] = $this->model->SelectAdopcionesMes($anio,$mes,$idOrganizacion);
+			$data['adopcionesPorMes'] = $this->model->SelectAdopcionesPorMes($anio,$idOrganizacion);
+			$data['adopcionesPorAno'] = $this->model->SelectAdopcionesPorAno($idOrganizacion);
 			//dep($data['pagosMes']);exit();
 
 			$this->views->GetView($this,"dashboard",$data);

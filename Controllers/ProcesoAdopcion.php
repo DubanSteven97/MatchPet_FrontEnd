@@ -26,6 +26,17 @@
 			$arrData = $this->model->CrearProceso($idPersona,$idAnimal,$idOrganizacionAnimal);
 			if($arrData == "Exito")
 			{
+
+			
+				$dataUsuario = array('nombreUsuario' => $_SESSION['userData']['nombres'] ,
+				"cliente" => $_SESSION['userData']['email'],
+				'asunto' => '¡Dando el Primer Paso hacia el Amor Incondicional: Has Comenzado Viaje de Una Adopción!');
+
+
+				SendEmailPhpMailer($dataUsuario,'SolicitudAdopcionAmigo');
+		
+
+
 				$arrResponse = array(	'estado'=> true,
 										'msg'	=> 'Proceso creado correctamente -  Un miembro de la organización se pondrá en contacto contigo.');
 			}else

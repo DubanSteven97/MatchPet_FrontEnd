@@ -48,6 +48,19 @@
 			return $total;
 		}
 
+		public function CanAdopciones()
+		{
+			$whereOrg = "";
+			if($_SESSION['userData']['idOrganizacion'] != null)
+			{
+				$whereOrg = "  AND idOrganizacion = ".$_SESSION['userData']['idOrganizacion'];
+			}
+			$sql = "SELECT COUNT(*) total FROM procesoadopcion WHERE estado != 0".$whereOrg;
+			$request = $this->Select($sql);
+			$total = $request['total'];
+			return $total;
+		}
+
 		public function CanPedidos($idPersona = null)
 		{
 			$where = "";
@@ -79,25 +92,67 @@
 			return $request;
 		}*/
 
-		/*public function SelectPagosMes(int $anio, int $mes, $idPersona = null)
+		public function SelectAdopcionesMes(int $anio, int $mes, $idOrganizacion)
 		{
 			$where = "WHERE 1=1 ";
-			if($idPersona != null)
+			if($idOrganizacion != null)
 			{
-				$where = " WHERE	p.personaid = ".$idPersona;
+				$where = " WHERE idOrganizacion = ".$idOrganizacion;
 			}
-			$sql = "SELECT	p.tipopagoid, 
-							tp.tipopago, 
-					        COUNT(p.tipopagoid) as cantidad, 
-					        SUM(p.monto) as total 
-					FROM pedido p 
-					INNER JOIN tipopago tp ON p.tipopagoid = tp.idtipopago 
-					".$where." AND MONTH(p.fecha) = $mes AND YEAR(p.fecha) = $anio 
-					GROUP BY p.tipopagoid";
-			$pagos = $this->SelectAll($sql);
-			$arrData = array('anio'=>$anio, 'mes'=>Meses()[$mes-1], 'tipospago'=>$pagos);
+			$sql = "SELECT	
+							CASE estado
+								WHEN 1 THEN 'En proceso'
+								WHEN 3 THEN 'Aprobados'
+								WHEN 4 THEN 'Rechazados'
+								ELSE 'Desconocido'
+							END AS nombre_estado, 
+					        COUNT(estado) as adopcion 
+					FROM procesoAdopcion  
+					".$where." AND MONTH(fecha_solicitud) = $mes AND YEAR(fecha_solicitud) = $anio 
+					GROUP BY estado";
+			$adopciones = $this->SelectAll($sql);
+			$arrData = array('anio'=>$anio, 'mes'=>Meses()[$mes-1], 'adopciones'=>$adopciones);
 			return $arrData;
-		}*/
+	
+		}
+
+		public function SelectAdopcionesPorMes( int $anio,$idOrganizacion)
+		{
+			$where = "WHERE 1=1 ";
+			if($idOrganizacion != null)
+			{
+				$where = " WHERE idOrganizacion = ".$idOrganizacion;
+			}
+			$sql = "SELECT	
+							FORMAT(fecha_solicitud, 'MMMM', 'es-es') mes,
+					        COUNT(*) as adopcion 
+					FROM procesoAdopcion  
+					".$where." AND estado = 3 AND YEAR(fecha_solicitud) = $anio 
+					GROUP BY FORMAT(fecha_solicitud, 'MMMM', 'es-es')";
+			$adopcionesPorMes = $this->SelectAll($sql);
+			$arrData = array( 'adopcionesPorMes'=>$adopcionesPorMes);
+			return $arrData;
+	
+		}		
+
+		public function SelectAdopcionesPorAno( $idOrganizacion)
+		{
+			$where = "WHERE 1=1 ";
+			if($idOrganizacion != null)
+			{
+				$where = " WHERE idOrganizacion = ".$idOrganizacion;
+			}
+			$sql = "SELECT	
+							YEAR(fecha_solicitud) ano,
+					        COUNT(*) as adopcion 
+					FROM procesoAdopcion  
+					".$where." AND estado = 3 
+					GROUP BY YEAR(fecha_solicitud)";
+			$adopcionesPorMes = $this->SelectAll($sql);
+			$arrData = array( 'adopcionesPorAno'=>$adopcionesPorMes);
+			return $arrData;
+	
+		}	
 	}
 
 ?>

@@ -349,7 +349,6 @@
 									"cliente" => $strEmail,
 									"emailCopia" => $strEmail,
 									'password' => $strPassword,
-									'nombreUsuario' => $strNombres ." ". $strApellidos, 
 									'asunto' => '¡Bienvenido a MatchPet!');
 					$_SESSION['idUser'] = $request;
 					$_SESSION['login'] = true;	
