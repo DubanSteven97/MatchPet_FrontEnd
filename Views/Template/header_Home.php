@@ -144,9 +144,9 @@ $infoPagePreguntas = !empty(GetPageRout('preguntas-frecuentes')) ? GetPageRout('
 
 					<!-- Icon header -->
 					<div class="wrap-icon-header flex-w flex-r-m">
-						<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 menu-right">
+						<!--<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 menu-right">
 							<a href="<?= BaseUrl(); ?>/apadrinar"><i class="zmdi zmdi-thumb-up"></i> Apadrinar</a>
-						</div>
+						</div>-->
 						<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 menu-right">
 							<a href="<?= BaseUrl(); ?>/donar"><i class="zmdi zmdi-favorite"></i> Donar</a>
 						</div>
@@ -238,9 +238,9 @@ $infoPagePreguntas = !empty(GetPageRout('preguntas-frecuentes')) ? GetPageRout('
 					<a href="<?= BaseUrl(); ?>/contacto">Contacto</a>
 				</li>
 				<hr>
-				<li>
+				<!--<li>
 					<a href="<?= BaseUrl(); ?>/apadrinar"><i class="zmdi zmdi-thumb-up"></i> Apadrinar</a>
-				</li>
+				</li>-->
 
 				<li>
 					<a href="<?= BaseUrl(); ?>/donar"><i class="zmdi zmdi-favorite"></i> Donar</a>
