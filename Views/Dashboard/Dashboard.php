@@ -90,11 +90,13 @@
                   </tr>
                 <?php }
                     } ?>
+
+                <?php } ?>
                 </tbody>
               </table>
             </div>
           </div>
-          
+<?php if($_SESSION['userData']['nombreRol'] != "Amigo"){ ?>    
             <div class="col-md-6">
                 <div class="tile">
                   <div class="container-title">
@@ -103,9 +105,9 @@
                   <div id="estadoAdopciones"></div>
                 </div>
             </div>
-            <?php } ?>
+            
         </div>
-        <?php if($_SESSION['userData']['nombreRol'] != "Amigo"){ ?>
+      
         <div class="row">
           <div class="col-md-12">
             <div class="tile">
