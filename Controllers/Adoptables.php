@@ -38,7 +38,7 @@
 			$animalesFiltrados = [];
 		
 			for ($p = 0; $p < count($arrData); $p++) {
-				if ($arrData[$p]->estado > 0) {
+				if ($arrData[$p]->estado == 0) {
 					$nacimiento = new DateTime($arrData[$p]->fecha_nacimiento);
 					$diferencia = $ahora->diff($nacimiento);
 					$arrData[$p]->edad = $diferencia->format("%y");
