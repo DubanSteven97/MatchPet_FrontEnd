@@ -6,7 +6,7 @@
 
 	public function __construct(){
 
-		$connectionString = "sqlsrv:server=".HOSTNAME.";database=".DATABASE;
+		$connectionString = "sqlsrv:server=".HOSTNAME.";database=".DATABASE.";Encrypt=0;TrustServerCertificate=1'";
 		try
 		{
 
