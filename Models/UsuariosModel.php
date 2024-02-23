@@ -73,7 +73,7 @@
 		public function SelectUsuarios()
 		{	
 			$whereAdmin = "";
-			if($_SESSION['idUser'] != 1)
+			if($_SESSION['userData']['idRol'] != 1)
 			{
 				$whereAdmin = "  AND p.idPersona != 1  AND o.idOrganizacion = ".$_SESSION['userData']['idOrganizacion'];
 			}
@@ -85,7 +85,7 @@
 		public function SelectUsuario(int $idPersona)
 		{
 			$this->intIdUsuario = $idPersona;
-			$sql = "SELECT p.idpersona, p.numero_identificacion, p.nombres, p.apellidos, p.telefono, p.email, p.nit, p.nombrefiscal, p.direccionfiscal, r.idrol, r.nombrerol, p.estado, FORMAT(p.fecha_creacion,'dd-MM-yyyy') as fechaRegistro,o.idOrganizacion, o.nombre FROM Persona p INNER JOIN Rol r ON p.idRol = r.idRol FULL OUTER JOIN  Organizacion o ON P.idOrganizacion = o.idOrganizacion WHERE p.idPersona = $this->intIdUsuario";
+			$sql = "SELECT p.idpersona, p.numero_identificacion, p.nombres, p.apellidos, p.telefono, p.email, p.nit, p.nombrefiscal, p.direccionfiscal, r.idrol, r.nombrerol, p.estado, p.fecha_creacion as fechaRegistro, o.idOrganizacion, o.nombre FROM Persona p INNER JOIN Rol r ON p.idRol = r.idRol FULL OUTER JOIN  Organizacion o ON P.idOrganizacion = o.idOrganizacion WHERE p.idPersona = $this->intIdUsuario";
 			$request = $this->Select($sql);
 			return $request;
 		}
