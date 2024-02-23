@@ -145,9 +145,7 @@
 				$DonacionDia = $this->Select($sql);
 				if(empty($DonacionDia))
 				{
-					$DonacionDia['dia'] = $n_dia;
-					$DonacionDia['cantidad'] = 0;
-					$DonacionDia['total'] = 0;
+					$DonacionDia = array('dia'=>$n_dia, 'cantidad'=>0, 'total'=>0);
 				}
 				
 				$totalDonacionesMes += $DonacionDia['total'];
